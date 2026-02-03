@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import styles from './App.module.css';
-import sharedStyles from './styles/shared.module.css';
 import {
     BiochemistryPage,
     EpigenomePage,
     FluxDynamicsPage,
     GuideDesignPage,
-    Header,
+    Navigation,
     PageHeader,
 } from './components';
+import sharedStyles from './styles/shared.module.css';
 
 const pages = [
   {
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div className={styles.app}>
-      <Header activePage={activePage} setActivePage={setActivePage} />
+      <Navigation activePage={activePage} setActivePage={setActivePage} />
       <main className={styles.content} key={activePage}>
         <PageHeader title={title} subtitle={subtitle} />
         <div className={sharedStyles.pageContent}>

@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import styles from './Header.module.css';
+import styles from './Navigation.module.css';
 
 const pages = ['Biochemistry', 'Epigenome', 'Flux Dynamics', 'Guide Design'];
 
-export function Header({ activePage, setActivePage }) {
+export function Navigation({ activePage, setActivePage }) {
   const navRef = useRef(null);
   const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 

@@ -1,22 +1,5 @@
 /* Guide Design page styles */
 
-.headline {
-  margin-bottom: 24px;
-  text-align: center;
-}
-
-.title {
-  font-size: 28px;
-  font-weight: 300;
-  margin: 0 0 8px 0;
-}
-
-.subtitle {
-  font-size: 16px;
-  color: #94a3b8;
-  margin: 0;
-}
-
 /* Mode header bar */
 .modeHeader {
   background: linear-gradient(90deg, #166534 0%, #15803d 100%);

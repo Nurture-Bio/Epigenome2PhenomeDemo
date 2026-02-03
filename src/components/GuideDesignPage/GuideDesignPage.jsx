@@ -9,14 +9,7 @@ export function GuideDesignPage() {
   const selectedGuideData = guides.find(g => g.id === selectedGuide);
 
   return (
-    <div>
-      <div className={styles.headline}>
-        <h1 className={styles.title}>Guide Design</h1>
-        <p className={styles.subtitle}>
-          CRISPR guides ranked by predicted flux impact. Target accessible chromatin for maximum effect.
-        </p>
-      </div>
-
+    <>
       {/* Mode header */}
       <div className={styles.modeHeader}>
         <span className={styles.modeTitle}>dCas9-VPR Activation Mode (Active)</span>
@@ -148,6 +141,6 @@ export function GuideDesignPage() {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 }

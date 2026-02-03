@@ -417,15 +417,7 @@ export function FluxDynamicsPage() {
   const genes = ['BAT2', 'ARO10', 'ADH6', 'ATF1'];
 
   return (
-    <div>
-      <div className={styles.headline}>
-        <h1 className={styles.title}>Flux Dynamics</h1>
-        <p className={styles.subtitle}>
-          Chromatin accessibility constrains metabolic flux. Click any enzyme to simulate dCas9-VPR activation.
-        </p>
-      </div>
-
-      <div className={styles.container}>
+    <div className={styles.container}>
         {/* Pathway Visualization */}
         <div className={`${styles.card} ${styles.pathwayCard}`}>
           <PathwayDiagram
@@ -524,6 +516,5 @@ export function FluxDynamicsPage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

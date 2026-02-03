@@ -4,15 +4,7 @@ import styles from './EpigenomePage.module.css';
 
 export function EpigenomePage() {
   return (
-    <div>
-      <div className={styles.headline}>
-        <h1 className={styles.title}>Epigenome Layer</h1>
-        <p className={styles.subtitle}>
-          Each regulatory layer constrains which genes can be active. One unified score.
-        </p>
-      </div>
-
-      <div className={styles.container}>
+    <div className={styles.container}>
         {/* Layer Stack */}
         <div className={styles.layerStack}>
           {epigenomeLayers.map((layer, i) => (
@@ -115,6 +107,5 @@ export function EpigenomePage() {
           </div>
         </div>
       </div>
-    </div>
   );
 }

@@ -1,4 +1,8 @@
 /* Global Reset & Base Styles */
+:root {
+  --header-height: 81px;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;

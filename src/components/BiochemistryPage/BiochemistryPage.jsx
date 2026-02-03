@@ -53,15 +53,7 @@ export function BiochemistryPage() {
   };
 
   return (
-    <div>
-      <div className={styles.headline}>
-        <h1 className={styles.title}>Biochemistry Layer</h1>
-        <p className={styles.subtitle}>
-          The same thermodynamics govern every living cell. One physics. Universal.
-        </p>
-      </div>
-
-      <div className={styles.container}>
+    <div className={styles.container}>
         {/* Left Sidebar */}
         <div className={styles.sidebar}>
           {/* Model Info */}
@@ -231,7 +223,6 @@ export function BiochemistryPage() {
           )}
         </div>
       </div>
-    </div>
   );
 }
 

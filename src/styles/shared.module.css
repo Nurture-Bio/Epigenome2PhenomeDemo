@@ -130,6 +130,60 @@
   filter: brightness(1.1);
 }
 
+/* Page header animation */
+@keyframes pageHeaderFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-8px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes pageContentFadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(12px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* Page Header - Auto-sized row in CSS Grid, gap handles spacing */
+.pageHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  animation: pageHeaderFadeIn 0.35s ease-out both;
+}
+
+.pageTitle {
+  font-size: 24px;
+  font-weight: 300;
+  margin: 0 0 4px 0;
+  color: #e2e8f0;
+}
+
+.pageSubtitle {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0;
+  max-width: 700px;
+  line-height: 1.4;
+}
+
+/* Page Content - Scrollable area below header */
+.pageContent {
+  overflow: auto;
+  min-height: 0;
+  animation: pageContentFadeIn 0.4s ease-out 0.1s both;
+}
+
 .buttonSecondary {
   padding: 6px 12px;
   background: rgba(0, 0, 0, 0.2);

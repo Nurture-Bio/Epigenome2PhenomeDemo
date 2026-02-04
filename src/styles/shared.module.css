@@ -40,16 +40,22 @@
 
 /* Base class for interactive/selectable elements (cards, rows, etc.) */
 .selectable {
-  @apply cursor-pointer relative z-[1] transition-shadow duration-150;
+  @apply cursor-pointer relative z-[1] transition-all duration-150;
 }
 
-.selectable:hover {
-  @apply shadow-[inset_0_0_0_100px_rgba(255,255,255,0.05)];
+.selectable:hover:not(.selected) {
+  @apply shadow-[inset_0_0_0_100px_rgba(255,255,255,0.04)];
 }
 
 /* Selected/lifted state */
 .selected {
-  @apply shadow-[inset_0_0_0_100px_rgba(255,255,255,0.08),_inset_0_1px_0_0_rgba(255,255,255,0.15),_0_4px_16px_rgba(0,0,0,0.5)] relative z-[1];
+  @apply shadow-[0_0_0_1px_rgba(255,255,255,0.1),_0_4px_12px_rgba(0,0,0,0.4)] relative z-[1];
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.selected:hover {
+  @apply shadow-[0_0_0_1px_rgba(255,255,255,0.15),_0_6px_16px_rgba(0,0,0,0.5)];
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .toggleSwitch {

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { reactionDetails, reactionTableData } from '../../data';
 import { useSelectionStore } from '../../stores';
 import sharedStyles from '../../styles/shared.module.css';
-import styles from './BiochemistryPage.module.css';
+import styles from './MetabolismPage.module.css';
 
-export function BiochemistryPage() {
+export function MetabolismPage() {
   const { selectedReaction, selectReaction } = useSelectionStore();
   const [anaerobic, setAnaerobic] = useState(false);
   const [isRecalculating, setIsRecalculating] = useState(false);

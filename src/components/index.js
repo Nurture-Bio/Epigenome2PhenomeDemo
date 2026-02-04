@@ -1,10 +1,10 @@
 // Component exports
-export { BiochemistryPage } from './BiochemistryPage/BiochemistryPage';
 export { BottleneckPage } from './BottleneckPage/BottleneckPage';
-export { EpigenomePage } from './EpigenomePage/EpigenomePage';
 export { FlavorSearchPage } from './FlavorSearchPage/FlavorSearchPage';
-export { FluxDynamicsPage } from './FluxDynamicsPage/FluxDynamicsPage';
+export { GeneTopologyPage } from './GeneTopologyPage/GeneTopologyPage';
 export { GuideDesignPage } from './GuideDesignPage/GuideDesignPage';
+export { MetabolismPage } from './MetabolismPage/MetabolismPage';
 export { Navigation } from './Navigation/Navigation';
 export { PageHeader } from './PageHeader/PageHeader';
+export { SimulationPage } from './SimulationPage/SimulationPage';
 

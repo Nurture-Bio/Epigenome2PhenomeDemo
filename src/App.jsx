@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import styles from './App.module.css';
 import {
-    BiochemistryPage,
-    EpigenomePage,
     FlavorSearchPage,
-    FluxDynamicsPage,
+    GeneTopologyPage,
     GuideDesignPage,
+    MetabolismPage,
     Navigation,
     PageHeader,
+    SimulationPage,
 } from './components';
 import sharedStyles from './styles/shared.module.css';
 
@@ -18,18 +18,18 @@ const pages = [
     subtitle: 'From banana beer to citrus IPA. Find the genes that make flavor compounds.',
   },
   {
-    component: BiochemistryPage,
-    title: 'Biochemistry Layer',
+    component: MetabolismPage,
+    title: 'Metabolic Landscape',
     subtitle: 'The same thermodynamics govern every living cell. One physics. Universal.',
   },
   {
-    component: EpigenomePage,
-    title: 'Epigenome Layer',
+    component: GeneTopologyPage,
+    title: 'Gene Topology',
     subtitle: 'Each regulatory layer constrains which genes can be active. One unified score.',
   },
   {
-    component: FluxDynamicsPage,
-    title: 'Flux Dynamics',
+    component: SimulationPage,
+    title: 'Simulation',
     subtitle: 'Chromatin accessibility constrains metabolic flux. Click any enzyme to simulate dCas9-VPR activation.',
   },
   {

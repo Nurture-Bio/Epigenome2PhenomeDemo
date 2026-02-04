@@ -10,6 +10,18 @@ export const useSelectionStore = create((set, get) => ({
   selectedGene: null,        // e.g., 'ATF1', 'BAT2'
   selectedReaction: 'r_0160', // Default to first reaction
 
+  // Layer loading states: 'idle' | 'loading' | 'loaded'
+  layerLoadStates: {
+    'Hi-C': 'idle',
+    'ATAC-seq': 'idle',
+    'ChIP-seq': 'idle',
+    'RNA-seq': 'idle',
+  },
+
+  // Convergence state: 'idle' | 'converging' | 'converged'
+  convergenceState: 'idle',
+  convergenceTypingComplete: false,
+
   // CRISPR intervention state: 'repress' | 'normal' | 'activate'
   interventions: {
     BAT2: 'normal',
@@ -30,6 +42,21 @@ export const useSelectionStore = create((set, get) => ({
   selectReaction: (reaction) => set((state) => ({
     selectedReaction: state.selectedReaction === reaction ? null : reaction,
   })),
+
+  // Layer loading actions
+  setLayerLoading: (source) => set((state) => ({
+    layerLoadStates: { ...state.layerLoadStates, [source]: 'loading' },
+  })),
+
+  setLayerLoaded: (source) => set((state) => ({
+    layerLoadStates: { ...state.layerLoadStates, [source]: 'loaded' },
+    selectedLayer: source, // Auto-select when loaded
+  })),
+
+  // Convergence actions
+  setConverging: () => set({ convergenceState: 'converging' }),
+  setConverged: () => set({ convergenceState: 'converged', selectedLayer: 'convergence' }),
+  setConvergenceTypingComplete: () => set({ convergenceTypingComplete: true }),
 
   // Set intervention for a specific gene
   setIntervention: (gene, state) => set((prev) => ({

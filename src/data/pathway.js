@@ -78,19 +78,13 @@ export const pathwayEdges = [
   { from: 'iamoh', to: 'waste', gene: 'EXPORT' },  // branch B: waste
 ];
 
-// Epigenome layer definitions
+// Epigenome layer definitions (ordered from simple to complex)
 export const epigenomeLayers = [
   { 
-    name: '3D Chromatin Structure', 
-    source: 'Hi-C', 
-    color: '#8b5cf6', 
-    question: 'Does the promoter contact enhancers?' 
-  },
-  { 
-    name: 'Chromatin Accessibility', 
-    source: 'ATAC-seq', 
-    color: '#f472b6', 
-    question: 'Is the DNA physically accessible?' 
+    name: 'Transcription', 
+    source: 'RNA-seq', 
+    color: '#22c55e', 
+    question: 'Is the gene being transcribed?' 
   },
   { 
     name: 'Histone Modifications', 
@@ -99,10 +93,16 @@ export const epigenomeLayers = [
     question: 'What is the activation state?' 
   },
   { 
-    name: 'Transcription', 
-    source: 'RNA-seq', 
-    color: '#22c55e', 
-    question: 'Is the gene being transcribed?' 
+    name: 'Chromatin Accessibility', 
+    source: 'ATAC-seq', 
+    color: '#f472b6', 
+    question: 'Is the DNA physically accessible?' 
+  },
+  { 
+    name: '3D Chromatin Structure', 
+    source: 'Hi-C', 
+    color: '#8b5cf6', 
+    question: 'Does the promoter contact enhancers?' 
   },
 ];
 

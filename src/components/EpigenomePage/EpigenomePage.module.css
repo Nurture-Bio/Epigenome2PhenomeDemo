@@ -1,15 +1,80 @@
 /* Epigenome page styles */
 
 .container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
   height: 100%;
 }
 
-/* Layer stack */
-.layerStack {
+.content {
+  padding: 20px;
+}
+
+.description {
+  font-size: 12px;
+  color: #64748b;
+  margin-bottom: 12px;
+}
+
+/* Target gene dropdown */
+.targetDropdown {
+  margin-bottom: 12px;
+}
+
+.targetSelect {
+  width: 100%;
+  padding: 10px 14px;
+  background: #1e293b;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #e2e8f0;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M3 4.5L6 8l3-3.5H3z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+.targetSelect:focus {
+  outline: none;
+  border-color: rgba(34, 197, 94, 0.5);
+}
+
+.conditionTag {
+  font-size: 11px;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+/* Load All button */
+.loadAllBtn {
+  width: 100%;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 6px;
+  color: #a78bfa;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 16px;
+}
+
+.loadAllBtn:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+
+/* Layer list */
+.layerList {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .layerCard {
@@ -18,27 +83,43 @@
   border-left-width: 3px;
   border-left-style: solid;
   border-radius: 8px;
-  padding: 14px 20px;
-  margin-bottom: 4px;
+  padding: 14px 16px;
+  transition: all 0.2s ease;
 }
 
-/* Hover handled by shared .selectable class */
-
-.layerContent {
+.layerCardHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 6px;
 }
 
 .layerName {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 500;
-  margin-bottom: 2px;
+  color: #e2e8f0;
+}
+
+.layerSource {
+  font-size: 11px;
+  color: #64748b;
+  margin-left: 8px;
 }
 
 .layerQuestion {
-  font-size: 12px;
-  color: #94a3b8;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.convergenceCard {
+  margin-top: 12px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+  border-color: rgba(139, 92, 246, 0.15);
+}
+
+.layerCard.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .layerBadge {
@@ -46,121 +127,540 @@
   border-radius: 4px;
   font-size: 10px;
   font-weight: 600;
-}
-
-.arrow {
-  text-align: center;
-  color: #475569;
-  font-size: 14px;
-  margin: 2px 0;
-}
-
-/* Convergence box */
-.convergence {
-  padding: 20px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border: 2px solid rgba(59, 130, 246, 0.4);
-  border-radius: 12px;
+  min-width: 32px;
   text-align: center;
 }
 
-.convergenceLabel {
-  font-size: 10px;
-  color: #60a5fa;
-  margin-bottom: 8px;
-  letter-spacing: 2px;
-  font-weight: 600;
-}
-
-.convergenceTitle {
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 8px;
-}
-
-.convergenceCode {
+/* Loading spinner */
+.spinner {
   display: inline-block;
-  background: rgba(0, 0, 0, 0.3);
-  padding: 8px 16px;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #60a5fa;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
-.convergenceSubtitle {
-  font-size: 12px;
-  color: #64748b;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-/* Gene bars */
-.geneBar {
-  margin-bottom: 12px;
+.loadingText {
+  display: inline-flex;
+  align-items: center;
 }
 
-.geneBarHeader {
+/* Converge button */
+.convergeButton {
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 4px;
-}
-
-.geneId {
-  font-size: 11px;
-}
-
-.geneIdHighlight {
-  color: #ef4444;
-  font-weight: 600;
-}
-
-.geneName {
-  font-size: 10px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 16px;
+  background: rgba(100, 100, 100, 0.15);
+  border: 1px solid rgba(100, 100, 100, 0.2);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
   color: #64748b;
-  margin-left: 6px;
+  cursor: not-allowed;
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
-.genePct {
-  font-size: 12px;
-  font-weight: 600;
+.convergeButton.convergeReady {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #a78bfa;
+  cursor: pointer;
 }
 
-.genePctHigh {
+.convergeButton.convergeReady:hover {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
+  border-color: rgba(139, 92, 246, 0.5);
+  transform: translateY(-1px);
+}
+
+.convergeButton.converging {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+  border-color: rgba(139, 92, 246, 0.2);
+  color: #94a3b8;
+}
+
+.convergeButton.converged {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
   color: #22c55e;
 }
 
-.genePctLow {
-  color: #ef4444;
+.convergeIcon {
+  font-size: 16px;
 }
 
-.geneRole {
+/* Convergence result */
+.convergenceResult {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* AI typing box */
+.aiTypingBox {
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.aiHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.aiIcon {
+  font-size: 16px;
+}
+
+.aiLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a78bfa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.aiText {
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.6;
+  min-height: 120px;
+}
+
+.aiIntro {
+  color: #94a3b8;
+  margin-bottom: 12px;
+}
+
+.aiBullet {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
+.bulletIcon {
+  color: #22c55e;
+  flex-shrink: 0;
+}
+
+/* Insights grid */
+.insightsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.insightCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  animation: fadeInUp 0.3s ease;
+}
+
+.insightIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.insightContent {
+  flex: 1;
+  min-width: 0;
+}
+
+.insightLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.insightValue {
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.4;
+}
+
+/* Typewriter effect */
+.cursor {
+  display: inline-block;
+  color: #a78bfa;
+  animation: blink 0.8s infinite;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typingIndicator {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  padding: 16px;
+}
+
+.typingDot {
+  width: 8px;
+  height: 8px;
+  background: #a78bfa;
+  border-radius: 50%;
+  animation: typingBounce 1.2s infinite;
+}
+
+.typingDot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.typingDot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typingBounce {
+  0%, 60%, 100% { 
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% { 
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
+
+.summaryRow {
+  margin-top: 16px;
+}
+
+/* Gene header */
+.geneHeader {
+  margin-bottom: 24px;
+}
+
+.geneNameLarge {
+  font-size: 28px;
+  font-weight: 300;
+  color: #f1f5f9;
+  margin-bottom: 4px;
+}
+
+.geneSystematic {
+  font-size: 12px;
+  color: #64748b;
+  font-family: monospace;
+  margin-bottom: 8px;
+}
+
+.geneDesc {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* Expression bars (RNA-seq) */
+.expressionList {
+  margin-bottom: 24px;
+}
+
+.expressionRow {
+  margin-bottom: 16px;
+}
+
+.expressionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.conditionName {
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.expressionPct {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.expressionBar {
+  height: 10px;
+  background: #1e293b;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.expressionFill {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.6s ease-out;
+}
+
+.expressionLabel {
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* Alert box */
+.alertBox {
+  padding: 16px;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.alertHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.alertIcon {
+  font-size: 20px;
+}
+
+.alertTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fbbf24;
+}
+
+.alertSubtitle {
+  font-size: 11px;
+  color: #f59e0b;
+}
+
+.alertBody {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* Impact grid */
+.impactGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.impactCard {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+}
+
+.impactValue {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 4px;
+}
+
+.impactLabel {
+  font-size: 10px;
+  color: #64748b;
+}
+
+/* Metric display (other layers) */
+.metricDisplay {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+}
+
+.metricValue {
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.metricSmall {
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.metricUnit {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.statusBadge {
+  display: block;
+  padding: 12px 16px;
+  border: 1px solid;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  margin-bottom: 24px;
+}
+
+.dataSection {
+  margin-top: 16px;
+}
+
+/* Empty state */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 300px;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+
+.emptyTitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.emptyDesc {
+  font-size: 12px;
+  color: #475569;
+  max-width: 200px;
+}
+
+/* Finding / Implication boxes */
+.findingBox {
+  padding: 16px;
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.findingLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: #60a5fa;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.findingText {
+  font-size: 13px;
+  color: #e2e8f0;
+  line-height: 1.5;
+}
+
+.implicationBox {
+  display: flex;
+  gap: 12px;
+  padding: 14px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  border-radius: 8px;
+}
+
+.implicationIcon {
+  font-size: 18px;
+}
+
+.implicationText {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+/* Comparison section (ATAC-seq) */
+.comparisonSection {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.comparisonTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.comparisonRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.comparisonGene {
+  width: 90px;
+}
+
+.comparisonGene .highlightGene {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+.comparisonRole {
+  display: block;
   font-size: 9px;
   color: #475569;
-  margin-top: 2px;
 }
 
-/* Bottleneck bar */
-.bottleneckBar {
-  height: 8px;
+.comparisonBar {
+  flex: 1;
+  height: 10px;
   background: #1e293b;
-  border-radius: 4px;
+  border-radius: 5px;
   overflow: hidden;
   position: relative;
 }
 
-.bottleneckFill {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  border-radius: 4px;
+.comparisonFill {
+  height: 100%;
+  border-radius: 5px;
   transition: width 0.5s ease;
-}
-
-.bottleneckFillSuccess {
-  background: linear-gradient(90deg, #15803d 0%, #22c55e 100%);
-}
-
-.bottleneckFillDanger {
-  background: linear-gradient(90deg, #dc2626 0%, #ef4444 100%);
 }
 
 .bottleneckLabel {
@@ -174,46 +674,113 @@
   letter-spacing: 0.5px;
 }
 
-/* Alert box */
-.alertBox {
-  padding: 16px;
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
-  border-radius: 8px;
-  margin-bottom: 16px;
-}
-
-.alertHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-.alertIcon {
+.comparisonPct {
   width: 40px;
-  height: 40px;
-  border-radius: 8px;
-  background: rgba(239, 68, 68, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-}
-
-.alertTitle {
-  font-size: 14px;
-  font-weight: 600;
-  color: #fca5a5;
-}
-
-.alertSubtitle {
-  font-size: 11px;
-  color: #f87171;
-}
-
-.alertBody {
+  text-align: right;
   font-size: 12px;
-  color: #94a3b8;
-  line-height: 1.5;
+  font-weight: 600;
+}
+
+/* Details grid (Hi-C) */
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.detailCard {
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.detailLabel {
+  font-size: 10px;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.detailValue {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* Marks section (ChIP-seq) */
+.marksSection {
+  margin-bottom: 20px;
+}
+
+.marksTitle {
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.markRow {
+  margin-bottom: 14px;
+}
+
+.metricRow {
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.metricRow:last-child {
+  border-bottom: none;
+}
+
+.metricRowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.markHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.markName {
+  font-size: 13px;
+  color: #e2e8f0;
+}
+
+.markType {
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+.markValue {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.markBar {
+  height: 8px;
+  background: #1e293b;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.markBaseline {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.markFill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
 }

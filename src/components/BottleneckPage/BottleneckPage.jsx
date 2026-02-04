@@ -56,7 +56,7 @@ export function BottleneckPage() {
           <div className={styles.dataSection}>
             <div className={sharedStyles.dataRow}>
               <span className={sharedStyles.dataLabel}>Predicted intervention</span>
-              <span className={sharedStyles.dataValue} style={{ color: '#22c55e' }}>dCas9-VPR activation</span>
+              <span className={sharedStyles.dataValue} style={{ color: '#22c55e' }}>Chromatin activation</span>
             </div>
             <div className={sharedStyles.dataRow}>
               <span className={sharedStyles.dataLabel}>Target region</span>

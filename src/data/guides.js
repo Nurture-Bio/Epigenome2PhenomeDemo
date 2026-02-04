@@ -2,7 +2,7 @@
  * sgRNA guide data for ATF1 promoter targeting
  * Ranked by predicted flux impact with ATAC-seq accessibility scores
  * 
- * Logic: Lower ATAC = more closed chromatin = more room for VPR to open = bigger flux gain
+ * Logic: Lower ATAC = more closed chromatin = more room for activation to open = bigger flux gain
  * But extremely low ATAC sites may be harder to access initially
  */
 
@@ -15,7 +15,7 @@ export const guides = [
     pam: 'AGG', 
     offTargets: 0, 
     atacScore: 0.18,
-    predictedAtac: 0.72,  // After VPR activation
+    predictedAtac: 0.72,  // After activation
     predictedFlux: '+312%' 
   },
   { 

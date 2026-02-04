@@ -6,7 +6,7 @@ Interactive visualization of how epigenomic data (ATAC-seq chromatin accessibili
 
 ## What This Shows
 
-Traditional metabolic engineering picks gene targets based on pathway position or expression levels. This demo illustrates a different approach: using chromatin accessibility data to identify which genes are epigenetically constrained and would benefit most from dCas9-VPR activation.
+Traditional metabolic engineering picks gene targets based on pathway position or expression levels. This demo illustrates a different approach: using chromatin accessibility data to identify which genes are epigenetically constrained and would benefit most from chromatin activation.
 
 The key insight: **ATF1** (alcohol acetyltransferase) has only 6% chromatin accessibility at baseline, making it the flux bottleneck—not because the enzyme is slow, but because the gene is epigenetically silenced. Opening upstream genes that are already 65-72% accessible provides marginal gains; opening ATF1 redirects flux from waste to product.
 
@@ -14,7 +14,7 @@ The key insight: **ATF1** (alcohol acetyltransferase) has only 6% chromatin acce
 
 1. **Biochemistry** — Interactive reaction network with thermodynamic data (ΔG°) and cofactor requirements
 2. **Epigenome** — Multi-layer epigenomic integration (Hi-C, ATAC-seq, ChIP-seq, RNA-seq) with unified regulatory scores  
-3. **Flux Dynamics** — Live flux simulation with toggleable dCas9-VPR interventions per gene
+3. **Flux Dynamics** — Live flux simulation with toggleable chromatin interventions per gene
 4. **Guide Design** — CRISPR guide RNA ranking by predicted flux impact
 
 ## Project Structure

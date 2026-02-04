@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { epigenomeLayers } from '../../data';
 import { useSelectionStore } from '../../stores';
 import sharedStyles from '../../styles/shared.module.css';
-import styles from './GeneTopologyPage.module.css';
+import styles from './EpigenomePage.module.css';
 
 // AI convergence response - bullet points for typewriter, then insights after
 const aiTextChunks = [
@@ -89,7 +89,7 @@ const layerVisData = {
   },
 };
 
-export function GeneTopologyPage() {
+export function EpigenomePage() {
   const { 
     selectedLayer, 
     selectLayer, 

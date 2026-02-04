@@ -30,7 +30,7 @@ const pages = [
   {
     component: SimulationPage,
     title: 'Simulation',
-    subtitle: 'Chromatin accessibility constrains metabolic flux. Click any enzyme to simulate dCas9-VPR activation.',
+    subtitle: 'Chromatin accessibility constrains metabolic flux. Click any enzyme to simulate activation or repression.',
   },
   {
     component: GuideDesignPage,

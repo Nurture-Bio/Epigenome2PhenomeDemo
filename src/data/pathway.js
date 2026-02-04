@@ -12,7 +12,7 @@ export const baselineChromatin = {
   EXPORT: 0.30,
 };
 
-// Predicted chromatin after dCas9-KRAB repression
+// Predicted chromatin after repression
 export const repressedChromatin = {
   BAT2: 0.18,   // -47% (significant reduction)
   ARO10: 0.20,  // -52% (significant reduction)
@@ -21,7 +21,7 @@ export const repressedChromatin = {
   EXPORT: 0.30, // passive export, not controllable
 };
 
-// Predicted chromatin after dCas9-VPR activation
+// Predicted chromatin after activation
 export const activatedChromatin = {
   BAT2: 0.88,   // +23% (marginal gain, already open)
   ARO10: 0.91,  // +19% (marginal gain)

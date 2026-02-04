@@ -4,7 +4,7 @@ import { baselineChromatin, metabolites, pathwayEdges } from '../../data';
 import { getChromatinColor, useFluxSolver, usePathwayLayout } from '../../hooks';
 import { useSelectionStore } from '../../stores';
 import sharedStyles from '../../styles/shared.module.css';
-import styles from './SimulationPage.module.css';
+import styles from './FluxDynamicsPage.module.css';
 
 // Inline enzyme pill with spring-animated bar
 function InlineEnzyme({ gene, x, y, chromatin = 0.5, interventions = {}, nodeConfig, chromatinBarConfig, onToggle, isBottleneck }) {
@@ -398,7 +398,7 @@ function TriStateToggle({ value, onChange }) {
   );
 }
 
-export function SimulationPage() {
+export function FluxDynamicsPage() {
   // Get interventions from global store
   const interventions = useSelectionStore((state) => state.interventions);
   const setIntervention = useSelectionStore((state) => state.setIntervention);

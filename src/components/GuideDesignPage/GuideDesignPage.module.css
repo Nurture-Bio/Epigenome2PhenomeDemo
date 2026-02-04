@@ -1,5 +1,14 @@
 /* Guide Design page styles */
 
+/* Page container */
+.pageContainer {
+  max-width: 956px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 /* Mode header bar */
 .modeHeader {
   background: linear-gradient(90deg, #166534 0%, #15803d 100%);
@@ -57,18 +66,27 @@
   display: grid;
   grid-template-columns: 1fr 340px;
   gap: 16px;
+  align-items: stretch;
 }
 
 /* Guide table */
 .guideTablePanel {
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
+}
+
+.guideTablePanel > div:last-child {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .guideRow {
   display: grid;
-  grid-template-columns: 200px 70px 50px 50px 70px 70px 80px;
-  padding: 10px 16px;
-  font-size: 12px;
+  grid-template-columns: 1fr 55px 35px 45px 45px 50px 60px;
+  padding: 10px 12px;
+  font-size: 11px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 4px;
 }
@@ -85,7 +103,6 @@
 
 /* Details panel */
 .detailsPanel {
-  height: fit-content;
   transition: all 0.3s;
 }
 

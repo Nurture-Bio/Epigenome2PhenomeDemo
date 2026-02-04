@@ -3,9 +3,10 @@
 /* Main layout */
 .container {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: minmax(400px, 500px) 340px;
   gap: 28px;
   height: 100%;
+  justify-content: center;
 }
 
 /* Glass card base */
@@ -301,21 +302,27 @@
 .controlStack {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  height: 100%;
+}
+
+/* First card (interventions) grows to fill available space */
+.controlStack > .card:first-child {
+  flex: 1;
 }
 
 /* Intervention rows */
 .interventionList {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 10px;
 }
 
 .interventionRow {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 12px 14px;
   margin: 0 -4px;
   border-radius: 8px;
 }

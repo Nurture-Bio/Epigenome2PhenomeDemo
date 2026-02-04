@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './Navigation.module.css';
 
-const pages = ['Biochemistry', 'Epigenome', 'Bottleneck', 'Flux Dynamics', 'Guide Design'];
+const pages = ['Biochemistry', 'Epigenome', 'Flux Dynamics', 'Guide Design'];
 
 export function Navigation({ activePage, setActivePage }) {
   const navRef = useRef(null);

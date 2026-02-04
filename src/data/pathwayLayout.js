@@ -6,22 +6,22 @@
 export const layoutConfig = {
   // SVG dimensions
   viewBox: {
-    width: 700,
+    width: 420,
     baseHeight: 650,
-    padding: { top: 70, bottom: 50, left: 80, right: 80 }
+    padding: { top: 70, bottom: 50, left: 40, right: 40 }
   },
   
   // Column positions as fractions of width
   columns: {
     main: 0.5,      // center column for main pathway
-    product: 0.85,  // right side for product
-    waste: 0.15     // left side for waste
+    product: 0.82,  // right side for product
+    waste: 0.18     // left side for waste
   },
   
   // Node dimensions
   nodes: {
     metabolite: {
-      width: 160,
+      width: 130,
       height: 42,
       rx: 8
     },

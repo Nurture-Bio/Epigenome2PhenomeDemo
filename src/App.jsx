@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styles from './App.module.css';
 import {
     BiochemistryPage,
-    BottleneckPage,
     EpigenomePage,
     FluxDynamicsPage,
     GuideDesignPage,
@@ -21,11 +20,6 @@ const pages = [
     component: EpigenomePage,
     title: 'Epigenome Layer',
     subtitle: 'Each regulatory layer constrains which genes can be active. One unified score.',
-  },
-  {
-    component: BottleneckPage,
-    title: 'Bottleneck Analysis',
-    subtitle: 'Identify pathway bottlenecks by comparing chromatin accessibility across genes.',
   },
   {
     component: FluxDynamicsPage,

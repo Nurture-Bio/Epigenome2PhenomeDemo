@@ -9,7 +9,7 @@ export function GuideDesignPage() {
   const selectedGuideData = guides.find(g => g.id === selectedGuide);
 
   return (
-    <>
+    <div className={styles.pageContainer}>
       {/* Mode header */}
       <div className={styles.modeHeader}>
         <span className={styles.modeTitle}>dCas9-VPR Activation Mode (Active)</span>
@@ -141,6 +141,6 @@ export function GuideDesignPage() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

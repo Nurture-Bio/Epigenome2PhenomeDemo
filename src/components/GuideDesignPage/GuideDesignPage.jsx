@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { guides, targetGene } from '../../data';
+import { guides } from '../../data';
 import sharedStyles from '../../styles/shared.module.css';
 import styles from './GuideDesignPage.module.css';
 
@@ -97,7 +97,21 @@ function DnaVisualization({ guides, selectedGuide, onSelectGuide, isRepression }
   return (
     <div className={styles.dnaContainer}>
       <div className={styles.dnaHeader}>
-        <span className={styles.dnaTitle}>ATF1 Promoter Region</span>
+        <div className={styles.targetSelectors}>
+          <select className={styles.geneSelect} defaultValue="ATF1">
+            <option value="ATF1">ATF1</option>
+            <option value="ATF2">ATF2</option>
+            <option value="EHT1">EHT1</option>
+            <option value="BAT1">BAT1</option>
+            <option value="BAT2">BAT2</option>
+          </select>
+          <select className={styles.regionSelect} defaultValue="promoter">
+            <option value="promoter">Promoter</option>
+            <option value="5utr">5' UTR</option>
+            <option value="cds">CDS</option>
+            <option value="3utr">3' UTR</option>
+          </select>
+        </div>
         <span className={styles.dnaCoords}>chr XV: 798,234 - 798,734</span>
       </div>
       
@@ -146,11 +160,6 @@ function DnaVisualization({ guides, selectedGuide, onSelectGuide, isRepression }
               <div className={styles.guideMarkerHead}>
                 {guide.strand === '+' ? '▶' : '◀'}
               </div>
-              {isSelected && (
-                <div className={styles.guideMarkerTooltip}>
-                  <span className="mono">{guide.position}</span>
-                </div>
-              )}
             </div>
           );
         })}
@@ -179,15 +188,15 @@ function DnaVisualization({ guides, selectedGuide, onSelectGuide, isRepression }
           </div>
         </div>
         
-        {/* Predicted ATAC track - always rendered for layout stability */}
-        <div 
-          className={`${styles.atacTrack} ${styles.atacTrackPredicted}`}
-          style={{ opacity: selectedGuide ? 1 : 0 }}
-        >
-          <div className={styles.atacLabel} style={{ color: isRepression ? '#8b5cf6' : '#22c55e' }}>
+        {/* Predicted ATAC track - always visible for layout stability */}
+        <div className={`${styles.atacTrack} ${styles.atacTrackPredicted}`}>
+          <div className={styles.atacLabel} style={{ 
+            color: isRepression ? '#8b5cf6' : '#22c55e',
+            opacity: selectedGuide ? 1 : 0.3
+          }}>
             {isRepression ? 'Repr' : 'Act'}
           </div>
-          <div className={styles.atacSignal}>
+          <div className={styles.atacSignal} style={{ opacity: selectedGuide ? 1 : 0.15 }}>
             <svg viewBox="0 0 100 32" preserveAspectRatio="none" className={styles.atacSvg}>
               <path d={predictedAtacPath || currentAtacPath} fill={isRepression ? 'url(#atacRepressionGradient)' : 'url(#atacPredictedGradient)'} />
             </svg>
@@ -267,30 +276,6 @@ export function GuideDesignPage() {
           >
             Switch to {isRepression ? 'Activation' : 'Repression'}
           </button>
-        </div>
-      </div>
-
-      {/* Config panel */}
-      <div className={`${sharedStyles.panel} ${styles.configPanel}`}>
-        <div className={styles.configGrid}>
-          <div>
-            <label className={styles.configLabel}>Target Gene</label>
-            <div className={styles.configValue}>
-              <span className="mono">{targetGene.yorf}</span>
-              <span className={styles.configSecondary}>({targetGene.name})</span>
-            </div>
-          </div>
-          <div>
-            <label className={styles.configLabel}>Target Region</label>
-            <div className={styles.configValue}>{targetGene.region}</div>
-          </div>
-          <div>
-            <label className={styles.configLabel}>PAM</label>
-            <div className={styles.configValue}>
-              <span className="mono">{targetGene.pam}</span>
-              <span className={styles.configSecondary}>({targetGene.cas})</span>
-            </div>
-          </div>
         </div>
       </div>
       

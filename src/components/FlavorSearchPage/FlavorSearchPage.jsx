@@ -292,15 +292,6 @@ export function FlavorSearchPage() {
                 </div>
               </div>
             </div>
-            
-            <div className={styles.actionSection}>
-              <button className={sharedStyles.button} style={{ width: '100%' }}>
-                View in Flux Dynamics →
-              </button>
-              <button className={sharedStyles.buttonSecondary} style={{ width: '100%', marginTop: 8 }}>
-                Design CRISPR Guide
-              </button>
-            </div>
           </div>
         ) : (
           <div className={styles.detailsEmpty}>

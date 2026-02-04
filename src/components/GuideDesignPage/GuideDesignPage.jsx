@@ -145,22 +145,30 @@ function DnaVisualization({ guides, selectedGuide, onSelectGuide, isRepression }
           <span className={styles.tssLabel}>TSS</span>
         </div>
         
-        {/* Guide markers */}
+        {/* Guide markers - + strand above DNA, - strand below DNA */}
         {guides.map(guide => {
           const isSelected = selectedGuide === guide.id;
           const left = posToPercent(guide.position);
+          const isPlus = guide.strand === '+';
           return (
             <div
               key={guide.id}
-              className={`${styles.guideMarker} ${isSelected ? styles.guideMarkerSelected : ''} ${guide.strand === '+' ? styles.guideMarkerPlus : styles.guideMarkerMinus}`}
+              className={`${styles.guideMarker} ${isSelected ? styles.guideMarkerSelected : ''} ${isPlus ? styles.guideMarkerPlus : styles.guideMarkerMinus}`}
               style={{ left: `${left}%` }}
               onClick={() => onSelectGuide(guide.id)}
               title={`Guide ${guide.id}: ${guide.position}bp (${guide.strand})`}
             >
-              <div className={styles.guideMarkerLine} />
-              <div className={styles.guideMarkerHead}>
-                {guide.strand === '+' ? '▶' : '◀'}
-              </div>
+              {isPlus ? (
+                <>
+                  <div className={styles.guideMarkerHead}>▶</div>
+                  <div className={styles.guideMarkerLine} />
+                </>
+              ) : (
+                <>
+                  <div className={styles.guideMarkerLine} />
+                  <div className={styles.guideMarkerHead}>◀</div>
+                </>
+              )}
             </div>
           );
         })}

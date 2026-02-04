@@ -27,6 +27,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 50px;
 }
 
 .cardTitle {
@@ -39,6 +40,47 @@
 
 .cardContent {
   padding: 20px;
+}
+
+.cardDescription {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0 0 12px 0;
+}
+
+.aboutText {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 10px 0;
+}
+
+.aboutText:last-child {
+  margin-bottom: 0;
+}
+
+.aboutText strong {
+  color: #e2e8f0;
+  font-weight: 500;
+}
+
+.resetBtn {
+  font-size: 10px;
+  font-weight: 500;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.resetBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 /* =========================================
@@ -103,6 +145,14 @@
   font-size: 11px;
   fill: #64748b;
   text-anchor: middle;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.fluxPercent {
+  font-size: 13px;
+  font-weight: 600;
+  fill: #94a3b8;
+  text-anchor: start;
   font-family: 'IBM Plex Mono', monospace;
 }
 
@@ -224,19 +274,6 @@
   letter-spacing: 1.5px;
 }
 
-/* Legend */
-.legendTitle {
-  font-size: 11px;
-  fill: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.legendText {
-  font-size: 12px;
-  fill: #94a3b8;
-}
-
 /* =========================================
    ANIMATED FLOW LINES
    ========================================= */
@@ -296,14 +333,14 @@
 }
 
 .interventionGene {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 600;
-  min-width: 50px;
+  min-width: 55px;
   transition: color 0.2s;
 }
 
 .interventionMeta {
-  font-size: 10px;
+  font-size: 13px;
   color: #64748b;
 }
 
@@ -443,23 +480,30 @@
 }
 
 .captureBar {
-  height: 8px;
+  height: 12px;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
-  display: flex;
 }
 
 .captureProduct {
   height: 100%;
   background: linear-gradient(90deg, #22c55e, #10b981);
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border-radius: 6px;
 }
 
-.captureWaste {
+.fluxProductBar {
   height: 100%;
-  background: #475569;
-  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  border-radius: 6px;
+}
+
+.captureLabels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #64748b;
+  margin-top: 4px;
 }
 
 /* Insight banner */

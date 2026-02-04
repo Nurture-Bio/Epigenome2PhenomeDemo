@@ -1,7 +1,8 @@
 import { motion, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { baselineChromatin, metabolites, pathwayEdges } from '../../data';
 import { getChromatinColor, useFluxSolver, usePathwayLayout } from '../../hooks';
+import { useSelectionStore } from '../../stores';
 import sharedStyles from '../../styles/shared.module.css';
 import styles from './FluxDynamicsPage.module.css';
 
@@ -292,6 +293,9 @@ function PathwayDiagram({ geneStates, fluxState, interventions, onToggle }) {
     const variant = getVariant(nodeId);
     const { width, height, rx } = nodeConfig.metabolite;
     
+    // Format flux as percentage of input
+    const fluxPercent = Math.round(flux * 100);
+    
     return (
       <g>
         <rect
@@ -302,11 +306,16 @@ function PathwayDiagram({ geneStates, fluxState, interventions, onToggle }) {
           rx={rx}
           className={`${styles.metaboliteRect} ${styles[variant] || ''}`}
         />
-        <text x={pos.x} y={pos.y - 2} className={styles.metaboliteText}>
+        <text x={pos.x} y={pos.y + 4} className={styles.metaboliteText}>
           {meta.name}
         </text>
-        <text x={pos.x} y={pos.y + 14} className={styles.fluxText}>
-          {flux.toFixed(3)}
+        {/* Flux percentage on the right side */}
+        <text 
+          x={pos.x + width / 2 + 8} 
+          y={pos.y + 4} 
+          className={styles.fluxPercent}
+        >
+          {fluxPercent}%
         </text>
       </g>
     );
@@ -356,17 +365,6 @@ function PathwayDiagram({ geneStates, fluxState, interventions, onToggle }) {
       {Object.keys(positions).map(nodeId => (
         <MetaboliteNode key={nodeId} nodeId={nodeId} />
       ))}
-
-      {/* Legend */}
-      <g transform={`translate(${viewBoxWidth - 120}, 60)`}>
-        <text x="0" y="0" className={styles.legendTitle}>Chromatin</text>
-        <circle cx="10" cy="18" r="6" fill="#22c55e" />
-        <text x="22" y="22" className={styles.legendText}>Open</text>
-        <circle cx="10" cy="38" r="6" fill="#f97316" />
-        <text x="22" y="42" className={styles.legendText}>Partial</text>
-        <circle cx="10" cy="58" r="6" fill="#ef4444" />
-        <text x="22" y="62" className={styles.legendText}>Closed</text>
-      </g>
     </svg>
   );
 }
@@ -401,32 +399,52 @@ function TriStateToggle({ value, onChange }) {
 }
 
 export function FluxDynamicsPage() {
-  const [interventions, setInterventions] = useState({
-    BAT2: 'normal',
-    ARO10: 'normal',
-    ADH6: 'normal',
-    ATF1: 'normal',
-  });
+  // Get interventions from global store
+  const interventions = useSelectionStore((state) => state.interventions);
+  const setIntervention = useSelectionStore((state) => state.setIntervention);
+  const resetInterventions = useSelectionStore((state) => state.resetInterventions);
 
   const { geneStates, fluxState, baselineFlux } = useFluxSolver(interventions);
 
-  const setIntervention = (gene, state) => {
-    setInterventions(prev => ({ ...prev, [gene]: state }));
-  };
-
   // Legacy toggle for pathway diagram clicks - cycles through states
   const toggleIntervention = (gene) => {
-    setInterventions(prev => {
-      const current = prev[gene];
-      const next = current === 'normal' ? 'activate' : current === 'activate' ? 'repress' : 'normal';
-      return { ...prev, [gene]: next };
-    });
+    const current = interventions[gene];
+    const next = current === 'normal' ? 'activate' : current === 'activate' ? 'repress' : 'normal';
+    setIntervention(gene, next);
   };
 
   const captureRate = fluxState.nodeFlux.iamac / (fluxState.nodeFlux.iamac + fluxState.nodeFlux.waste);
   const foldChange = fluxState.nodeFlux.iamac / baselineFlux.nodeFlux.iamac;
+  
+  // Flux to product as % of input (leucine = 1.0)
+  const fluxToProduct = (fluxState.nodeFlux.iamac || 0) * 100;
+
+  // Spring animate the capture rate for smooth bar transitions
+  const springCapture = useSpring(captureRate * 100, { stiffness: 120, damping: 20 });
+  useEffect(() => {
+    springCapture.set(captureRate * 100);
+  }, [captureRate, springCapture]);
+  
+  // Spring animate flux to product
+  const springFluxProduct = useSpring(fluxToProduct, { stiffness: 120, damping: 20 });
+  useEffect(() => {
+    springFluxProduct.set(fluxToProduct);
+  }, [fluxToProduct, springFluxProduct]);
+  
+  // Transform spring values to CSS width strings
+  const captureWidth = useTransform(springCapture, v => `${v}%`);
+  const fluxProductWidth = useTransform(springFluxProduct, v => `${v}%`);
 
   const genes = ['BAT2', 'ARO10', 'ADH6', 'ATF1'];
+
+  // Calculate bottleneck gene (lowest chromatin)
+  const bottleneckGene = genes.reduce((minGene, gene) => {
+    if (!minGene) return gene;
+    return geneStates[gene].chromatin < geneStates[minGene].chromatin ? gene : minGene;
+  }, null);
+
+  // Check if any interventions are active
+  const hasActiveInterventions = genes.some(g => interventions[g] !== 'normal');
 
   return (
     <div className={styles.container}>
@@ -445,9 +463,20 @@ export function FluxDynamicsPage() {
           {/* Interventions */}
           <div className={styles.card}>
             <div className={styles.cardHeader}>
-              <span className={styles.cardTitle}>Interventions</span>
+              <span className={styles.cardTitle}>CRISPR Interventions</span>
+              <button 
+                className={styles.resetBtn} 
+                onClick={resetInterventions}
+                style={{ visibility: hasActiveInterventions ? 'visible' : 'hidden' }}
+              >
+                Reset
+              </button>
             </div>
             <div className={styles.cardContent}>
+              <p className={styles.cardDescription}>
+                Simulate dCas9-VPR activation (+) or dCas9-KRAB repression (−) 
+                to modify chromatin accessibility and redirect metabolic flux.
+              </p>
               <div className={styles.interventionList}>
                 {genes.map(gene => {
                   const state = interventions[gene];
@@ -469,12 +498,17 @@ export function FluxDynamicsPage() {
                           {gene}
                         </span>
                         <span className={styles.interventionMeta}>
-                          {Math.round(baseline * 100)}% → {Math.round(currentChromatin * 100)}%
-                          {state !== 'normal' && (
-                            <span style={{ color: delta > 0 ? '#22c55e' : '#ef4444', marginLeft: 4 }}>
-                              ({deltaSign}{delta}%)
-                            </span>
-                          )}
+                          {state === 'normal' 
+                            ? `${Math.round(baseline * 100)}% accessible`
+                            : (
+                              <>
+                                {Math.round(baseline * 100)}% → {Math.round(currentChromatin * 100)}%
+                                <span style={{ color: delta > 0 ? '#22c55e' : '#ef4444', marginLeft: 4 }}>
+                                  ({deltaSign}{delta}%)
+                                </span>
+                              </>
+                            )
+                          }
                         </span>
                       </div>
                       <TriStateToggle 
@@ -517,25 +551,42 @@ export function FluxDynamicsPage() {
 
               <div className={styles.captureSection}>
                 <div className={styles.captureHeader}>
-                  <span>Product vs Waste</span>
-                  <span>{(fluxState.nodeFlux.iamac || 0).toFixed(3)} : {(fluxState.nodeFlux.waste || 0).toFixed(3)}</span>
+                  <span>Product Capture</span>
+                  <span>{Math.round(captureRate * 100)}%</span>
                 </div>
                 <div className={styles.captureBar}>
-                  <div 
+                  <motion.div 
                     className={styles.captureProduct}
-                    style={{ width: `${captureRate * 100}%` }}
+                    style={{ width: captureWidth }}
                   />
-                  <div 
-                    className={styles.captureWaste}
-                    style={{ width: `${(1 - captureRate) * 100}%` }}
+                </div>
+                <div className={styles.captureLabels}>
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              <div className={styles.captureSection}>
+                <div className={styles.captureHeader}>
+                  <span>Flux to Product</span>
+                  <span>{Math.round(fluxToProduct)}%</span>
+                </div>
+                <div className={styles.captureBar}>
+                  <motion.div 
+                    className={styles.fluxProductBar}
+                    style={{ width: fluxProductWidth }}
                   />
+                </div>
+                <div className={styles.captureLabels}>
+                  <span>0%</span>
+                  <span>100%</span>
                 </div>
               </div>
             </div>
             <div className={`${styles.insightBanner} ${interventions.ATF1 === 'activate' ? styles.success : ''}`}>
               {interventions.ATF1 === 'activate'
                 ? '✓ ATF1 activation redirects flux to product'
-                : '⚠ ATF1 is the bottleneck — most flux lost to waste'}
+                : `⚠ ${bottleneckGene} is the bottleneck — ${Math.round(geneStates[bottleneckGene].chromatin * 100)}% chromatin accessibility`}
             </div>
           </div>
         </div>

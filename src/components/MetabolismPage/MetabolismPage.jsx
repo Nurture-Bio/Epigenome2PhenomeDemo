@@ -45,11 +45,11 @@ export function MetabolismPage() {
         <Card>
           <CardHeader>Model</CardHeader>
           <CardContent>
-            <div className="px-3 py-2 bg-green-500/10 rounded-md mb-3 text-[11px] text-green-500">yeast-GEM.xml</div>
+            <div className="px-3 py-2 bg-green-500/10 rounded-md mb-3 type-sm text-green-500">yeast-GEM.xml</div>
             <DataRow label="Reactions" value="4,131" valueClassName="mono" style={{ padding: '6px 0' }} />
             <DataRow label="Metabolites" value="2,806" valueClassName="mono" style={{ padding: '6px 0' }} />
             <DataRow label="Genes" value="1,161" valueClassName="mono" style={{ padding: '6px 0' }} />
-            <div className="mt-3 px-3 py-2 bg-black/30 rounded-md text-[11px] text-slate-500 text-center">
+            <div className="mt-3 px-3 py-2 bg-black/30 rounded-md type-sm text-slate-500 text-center">
               Growth: <span className="mono text-green-500">{getGrowthRate()} h⁻¹</span>
             </div>
           </CardContent>
@@ -60,7 +60,7 @@ export function MetabolismPage() {
           <CardHeader>Thermodynamics</CardHeader>
           <CardContent>
             <div className={cn(
-              'px-3 py-2 rounded-md mb-3 text-[11px] transition-all duration-300',
+              'px-3 py-2 rounded-md mb-3 type-sm transition-all duration-300',
               isRecalculating ? 'bg-orange-400/15 text-orange-400' : 'bg-violet-400/10 text-violet-400'
             )}>
               {isRecalculating ? '⟳ Recalculating...' : '4,131 reactions loaded'}
@@ -104,13 +104,13 @@ export function MetabolismPage() {
       <Card className="flex flex-col overflow-hidden">
         <CardHeader>
           <span>Reactions</span>
-          <span className="text-[10px] transition-colors duration-300"
+          <span className="type-caption transition-colors duration-300"
             style={{ color: anaerobic ? '#fb923c' : glucoseLevel < 10 ? '#fb923c' : '#64748b' }}>
             {anaerobic ? '847 reactions affected' : glucoseLevel < 10 ? 'glucose-limited' : '4,131 total'}
           </span>
         </CardHeader>
 
-        <div className="grid grid-cols-[70px_55px_40px_80px_1fr] px-4 py-2 border-b border-white/[0.06] text-[10px] font-semibold text-slate-500 tracking-[0.5px]">
+        <div className="grid grid-cols-[70px_55px_40px_80px_1fr] px-4 py-2 border-b border-white/[0.06] type-label mb-0 tracking-[0.5px]">
           <div>FLUX</div><div>ΔG°</div><div>LOC</div><div>ID</div><div>NAME</div>
         </div>
 
@@ -134,7 +134,7 @@ export function MetabolismPage() {
                 selected={isSelected}
                 onClick={() => selectReaction(rxn.id)}
                 className={cn(
-                  'grid grid-cols-[70px_55px_40px_80px_1fr] px-4 py-2.5 border-b border-white/[0.03] border-l-2 border-l-transparent text-[11px] rounded',
+                  'grid grid-cols-[70px_55px_40px_80px_1fr] px-4 py-2.5 border-b border-white/[0.03] border-l-2 border-l-transparent type-sm rounded',
                   'transition-[background,border-left-color] duration-400',
                   isBlocked && 'bg-red-500/10 !border-l-red-500',
                   isReduced && 'bg-orange-400/[0.08] !border-l-orange-400',
@@ -218,29 +218,29 @@ function ReactionDetails({ rxn, rxnId, anaerobic, glucoseLevel }) {
           {isLimited && <Badge variant="limited">LIMITED</Badge>}
           {isIncreased && <Badge variant="increased">INCREASED</Badge>}
         </div>
-        <div className="text-[13px] text-slate-200 mb-2">{rxn.name}</div>
-        <div className="text-[11px] text-slate-500">
+        <div className="type-body mb-2">{rxn.name}</div>
+        <div className="type-sm text-slate-500">
           Compartment: <span className={isMito ? 'text-violet-400' : 'text-green-500'}>{rxn.compartment}</span>
         </div>
       </div>
 
       <div className="p-4 bg-black/30 rounded-lg mb-4">
-        <div className="mono text-[11px] text-slate-400 leading-relaxed">
+        <div className="type-mono text-slate-400 leading-relaxed">
           {rxn.substrates.join(' + ')} → {rxn.products.join(' + ')}
         </div>
       </div>
 
       <div className="mb-4">
-        <div className="text-[11px] text-slate-500 mb-1">Thermodynamics</div>
+        <div className="type-sm text-slate-500 mb-1">Thermodynamics</div>
         <div className={cn('p-4 rounded-lg border border-white/10 mb-4', thermoBoxVariant)}>
           <div className="text-2xl mb-1" style={{ color: dGColor }}>
             <span className="mono">{rxn.dG.toFixed(1)}</span>
             <span className="text-xs ml-1">kJ/mol</span>
           </div>
-          <div className="text-[11px] text-slate-500 mb-2">ΔG°′ ± {rxn.uncertainty.toFixed(1)}</div>
-          <span className="px-2 py-1 bg-white/10 rounded text-[10px] font-medium" style={{ color: dGColor }}>{dGLabel}</span>
+          <div className="type-sm text-slate-500 mb-2">ΔG°′ ± {rxn.uncertainty.toFixed(1)}</div>
+          <span className="px-2 py-1 bg-white/10 rounded type-caption font-semibold" style={{ color: dGColor }}>{dGLabel}</span>
           {rxn.method !== 'standard' && (
-            <div className="text-[9px] text-slate-500 mt-2">
+            <div className="type-badge text-slate-500 mt-2">
               Method: {rxn.method === 'multicompartmental' ? 'Multicompartmental (PMF)' : 'Redox carrier'}
             </div>
           )}
@@ -249,21 +249,21 @@ function ReactionDetails({ rxn, rxnId, anaerobic, glucoseLevel }) {
 
       <div className="grid grid-cols-2 gap-3 mb-4">
         <div>
-          <div className="text-[9px] text-slate-500 mb-1.5 tracking-[0.5px]">SUBSTRATES</div>
+          <div className="type-badge text-slate-500 mb-1.5 tracking-[0.5px]">SUBSTRATES</div>
           {rxn.substrates.map((s, i) => (
-            <div key={i} className="text-[11px] text-slate-400 mb-1">{s}</div>
+            <div key={i} className="type-sm mb-1">{s}</div>
           ))}
         </div>
         <div>
-          <div className="text-[9px] text-slate-500 mb-1.5 tracking-[0.5px]">PRODUCTS</div>
+          <div className="type-badge text-slate-500 mb-1.5 tracking-[0.5px]">PRODUCTS</div>
           {rxn.products.map((p, i) => (
-            <div key={i} className="text-[11px] text-slate-400 mb-1">{p}</div>
+            <div key={i} className="type-sm mb-1">{p}</div>
           ))}
         </div>
       </div>
 
-      <DataRow label="Subsystem" value={<span className="text-[11px] text-slate-400">{rxn.subsystem}</span>} style={{ padding: '6px 0' }} />
-      <DataRow label="EC" value={<span className="mono text-[11px] text-slate-400">{rxn.ec}</span>} style={{ padding: '6px 0' }} />
+      <DataRow label="Subsystem" value={<span className="type-sm">{rxn.subsystem}</span>} style={{ padding: '6px 0' }} />
+      <DataRow label="EC" value={<span className="type-mono text-slate-400">{rxn.ec}</span>} style={{ padding: '6px 0' }} />
     </>
   );
 }

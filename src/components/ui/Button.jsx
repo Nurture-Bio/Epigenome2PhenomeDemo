@@ -11,7 +11,7 @@ export function Button({ children, variant = 'primary', className, ...props }) {
   return (
     <button
       className={cn(
-        'px-4 py-2 rounded-md text-xs font-medium cursor-pointer transition-all',
+        'px-4 py-2 rounded-md text-xs font-semibold cursor-pointer transition-all',
         buttonVariants[variant],
         className
       )}
@@ -28,7 +28,7 @@ export function Select({ children, className, ...props }) {
     <select
       className={cn(
         'w-full px-3 py-2 bg-slate-800 border border-white/10 rounded-md',
-        'text-slate-200 text-[13px] cursor-pointer',
+        'type-title cursor-pointer',
         'focus:outline-none focus:border-green-500/50',
         className
       )}

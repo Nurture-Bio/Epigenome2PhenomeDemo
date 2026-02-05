@@ -13,7 +13,7 @@ export function Badge({ children, variant = 'muted', className, ...props }) {
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2 py-0.5 rounded text-[9px] font-semibold border',
+        'inline-flex items-center px-2 py-0.5 rounded type-badge border',
         variants[variant],
         className
       )}

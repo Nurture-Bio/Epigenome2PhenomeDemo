@@ -3,9 +3,9 @@ import { cn } from '../../lib/utils';
 // DataRow: flex justify-between, py-2 (8px), border-b white/0.04, text-[13px]
 export function DataRow({ label, value, className, valueClassName, style }) {
   return (
-    <div className={cn('flex justify-between py-1.5 border-b border-white/[0.04] last:border-b-0 text-[13px]', className)} style={style}>
+    <div className={cn('flex justify-between py-1.5 border-b border-white/[0.04] last:border-b-0 type-body', className)} style={style}>
       <span className="text-slate-500">{label}</span>
-      <span className={cn('text-slate-200 font-medium', valueClassName)}>{value}</span>
+      <span className={cn('text-slate-200 font-semibold', valueClassName)}>{value}</span>
     </div>
   );
 }
@@ -25,7 +25,7 @@ export function Badge({ variant, className, children }) {
     keyGene: 'bg-yellow-500/20 border border-yellow-500/30 text-yellow-500',
   };
   return (
-    <span className={cn('px-2 py-0.5 rounded text-[9px] font-semibold', variants[variant], className)}>
+    <span className={cn('px-2 py-0.5 rounded type-badge', variants[variant], className)}>
       {children}
     </span>
   );
@@ -39,7 +39,7 @@ export function Button({ variant = 'primary', className, children, ...props }) {
     ghost: 'bg-transparent text-slate-400 hover:text-slate-200',
   };
   return (
-    <button className={cn('px-4 py-2.5 rounded-md text-xs font-medium cursor-pointer transition-all', variants[variant], className)} {...props}>
+    <button className={cn('px-4 py-2.5 rounded-md text-xs font-semibold cursor-pointer transition-all', variants[variant], className)} {...props}>
       {children}
     </button>
   );
@@ -90,8 +90,8 @@ export function InfoBox({ variant = 'blue', className, children }) {
 export function EmptyState({ title, children, className }) {
   return (
     <div className={cn('flex flex-col items-center justify-center h-full p-8 text-center', className)}>
-      {title && <div className="text-sm text-slate-300 mb-1.5">{title}</div>}
-      <div className="text-[13px] text-slate-500 max-w-[260px] leading-relaxed">{children}</div>
+      {title && <div className="type-body text-slate-300 mb-1.5">{title}</div>}
+      <div className="type-body text-slate-500 max-w-[260px] leading-relaxed">{children}</div>
     </div>
   );
 }

@@ -3,10 +3,10 @@ import { cn } from '../../lib/utils';
 // DataRow - replaces .dataRow pattern (found many times)
 export function DataRow({ label, value, className, mono = false, valueColor }) {
   return (
-    <div className={cn('flex justify-between py-1.5 text-[11px]', className)}>
+    <div className={cn('flex justify-between py-1.5 type-sm', className)}>
       <span className="text-slate-500">{label}</span>
       <span
-        className={cn('font-medium', mono && 'font-mono', valueColor || 'text-slate-200')}
+        className={cn('font-semibold', mono && 'font-mono', valueColor || 'text-slate-200')}
       >
         {value}
       </span>
@@ -32,13 +32,13 @@ export function InfoBox({ label, icon, children, variant = 'blue', className }) 
   return (
     <div className={cn('p-4 rounded-lg border', variants[variant], className)}>
       {label && (
-        <div className={cn('text-[10px] font-semibold uppercase tracking-wider mb-2', labelColors[variant])}>
+        <div className={cn('type-label mb-2', labelColors[variant])}>
           {label}
         </div>
       )}
       <div className="flex gap-3">
         {icon && <span className="text-lg shrink-0">{icon}</span>}
-        <div className="text-[13px] text-slate-200 leading-relaxed">{children}</div>
+        <div className="type-body leading-relaxed">{children}</div>
       </div>
     </div>
   );

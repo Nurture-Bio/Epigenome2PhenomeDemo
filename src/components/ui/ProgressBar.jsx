@@ -20,7 +20,7 @@ export function ProgressBar({ value, max = 100, color = 'green', className, show
         />
       </div>
       {showLabel && (
-        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-semibold">
+        <span className="absolute right-2 top-1/2 -translate-y-1/2 type-badge">
           {label || `${Math.round(percent)}%`}
         </span>
       )}
@@ -33,11 +33,11 @@ export function ComparisonBar({ gene, value, unit = '%', isBottleneck = false, r
   return (
     <div className="mb-3">
       <div className="flex justify-between items-center mb-1">
-        <span className="text-[11px]">
+        <span className="type-sm">
           <span className={cn('font-mono', isBottleneck && 'text-red-400')}>{gene}</span>
           {role && <span className="text-slate-500 ml-1">({role})</span>}
         </span>
-        <span className={cn('font-mono text-[11px]', isBottleneck ? 'text-red-500' : 'text-green-500')}>
+        <span className={cn('font-mono type-sm', isBottleneck ? 'text-red-500' : 'text-green-500')}>
           {value}{unit}
         </span>
       </div>
@@ -52,7 +52,7 @@ export function ComparisonBar({ gene, value, unit = '%', isBottleneck = false, r
           style={{ width: `${Math.min(value, 100)}%` }}
         />
         {isBottleneck && (
-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-semibold text-red-300">
+          <span className="absolute right-2 top-1/2 -translate-y-1/2 type-badge text-red-300">
             BOTTLENECK
           </span>
         )}

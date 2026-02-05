@@ -12,7 +12,7 @@ export function Card({ className, children, ...props }) {
 // PanelHeader: px-5 py-4 (16px 20px), 11px, semibold, tracking 1.5px, slate-500, uppercase
 export function CardHeader({ className, children }) {
   return (
-    <div className={cn('px-5 py-4 border-b border-white/[0.06] text-[11px] font-semibold tracking-[1.5px] text-slate-500 uppercase flex items-center justify-between', className)}>
+    <div className={cn('px-5 py-4 border-b border-white/[0.06] type-label mb-0 tracking-[1.5px] flex items-center justify-between', className)}>
       {children}
     </div>
   );

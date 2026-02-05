@@ -240,7 +240,7 @@ export function SimulationPage() {
             <span>CRISPR Interventions</span>
             <button
               onClick={resetInterventions}
-              className="text-[10px] font-medium text-slate-400 bg-white/[0.06] border border-white/10 rounded px-2.5 py-1 cursor-pointer transition-all hover:bg-white/10 hover:text-slate-200 hover:border-white/20"
+              className="type-caption font-semibold text-slate-400 bg-white/[0.06] border border-white/10 rounded px-2.5 py-1 cursor-pointer transition-all hover:bg-white/10 hover:text-slate-200 hover:border-white/20"
               style={{ visibility: hasActiveInterventions ? 'visible' : 'hidden' }}
             >Reset</button>
           </CardHeader>
@@ -264,12 +264,12 @@ export function SimulationPage() {
                     )}
                   >
                     <div className="flex items-center gap-4">
-                      <span className="text-[15px] font-semibold min-w-[55px] transition-colors" style={{ color: getChromatinColor(currentChromatin) }}>{gene}</span>
-                      <span className="text-[13px] text-slate-500">
+                      <span className="type-gene min-w-[55px] transition-colors" style={{ color: getChromatinColor(currentChromatin) }}>{gene}</span>
+                      <span className="type-body text-slate-500">
                         {state === 'normal'
                           ? `${Math.round(baseline * 100)}% accessible`
                           : <>{Math.round(baseline * 100)}% → {Math.round(currentChromatin * 100)}%
-                              <span className="ml-1 font-medium" style={{ color: delta > 0 ? '#22c55e' : '#ef4444' }}>({deltaSign}{delta}%)</span>
+                              <span className="ml-1 font-semibold" style={{ color: delta > 0 ? '#22c55e' : '#ef4444' }}>({deltaSign}{delta}%)</span>
                             </>
                         }
                       </span>
@@ -288,14 +288,14 @@ export function SimulationPage() {
           <div className="p-5">
             <div className="grid grid-cols-2 gap-2">
               <div className="p-3 bg-black/25 rounded-lg text-center">
-                <div className="text-[9px] text-slate-500 uppercase tracking-[0.5px] mb-1">Capture Rate</div>
-                <div className="text-[28px] font-semibold mono leading-none transition-colors" style={{ color: getChromatinColor(geneStates.ATF1.chromatin) }}>
+                <div className="type-label mb-1">Capture Rate</div>
+                <div className="type-metric transition-colors" style={{ color: getChromatinColor(geneStates.ATF1.chromatin) }}>
                   {Math.round(captureRate * 100)}%
                 </div>
               </div>
               <div className="p-3 bg-black/25 rounded-lg text-center">
-                <div className="text-[9px] text-slate-500 uppercase tracking-[0.5px] mb-1">vs Baseline</div>
-                <div className="text-[28px] font-semibold mono leading-none transition-colors" style={{ color: foldChange > 1.1 ? '#22c55e' : '#64748b' }}>
+                <div className="type-label mb-1">vs Baseline</div>
+                <div className="type-metric transition-colors" style={{ color: foldChange > 1.1 ? '#22c55e' : '#64748b' }}>
                   {foldChange.toFixed(1)}×
                 </div>
               </div>
@@ -307,13 +307,13 @@ export function SimulationPage() {
               { label: 'Flux to Product', value: Math.round(fluxToProduct), width: fluxProductWidth, gradient: 'bg-gradient-to-r from-blue-500 to-violet-500' },
             ].map(bar => (
               <div key={bar.label} className="mt-2.5">
-                <div className="flex justify-between mb-1.5 text-[9px] text-slate-500 uppercase tracking-[0.5px]">
+                <div className="flex justify-between mb-1.5 type-label mb-0 pb-1.5">
                   <span>{bar.label}</span><span>{bar.value}%</span>
                 </div>
                 <div className="h-3 bg-black/30 rounded-md overflow-hidden">
                   <motion.div className={cn('h-full rounded-md', bar.gradient)} style={{ width: bar.width }} />
                 </div>
-                <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+                <div className="flex justify-between type-caption mt-1">
                   <span>0%</span><span>100%</span>
                 </div>
               </div>
@@ -321,7 +321,7 @@ export function SimulationPage() {
           </div>
           {/* Insight banner */}
           <div className={cn(
-            'py-2.5 px-3.5 text-[11px] text-center border-t border-white/[0.04]',
+            'py-2.5 px-3.5 type-sm text-center border-t border-white/[0.04]',
             interventions.ATF1 === 'activate'
               ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-300'
               : 'bg-gradient-to-r from-blue-500/[0.08] to-violet-500/[0.08] text-slate-400'

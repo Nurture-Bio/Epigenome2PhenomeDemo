@@ -54,7 +54,7 @@ export function FlavorSearchPage() {
             {/* Suggestions */}
             {!query && (
               <div className="mt-4">
-                <div className="text-[11px] text-slate-500 uppercase tracking-[1px] mb-2.5">Try searching for:</div>
+                <div className="type-label mb-2.5">Try searching for:</div>
                 <div className="flex flex-wrap gap-2">
                   {suggestedSearches.map(s => (
                     <button
@@ -134,15 +134,15 @@ export function FlavorSearchPage() {
                 <div className="flex items-center gap-3 mb-1.5">
                   <div className="text-[10px] text-slate-500 min-w-[20px]">#{idx + 1}</div>
                   <div className="flex items-baseline gap-2 flex-1">
-                    <span className="mono text-[15px] font-semibold text-green-500">{gene.gene_name || gene.gene_id}</span>
-                    <span className="mono text-[11px] text-slate-500">{gene.gene_name ? gene.gene_id : ''}</span>
+                    <span className="type-gene text-green-500">{gene.gene_name || gene.gene_id}</span>
+                    <span className="type-mono text-slate-500">{gene.gene_name ? gene.gene_id : ''}</span>
                   </div>
                   {gene.highlight && (
                     <span className="text-[10px] px-2 py-0.5 bg-yellow-500/20 border border-yellow-500/30 rounded text-yellow-500">⭐ Key Gene</span>
                   )}
                 </div>
                 {gene.full_name && (
-                  <div className="text-[11px] text-slate-400 mb-2.5 ml-8">{gene.full_name}</div>
+                  <div className="type-sm mb-2.5 ml-8">{gene.full_name}</div>
                 )}
                 <div className="flex flex-wrap gap-1.5 ml-8">
                   {gene.matchingCompounds.slice(0, 3).map(c => (
@@ -171,7 +171,7 @@ export function FlavorSearchPage() {
           <div className="p-4 overflow-y-auto flex-1">
             {/* Header */}
             <div className="mb-4 pb-3 border-b border-white/[0.06]">
-              <div className="mono text-xl font-semibold text-green-500">{selectedGeneData.gene_name || selectedGeneData.gene_id}</div>
+              <div className="type-gene text-xl text-green-500">{selectedGeneData.gene_name || selectedGeneData.gene_id}</div>
               {selectedGeneData.gene_name && <div className="mono text-xs text-slate-500 mt-0.5">{selectedGeneData.gene_id}</div>}
               {selectedGeneData.full_name && <div className="text-xs text-slate-400 mt-1.5">{selectedGeneData.full_name}</div>}
             </div>
@@ -186,13 +186,13 @@ export function FlavorSearchPage() {
 
             {/* Compounds */}
             <div className="mb-5">
-              <div className="text-[10px] font-semibold uppercase tracking-[1px] text-slate-500 mb-2.5">
+              <div className="type-label mb-2.5">
                 Compounds Produced ({selectedGeneData.compounds.length})
               </div>
               <div className="flex flex-col gap-3">
                 {selectedGeneData.compounds.map(c => (
                   <div key={c.page_id} className="py-2.5 px-3 bg-black/20 rounded-md">
-                    <div className="text-[13px] font-medium text-slate-200 mb-1">{c.name}</div>
+                    <div className="type-title mb-1">{c.name}</div>
                     {c.note && <div className="text-[10px] text-green-500 italic mb-1.5">{c.note}</div>}
                     {c.odor?.length > 0 && (
                       <div className="flex gap-2 text-[11px] mt-1">
@@ -227,7 +227,7 @@ export function FlavorSearchPage() {
 
             {/* All Descriptors */}
             <div className="mb-5">
-              <div className="text-[10px] font-semibold uppercase tracking-[1px] text-slate-500 mb-2.5">All Descriptors</div>
+              <div className="type-label mb-2.5">All Descriptors</div>
               <div className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1.5">
                   <span className="text-[10px] text-slate-500">Odors</span>

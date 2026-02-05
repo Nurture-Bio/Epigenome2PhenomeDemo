@@ -5,11 +5,10 @@
   --header-height: 81px;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* NOTE: Do NOT add a * { margin: 0; padding: 0 } reset here.
+   Tailwind v4 preflight already does this inside @layer base.
+   Unlayered CSS beats @layer utilities, which would break
+   every padding/margin utility class in the app. */
 
 body {
   font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -76,6 +75,24 @@ body {
 
 .glow {
   filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+}
+
+/* Page header/content fade animations */
+@keyframes pageHeaderFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pageContentFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
 /* Selection styling */

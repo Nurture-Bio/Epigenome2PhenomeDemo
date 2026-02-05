@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Global Reset & Base Styles */
+:root {
+  --header-height: 81px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: linear-gradient(145deg, #0a0a0f 0%, #0f1419 50%, #0a0f14 100%);
+  color: #e2e8f0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Monospace utility */
+.mono {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes flow {
+  0% { stroke-dashoffset: 20; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes flowPulse {
+  0%, 100% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}
+
+@keyframes flowDown {
+  from { stroke-dashoffset: 20; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Animation utility classes */
+.flowing-line {
+  stroke-dasharray: 5, 5;
+  animation: flow 1s linear infinite;
+}
+
+.flow-animate {
+  animation: flowPulse 0.8s linear infinite;
+}
+
+.flow-animate-fast {
+  animation: flowPulse 0.3s linear infinite;
+}
+
+.flow-animate-slow {
+  animation: flowPulse 2s linear infinite;
+}
+
+.particle {
+  filter: drop-shadow(0 0 4px rgba(250, 204, 21, 0.8));
+}
+
+.glow {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(59, 130, 246, 0.3);
+  color: #fff;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.15);
+}

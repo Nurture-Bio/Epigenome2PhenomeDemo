@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styles from './App.module.css';
 import {
     FlavorSearchPage,
     GeneTopologyPage,
@@ -9,7 +8,6 @@ import {
     PageHeader,
     SimulationPage,
 } from './components';
-import sharedStyles from './styles/shared.module.css';
 
 const pages = [
   {
@@ -41,15 +39,14 @@ const pages = [
 
 function App() {
   const [activePage, setActivePage] = useState(0);
-
   const { component: ActivePage, title, subtitle } = pages[activePage];
 
   return (
-    <div className={styles.app}>
+    <div className="min-h-screen overflow-hidden">
       <Navigation activePage={activePage} setActivePage={setActivePage} />
-      <main className={styles.content} key={activePage}>
+      <main className="grid grid-rows-[auto_1fr] gap-6 px-10 py-6 h-[calc(100vh-81px)] overflow-hidden" key={activePage}>
         <PageHeader title={title} subtitle={subtitle} />
-        <div className={sharedStyles.pageContent}>
+        <div className="overflow-auto min-h-0 animate-[pageContentFadeIn_0.4s_ease-out_0.1s_both]">
           <ActivePage />
         </div>
       </main>

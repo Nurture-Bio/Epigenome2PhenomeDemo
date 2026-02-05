@@ -1,6 +1,9 @@
 """
-Run this from a directory that has a .env file with
-ANTHROPIC_API_KEY=sk-ant***
+Run this from a directory that has a .env file with:
+ANTHROPIC_API_KEY=sk-ant-...
+
+pip install python-dotenv requests
+python call_convergence.py
 """
 
 import json

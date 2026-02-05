@@ -3,127 +3,61 @@ import { useEffect } from 'react';
 import { baselineChromatin, metabolites, pathwayEdges } from '../../data';
 import { getChromatinColor, useFluxSolver, usePathwayLayout } from '../../hooks';
 import { useSelectionStore } from '../../stores';
-import sharedStyles from '../../styles/shared.module.css';
-import styles from './SimulationPage.module.css';
+import { cn } from '../../lib/utils';
+import { Card, CardHeader, PlotSurface } from '../ui';
+import './SimulationPage.css';
 
 // Inline enzyme pill with spring-animated bar
 function InlineEnzyme({ gene, x, y, chromatin = 0.5, interventions = {}, nodeConfig, chromatinBarConfig, onToggle, isBottleneck }) {
-  // Spring animate the chromatin value
   const springChromatin = useSpring(chromatin, { stiffness: 180, damping: 12 });
+  useEffect(() => { springChromatin.set(chromatin); }, [chromatin, springChromatin]);
   
-  // Update spring target when chromatin prop changes
-  useEffect(() => {
-    springChromatin.set(chromatin);
-  }, [chromatin, springChromatin]);
-  
-  // Color always reflects chromatin state
   const color = getChromatinColor(chromatin);
   const isActive = gene && interventions[gene] && interventions[gene] !== 'normal';
   const { width, height, rx } = nodeConfig?.enzyme || { width: 72, height: 28, rx: 14 };
   const barWidth = chromatinBarConfig?.width || 54;
   const barHeight = chromatinBarConfig?.height || 6;
   
-  // Derived values from spring
   const barFillWidth = useTransform(springChromatin, v => barWidth * v);
   const glowOpacity = useTransform(springChromatin, v => Math.min(0.6, v * 0.8));
   const glowSize = useTransform(springChromatin, v => 4 + v * 8);
   const glowFilter = useTransform(glowSize, s => `drop-shadow(0 0 ${s}px ${color})`);
   
-  // Early return AFTER all hooks
   if (!gene || gene === 'EXPORT') return null;
   
   return (
-    <g 
-      className={styles.enzymeInline} 
-      onClick={(e) => { e.stopPropagation(); onToggle(gene); }}
-      style={{ cursor: 'pointer' }}
-    >
-      {/* Bottleneck indicator - separate red outer ring */}
+    <g className="enzymeInline" onClick={(e) => { e.stopPropagation(); onToggle(gene); }} style={{ cursor: 'pointer' }}>
       {isBottleneck && (
-        <rect
-          x={x - width / 2 - 6}
-          y={y - height / 2 - 6}
-          width={width + 12}
-          height={height + 12}
-          rx={rx + 6}
-          fill="none"
-          stroke="#ef4444"
-          strokeWidth={2}
-          className={styles.enzymeBottleneckPulse}
-          style={{ filter: 'drop-shadow(0 0 8px rgba(239, 68, 68, 0.6))' }}
-        />
+        <rect x={x - width / 2 - 6} y={y - height / 2 - 6} width={width + 12} height={height + 12} rx={rx + 6}
+          fill="none" stroke="#ef4444" strokeWidth={2} className="enzymeBottleneckPulse"
+          style={{ filter: 'drop-shadow(0 0 8px rgba(239, 68, 68, 0.6))' }} />
       )}
-      
-      {/* Chromatin glow ring */}
-      <motion.rect
-        x={x - width / 2 - 3}
-        y={y - height / 2 - 3}
-        width={width + 6}
-        height={height + 6}
-        rx={rx + 3}
-        fill="none"
-        stroke={color}
-        strokeWidth={2}
-        opacity={glowOpacity}
-        className={chromatin > 0.5 ? styles.enzymeGlowPulse : ''}
-        style={{ filter: glowFilter }}
-      />
-      
-      {/* Pill background */}
-      <rect
-        x={x - width / 2}
-        y={y - height / 2}
-        width={width}
-        height={height}
-        rx={rx}
-        className={`${styles.enzymePill} ${isActive ? styles.enzymeActive : ''}`}
-        style={{ stroke: color, strokeWidth: 1.5 }}
-      />
-      
-      {/* Gene name */}
-      <text x={x} y={y - 2} className={styles.enzymeLabel} style={{ fill: color }}>
-        {gene}
-      </text>
-      
-      {/* Chromatin bar background */}
-      <rect 
-        x={x - barWidth / 2} 
-        y={y + height / 2 - barHeight - 3} 
-        width={barWidth} 
-        height={barHeight} 
-        rx={barHeight / 2} 
-        fill="rgba(255,255,255,0.08)" 
-      />
-      {/* Chromatin bar fill - animated via spring */}
-      <motion.rect 
-        x={x - barWidth / 2} 
-        y={y + height / 2 - barHeight - 3} 
-        width={barFillWidth}
-        height={barHeight} 
-        rx={barHeight / 2} 
-        fill={color}
-      />
+      <motion.rect x={x - width / 2 - 3} y={y - height / 2 - 3} width={width + 6} height={height + 6} rx={rx + 3}
+        fill="none" stroke={color} strokeWidth={2} opacity={glowOpacity}
+        className={chromatin > 0.5 ? 'enzymeGlowPulse' : ''} style={{ filter: glowFilter }} />
+      <rect x={x - width / 2} y={y - height / 2} width={width} height={height} rx={rx}
+        className={`enzymePill ${isActive ? 'enzymeActive' : ''}`} style={{ stroke: color, strokeWidth: 1.5 }} />
+      <text x={x} y={y - 2} className="enzymeLabel" style={{ fill: color }}>{gene}</text>
+      <rect x={x - barWidth / 2} y={y + height / 2 - barHeight - 3} width={barWidth} height={barHeight}
+        rx={barHeight / 2} fill="rgba(255,255,255,0.08)" />
+      <motion.rect x={x - barWidth / 2} y={y + height / 2 - barHeight - 3} width={barFillWidth}
+        height={barHeight} rx={barHeight / 2} fill={color} />
     </g>
   );
 }
 
-// Flow speed helper
-function getFlowClass(chromatin, styles) {
-  if (chromatin > 0.7) return styles.flowFast;
-  if (chromatin > 0.3) return styles.flowMedium;
-  return styles.flowSlow;
+function getFlowClass(chromatin) {
+  if (chromatin > 0.7) return 'flowFast';
+  if (chromatin > 0.3) return 'flowMedium';
+  return 'flowSlow';
 }
 
-// Flow edge with inline enzyme - MUST be outside PathwayDiagram to preserve InlineEnzyme state
 function FlowEdge({ edge, positions, geneStates, interventions, nodeConfig, arrowConfig, chromatinBarConfig, onToggle, fluxState, bottleneckGene }) {
   const fromPos = positions[edge.from];
   const toPos = positions[edge.to];
   if (!fromPos || !toPos) return null;
   
   const chromatin = geneStates[edge.gene]?.chromatin || 0.5;
-  
-  // For EXPORT edge: use inverse of capture rate for color AND animation
-  // High waste = fast/green, low waste = slow/red
   let effectiveRate = chromatin;
   let color;
   if (edge.gene === 'EXPORT' && fluxState) {
@@ -131,7 +65,6 @@ function FlowEdge({ edge, positions, geneStates, interventions, nodeConfig, arro
     const wasteFlux = fluxState.nodeFlux.waste || 0;
     const total = productFlux + wasteFlux;
     const wasteRatio = total > 0 ? wasteFlux / total : 0.5;
-    // wasteRatio is how much goes to waste - this drives EXPORT edge
     effectiveRate = wasteRatio;
     color = getChromatinColor(wasteRatio);
   } else {
@@ -142,187 +75,83 @@ function FlowEdge({ edge, positions, geneStates, interventions, nodeConfig, arro
   const nodeHeight = nodeConfig.metabolite.height;
   const padding = 12;
   
-  // Vertical edge (main path) - straight through enzyme
   if (fromPos.x === toPos.x) {
     const x = fromPos.x;
     const y1 = fromPos.y + nodeHeight / 2 + padding;
     const y2 = toPos.y - nodeHeight / 2 - padding;
     const midY = (y1 + y2) / 2;
-    
     return (
       <g>
-        {/* Background track */}
-        <line
-          x1={x} y1={y1} x2={x} y2={y2}
-          stroke="rgba(255,255,255,0.04)"
-          strokeWidth={thickness + 4}
-          strokeLinecap="round"
-        />
-        {/* Animated flow line */}
-        <line
-          x1={x} y1={y1} x2={x} y2={y2}
-          stroke={color}
-          strokeWidth={thickness}
-          strokeLinecap="round"
-          strokeDasharray={arrowConfig.dashArray}
-          className={getFlowClass(effectiveRate, styles)}
-        />
-        {/* Arrow head */}
-        <polygon
-          points={`${x},${y2 + 6} ${x - 5},${y2} ${x + 5},${y2}`}
-          fill={color}
-        />
-        {/* Inline enzyme - rendered on top of flow */}
-        <InlineEnzyme 
-          gene={edge.gene} 
-          x={x} 
-          y={midY} 
-          chromatin={chromatin}
-          interventions={interventions}
-          nodeConfig={nodeConfig}
-          chromatinBarConfig={chromatinBarConfig}
-          onToggle={onToggle}
-          isBottleneck={edge.gene === bottleneckGene}
-        />
+        <line x1={x} y1={y1} x2={x} y2={y2} stroke="rgba(255,255,255,0.04)" strokeWidth={thickness + 4} strokeLinecap="round" />
+        <line x1={x} y1={y1} x2={x} y2={y2} stroke={color} strokeWidth={thickness} strokeLinecap="round"
+          strokeDasharray={arrowConfig.dashArray} className={getFlowClass(effectiveRate)} />
+        <polygon points={`${x},${y2 + 6} ${x - 5},${y2} ${x + 5},${y2}`} fill={color} />
+        <InlineEnzyme gene={edge.gene} x={x} y={midY} chromatin={chromatin} interventions={interventions}
+          nodeConfig={nodeConfig} chromatinBarConfig={chromatinBarConfig} onToggle={onToggle} isBottleneck={edge.gene === bottleneckGene} />
       </g>
     );
   }
   
-  // Branch edge - L-path: down, horizontal, then down into top of target
   const x1 = fromPos.x;
   const y1 = fromPos.y + nodeHeight / 2 + padding;
   const x2 = toPos.x;
-  const y2 = toPos.y - nodeHeight / 2 - padding; // stop at TOP edge of target
-  const midY = (y1 + y2) / 2; // horizontal segment at midpoint
-  // Use same thickness as main path for consistent look
-  const branchThickness = thickness;
+  const y2 = toPos.y - nodeHeight / 2 - padding;
+  const midY = (y1 + y2) / 2;
   const enzymeMidX = (x1 + x2) / 2;
-  
-  // Arrow head pointing DOWN into the node
-  const arrowHead = `${x2},${y2 + 6} ${x2 - 5},${y2} ${x2 + 5},${y2}`;
-  
   const branchPath = `M ${x1} ${y1} L ${x1} ${midY} L ${x2} ${midY} L ${x2} ${y2}`;
   
   return (
     <g>
-      {/* L-shaped path background */}
-      <path
-        d={branchPath}
-        fill="none"
-        stroke="rgba(255,255,255,0.04)"
-        strokeWidth={branchThickness + 4}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* Animated branch line */}
-      <path
-        d={branchPath}
-        fill="none"
-        stroke={color}
-        strokeWidth={branchThickness}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeDasharray={arrowConfig.dashArray}
-        className={getFlowClass(effectiveRate, styles)}
-      />
-      {/* Arrow head */}
-      <polygon points={arrowHead} fill={color} />
-      {/* Inline enzyme for branch */}
+      <path d={branchPath} fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth={thickness + 4} strokeLinecap="round" strokeLinejoin="round" />
+      <path d={branchPath} fill="none" stroke={color} strokeWidth={thickness} strokeLinecap="round" strokeLinejoin="round"
+        strokeDasharray={arrowConfig.dashArray} className={getFlowClass(effectiveRate)} />
+      <polygon points={`${x2},${y2 + 6} ${x2 - 5},${y2} ${x2 + 5},${y2}`} fill={color} />
       {edge.gene !== 'EXPORT' && (
-        <InlineEnzyme 
-          gene={edge.gene} 
-          x={enzymeMidX} 
-          y={midY}
-          chromatin={chromatin}
-          interventions={interventions}
-          nodeConfig={nodeConfig}
-          chromatinBarConfig={chromatinBarConfig}
-          onToggle={onToggle}
-          isBottleneck={edge.gene === bottleneckGene}
-        />
+        <InlineEnzyme gene={edge.gene} x={enzymeMidX} y={midY} chromatin={chromatin} interventions={interventions}
+          nodeConfig={nodeConfig} chromatinBarConfig={chromatinBarConfig} onToggle={onToggle} isBottleneck={edge.gene === bottleneckGene} />
       )}
     </g>
   );
 }
 
-// SVG Pathway Diagram Component - Data-driven layout
 function PathwayDiagram({ geneStates, fluxState, interventions, onToggle }) {
-  const { 
-    positions, 
-    viewBoxWidth, 
-    viewBoxHeight, 
-    nodeConfig, 
-    arrowConfig, 
-    chromatinBarConfig,
-    edges 
-  } = usePathwayLayout();
-
-  // Calculate bottleneck gene (lowest chromatin among controllable genes)
+  const { positions, viewBoxWidth, viewBoxHeight, nodeConfig, arrowConfig, chromatinBarConfig, edges } = usePathwayLayout();
   const controllableGenes = ['BAT2', 'ARO10', 'ADH6', 'ATF1'];
-  const bottleneckGene = controllableGenes.reduce((minGene, gene) => {
-    if (!minGene) return gene;
-    return geneStates[gene].chromatin < geneStates[minGene].chromatin ? gene : minGene;
-  }, null);
+  const bottleneckGene = controllableGenes.reduce((min, g) => !min || geneStates[g].chromatin < geneStates[min].chromatin ? g : min, null);
 
-  // Get variant class for metabolite
   const getVariant = (nodeId) => {
     const meta = metabolites[nodeId];
     if (meta.type === 'input') return 'input';
     if (meta.type === 'product') return interventions.ATF1 === 'activate' ? 'productActive' : 'product';
     if (meta.type === 'waste') return 'waste';
-    return 'default';
+    return '';
   };
 
-  // Get flux value for a node
   const getFlux = (nodeId) => {
     if (nodeId === 'leu') return 1.0;
     if (fluxState.nodeFlux[nodeId] !== undefined) return fluxState.nodeFlux[nodeId];
-    // Find edge leading to this node
     const edge = pathwayEdges.find(e => e.to === nodeId);
-    if (edge) {
-      return fluxState.edgeFlux[`${edge.from}-${edge.to}`] || 0;
-    }
-    return 0;
+    return edge ? (fluxState.edgeFlux[`${edge.from}-${edge.to}`] || 0) : 0;
   };
 
-  // Metabolite node component
   const MetaboliteNode = ({ nodeId }) => {
     const pos = positions[nodeId];
     const meta = metabolites[nodeId];
     const flux = getFlux(nodeId);
     const variant = getVariant(nodeId);
     const { width, height, rx } = nodeConfig.metabolite;
-    
-    // Format flux as percentage of input
-    const fluxPercent = Math.round(flux * 100);
-    
     return (
       <g>
-        <rect
-          x={pos.x - width / 2}
-          y={pos.y - height / 2}
-          width={width}
-          height={height}
-          rx={rx}
-          className={`${styles.metaboliteRect} ${styles[variant] || ''}`}
-        />
-        <text x={pos.x} y={pos.y + 4} className={styles.metaboliteText}>
-          {meta.name}
-        </text>
-        {/* Flux percentage on the right side */}
-        <text 
-          x={pos.x + width / 2 + 8} 
-          y={pos.y + 4} 
-          className={styles.fluxPercent}
-        >
-          {fluxPercent}%
-        </text>
+        <rect x={pos.x - width / 2} y={pos.y - height / 2} width={width} height={height} rx={rx}
+          className={`metaboliteRect ${variant}`} />
+        <text x={pos.x} y={pos.y + 4} className="metaboliteText">{meta.name}</text>
+        <text x={pos.x + width / 2 + 8} y={pos.y + 4} className="fluxPercent">{Math.round(flux * 100)}%</text>
       </g>
     );
   };
 
   return (
-    <svg viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} className={styles.pathwaySvg}>
+    <svg viewBox={`0 0 ${viewBoxWidth} ${viewBoxHeight}`} className="pathwaySvg">
       <defs>
         <linearGradient id="inputGradient" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="rgba(59, 130, 246, 0.2)" />
@@ -334,79 +163,47 @@ function PathwayDiagram({ geneStates, fluxState, interventions, onToggle }) {
         </linearGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-          <feMerge>
-            <feMergeNode in="coloredBlur"/>
-            <feMergeNode in="SourceGraphic"/>
-          </feMerge>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
       </defs>
-
-      {/* Title */}
-      <text x={viewBoxWidth / 2} y="40" className={styles.diagramTitle}>Ehrlich Pathway</text>
-
-      {/* Render all edges with inline enzymes */}
-      {pathwayEdges.map((edge, i) => (
-        <FlowEdge 
-          key={`${edge.from}-${edge.to}`} 
-          edge={edge}
-          positions={positions}
-          geneStates={geneStates}
-          interventions={interventions}
-          nodeConfig={nodeConfig}
-          arrowConfig={arrowConfig}
-          chromatinBarConfig={chromatinBarConfig}
-          onToggle={onToggle}
-          fluxState={fluxState}
-          bottleneckGene={bottleneckGene}
-        />
+      <text x={viewBoxWidth / 2} y="40" className="diagramTitle">Ehrlich Pathway</text>
+      {pathwayEdges.map((edge) => (
+        <FlowEdge key={`${edge.from}-${edge.to}`} edge={edge} positions={positions} geneStates={geneStates}
+          interventions={interventions} nodeConfig={nodeConfig} arrowConfig={arrowConfig}
+          chromatinBarConfig={chromatinBarConfig} onToggle={onToggle} fluxState={fluxState} bottleneckGene={bottleneckGene} />
       ))}
-
-      {/* Render all metabolite nodes */}
-      {Object.keys(positions).map(nodeId => (
-        <MetaboliteNode key={nodeId} nodeId={nodeId} />
-      ))}
+      {Object.keys(positions).map(nodeId => <MetaboliteNode key={nodeId} nodeId={nodeId} />)}
     </svg>
   );
 }
 
-// 3-position segmented control: repress | normal | activate
 function TriStateToggle({ value, onChange }) {
   return (
-    <div className={styles.triToggle}>
-      <button 
-        className={`${styles.triToggleBtn} ${value === 'repress' ? `${styles.triToggleActive} ${styles.triToggleRepress}` : ''}`}
-        onClick={(e) => { e.stopPropagation(); onChange('repress'); }}
-        title="Repression"
-      >
-        −
-      </button>
-      <button 
-        className={`${styles.triToggleBtn} ${value === 'normal' ? `${styles.triToggleActive} ${styles.triToggleNormal}` : ''}`}
-        onClick={(e) => { e.stopPropagation(); onChange('normal'); }}
-        title="No Intervention"
-      >
-        ○
-      </button>
-      <button 
-        className={`${styles.triToggleBtn} ${value === 'activate' ? `${styles.triToggleActive} ${styles.triToggleActivate}` : ''}`}
-        onClick={(e) => { e.stopPropagation(); onChange('activate'); }}
-        title="Activation"
-      >
-        +
-      </button>
+    <div className="flex gap-0.5 bg-black/30 rounded-md p-0.5">
+      {[
+        { v: 'repress', label: '−', active: 'bg-gradient-to-br from-red-500 to-red-600 shadow-[0_2px_8px_rgba(239,68,68,0.3)]' },
+        { v: 'normal', label: '○', active: 'bg-slate-600' },
+        { v: 'activate', label: '+', active: 'bg-gradient-to-br from-green-500 to-green-600 shadow-[0_2px_8px_rgba(34,197,94,0.3)]' },
+      ].map(({ v, label, active }) => (
+        <button key={v}
+          className={cn(
+            'w-6 h-5 border-none rounded text-xs font-semibold cursor-pointer transition-all flex items-center justify-center',
+            value === v ? `text-white ${active}` : 'bg-transparent text-slate-500 hover:bg-white/[0.08] hover:text-slate-400'
+          )}
+          onClick={(e) => { e.stopPropagation(); onChange(v); }}
+          title={v === 'repress' ? 'Repression' : v === 'activate' ? 'Activation' : 'No Intervention'}
+        >{label}</button>
+      ))}
     </div>
   );
 }
 
 export function SimulationPage() {
-  // Get interventions from global store
   const interventions = useSelectionStore((state) => state.interventions);
   const setIntervention = useSelectionStore((state) => state.setIntervention);
   const resetInterventions = useSelectionStore((state) => state.resetInterventions);
-
   const { geneStates, fluxState, baselineFlux } = useFluxSolver(interventions);
 
-  // Legacy toggle for pathway diagram clicks - cycles through states
   const toggleIntervention = (gene) => {
     const current = interventions[gene];
     const next = current === 'normal' ? 'activate' : current === 'activate' ? 'repress' : 'normal';
@@ -415,181 +212,126 @@ export function SimulationPage() {
 
   const captureRate = fluxState.nodeFlux.iamac / (fluxState.nodeFlux.iamac + fluxState.nodeFlux.waste);
   const foldChange = fluxState.nodeFlux.iamac / baselineFlux.nodeFlux.iamac;
-  
-  // Flux to product as % of input (leucine = 1.0)
   const fluxToProduct = (fluxState.nodeFlux.iamac || 0) * 100;
 
-  // Spring animate the capture rate for smooth bar transitions
   const springCapture = useSpring(captureRate * 100, { stiffness: 120, damping: 20 });
-  useEffect(() => {
-    springCapture.set(captureRate * 100);
-  }, [captureRate, springCapture]);
-  
-  // Spring animate flux to product
+  useEffect(() => { springCapture.set(captureRate * 100); }, [captureRate, springCapture]);
   const springFluxProduct = useSpring(fluxToProduct, { stiffness: 120, damping: 20 });
-  useEffect(() => {
-    springFluxProduct.set(fluxToProduct);
-  }, [fluxToProduct, springFluxProduct]);
-  
-  // Transform spring values to CSS width strings
+  useEffect(() => { springFluxProduct.set(fluxToProduct); }, [fluxToProduct, springFluxProduct]);
   const captureWidth = useTransform(springCapture, v => `${v}%`);
   const fluxProductWidth = useTransform(springFluxProduct, v => `${v}%`);
 
   const genes = ['BAT2', 'ARO10', 'ADH6', 'ATF1'];
-
-  // Calculate bottleneck gene (lowest chromatin)
-  const bottleneckGene = genes.reduce((minGene, gene) => {
-    if (!minGene) return gene;
-    return geneStates[gene].chromatin < geneStates[minGene].chromatin ? gene : minGene;
-  }, null);
-
-  // Check if any interventions are active
+  const bottleneckGene = genes.reduce((min, g) => !min || geneStates[g].chromatin < geneStates[min].chromatin ? g : min, null);
   const hasActiveInterventions = genes.some(g => interventions[g] !== 'normal');
 
   return (
-    <div className={styles.container}>
-        {/* Pathway Visualization */}
-        <div className={`${styles.card} ${styles.pathwayCard}`}>
-          <PathwayDiagram
-            geneStates={geneStates}
-            fluxState={fluxState}
-            interventions={interventions}
-            onToggle={toggleIntervention}
-          />
-        </div>
+    <div className="grid grid-cols-[minmax(400px,500px)_340px] gap-7 h-full justify-center">
+      {/* Pathway Visualization */}
+      <PlotSurface className="p-4">
+        <PathwayDiagram geneStates={geneStates} fluxState={fluxState} interventions={interventions} onToggle={toggleIntervention} />
+      </PlotSurface>
 
-        {/* Control Panel */}
-        <div className={styles.controlStack}>
-          {/* Interventions */}
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <span className={styles.cardTitle}>CRISPR Interventions</span>
-              <button 
-                className={styles.resetBtn} 
-                onClick={resetInterventions}
-                style={{ visibility: hasActiveInterventions ? 'visible' : 'hidden' }}
-              >
-                Reset
-              </button>
-            </div>
-            <div className={styles.cardContent}>
-              <p className={styles.cardDescription}>
-                Simulate activation (+) or repression (−) 
-                to modify chromatin accessibility and redirect metabolic flux.
-              </p>
-              <div className={styles.interventionList}>
-                {genes.map(gene => {
-                  const state = interventions[gene];
-                  const currentChromatin = geneStates[gene].chromatin;
-                  const baseline = baselineChromatin[gene];
-                  const delta = Math.round((currentChromatin - baseline) * 100);
-                  const deltaSign = delta > 0 ? '+' : '';
-                  
-                  return (
-                    <div 
-                      key={gene}
-                      className={`${styles.interventionRow} ${sharedStyles.selectable} ${state !== 'normal' ? styles.active : ''}`}
-                    >
-                      <div className={styles.interventionInfo}>
-                        <span 
-                          className={styles.interventionGene}
-                          style={{ color: getChromatinColor(currentChromatin) }}
-                        >
-                          {gene}
-                        </span>
-                        <span className={styles.interventionMeta}>
-                          {state === 'normal' 
-                            ? `${Math.round(baseline * 100)}% accessible`
-                            : (
-                              <>
-                                {Math.round(baseline * 100)}% → {Math.round(currentChromatin * 100)}%
-                                <span style={{ color: delta > 0 ? '#22c55e' : '#ef4444', marginLeft: 4 }}>
-                                  ({deltaSign}{delta}%)
-                                </span>
-                              </>
-                            )
-                          }
-                        </span>
-                      </div>
-                      <TriStateToggle 
-                        value={state} 
-                        onChange={(newState) => setIntervention(gene, newState)} 
-                      />
+      {/* Control Panel */}
+      <div className="flex flex-col gap-4 h-full">
+        {/* Interventions */}
+        <Card className="flex-1">
+          <CardHeader>
+            <span>CRISPR Interventions</span>
+            <button
+              onClick={resetInterventions}
+              className="text-[10px] font-medium text-slate-400 bg-white/[0.06] border border-white/10 rounded px-2.5 py-1 cursor-pointer transition-all hover:bg-white/10 hover:text-slate-200 hover:border-white/20"
+              style={{ visibility: hasActiveInterventions ? 'visible' : 'hidden' }}
+            >Reset</button>
+          </CardHeader>
+          <div className="p-5">
+            <p className="text-xs text-slate-400 leading-relaxed m-0 mb-3">
+              Simulate activation (+) or repression (−) to modify chromatin accessibility and redirect metabolic flux.
+            </p>
+            <div className="flex flex-col gap-2.5">
+              {genes.map(gene => {
+                const state = interventions[gene];
+                const currentChromatin = geneStates[gene].chromatin;
+                const baseline = baselineChromatin[gene];
+                const delta = Math.round((currentChromatin - baseline) * 100);
+                const deltaSign = delta > 0 ? '+' : '';
+                return (
+                  <div key={gene}
+                    className={cn(
+                      'flex items-center justify-between py-3 px-3.5 -mx-1 rounded-lg cursor-pointer relative z-[1] transition-all duration-150',
+                      state !== 'normal' && 'bg-green-500/[0.08]',
+                      state === 'normal' && 'hover:shadow-[inset_0_0_0_100px_rgba(255,255,255,0.04)]',
+                    )}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className="text-[15px] font-semibold min-w-[55px] transition-colors" style={{ color: getChromatinColor(currentChromatin) }}>{gene}</span>
+                      <span className="text-[13px] text-slate-500">
+                        {state === 'normal'
+                          ? `${Math.round(baseline * 100)}% accessible`
+                          : <>{Math.round(baseline * 100)}% → {Math.round(currentChromatin * 100)}%
+                              <span className="ml-1 font-medium" style={{ color: delta > 0 ? '#22c55e' : '#ef4444' }}>({deltaSign}{delta}%)</span>
+                            </>
+                        }
+                      </span>
                     </div>
-                  );
-                })}
-              </div>
+                    <TriStateToggle value={state} onChange={(newState) => setIntervention(gene, newState)} />
+                  </div>
+                );
+              })}
             </div>
           </div>
+        </Card>
 
-          {/* Results */}
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <span className={styles.cardTitle}>Flux Output</span>
-            </div>
-            <div className={styles.cardContent}>
-              <div className={styles.resultsGrid}>
-                <div className={styles.resultCard}>
-                  <div className={styles.resultLabel}>Capture Rate</div>
-                  <div 
-                    className={styles.resultValue}
-                    style={{ color: getChromatinColor(geneStates.ATF1.chromatin) }}
-                  >
-                    {Math.round(captureRate * 100)}%
-                  </div>
-                </div>
-                <div className={styles.resultCard}>
-                  <div className={styles.resultLabel}>vs Baseline</div>
-                  <div 
-                    className={styles.resultValue}
-                    style={{ color: foldChange > 1.1 ? '#22c55e' : '#64748b' }}
-                  >
-                    {foldChange.toFixed(1)}×
-                  </div>
+        {/* Results */}
+        <Card>
+          <CardHeader>Flux Output</CardHeader>
+          <div className="p-5">
+            <div className="grid grid-cols-2 gap-2">
+              <div className="p-3 bg-black/25 rounded-lg text-center">
+                <div className="text-[9px] text-slate-500 uppercase tracking-[0.5px] mb-1">Capture Rate</div>
+                <div className="text-[28px] font-semibold mono leading-none transition-colors" style={{ color: getChromatinColor(geneStates.ATF1.chromatin) }}>
+                  {Math.round(captureRate * 100)}%
                 </div>
               </div>
-
-              <div className={styles.captureSection}>
-                <div className={styles.captureHeader}>
-                  <span>Product Capture</span>
-                  <span>{Math.round(captureRate * 100)}%</span>
-                </div>
-                <div className={styles.captureBar}>
-                  <motion.div 
-                    className={styles.captureProduct}
-                    style={{ width: captureWidth }}
-                  />
-                </div>
-                <div className={styles.captureLabels}>
-                  <span>0%</span>
-                  <span>100%</span>
-                </div>
-              </div>
-
-              <div className={styles.captureSection}>
-                <div className={styles.captureHeader}>
-                  <span>Flux to Product</span>
-                  <span>{Math.round(fluxToProduct)}%</span>
-                </div>
-                <div className={styles.captureBar}>
-                  <motion.div 
-                    className={styles.fluxProductBar}
-                    style={{ width: fluxProductWidth }}
-                  />
-                </div>
-                <div className={styles.captureLabels}>
-                  <span>0%</span>
-                  <span>100%</span>
+              <div className="p-3 bg-black/25 rounded-lg text-center">
+                <div className="text-[9px] text-slate-500 uppercase tracking-[0.5px] mb-1">vs Baseline</div>
+                <div className="text-[28px] font-semibold mono leading-none transition-colors" style={{ color: foldChange > 1.1 ? '#22c55e' : '#64748b' }}>
+                  {foldChange.toFixed(1)}×
                 </div>
               </div>
             </div>
-            <div className={`${styles.insightBanner} ${interventions.ATF1 === 'activate' ? styles.success : ''}`}>
-              {interventions.ATF1 === 'activate'
-                ? '✓ ATF1 activation redirects flux to product'
-                : `⚠ ${bottleneckGene} is the bottleneck — ${Math.round(geneStates[bottleneckGene].chromatin * 100)}% chromatin accessibility`}
-            </div>
+
+            {/* Capture bars */}
+            {[
+              { label: 'Product Capture', value: Math.round(captureRate * 100), width: captureWidth, gradient: 'bg-gradient-to-r from-green-500 to-emerald-500' },
+              { label: 'Flux to Product', value: Math.round(fluxToProduct), width: fluxProductWidth, gradient: 'bg-gradient-to-r from-blue-500 to-violet-500' },
+            ].map(bar => (
+              <div key={bar.label} className="mt-2.5">
+                <div className="flex justify-between mb-1.5 text-[9px] text-slate-500 uppercase tracking-[0.5px]">
+                  <span>{bar.label}</span><span>{bar.value}%</span>
+                </div>
+                <div className="h-3 bg-black/30 rounded-md overflow-hidden">
+                  <motion.div className={cn('h-full rounded-md', bar.gradient)} style={{ width: bar.width }} />
+                </div>
+                <div className="flex justify-between text-[10px] text-slate-500 mt-1">
+                  <span>0%</span><span>100%</span>
+                </div>
+              </div>
+            ))}
           </div>
-        </div>
+          {/* Insight banner */}
+          <div className={cn(
+            'py-2.5 px-3.5 text-[11px] text-center border-t border-white/[0.04]',
+            interventions.ATF1 === 'activate'
+              ? 'bg-gradient-to-r from-green-500/10 to-emerald-500/10 text-green-300'
+              : 'bg-gradient-to-r from-blue-500/[0.08] to-violet-500/[0.08] text-slate-400'
+          )}>
+            {interventions.ATF1 === 'activate'
+              ? '✓ ATF1 activation redirects flux to product'
+              : `⚠ ${bottleneckGene} is the bottleneck — ${Math.round(geneStates[bottleneckGene].chromatin * 100)}% chromatin accessibility`}
+          </div>
+        </Card>
       </div>
+    </div>
   );
 }

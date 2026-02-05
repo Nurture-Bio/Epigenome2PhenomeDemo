@@ -1,0 +1,99 @@
+/* SVG Pathway - animations & fill rules that can't be Tailwind */
+
+.pathwaySvg {
+  width: 100%;
+  height: 100%;
+  min-height: 500px;
+  display: block;
+}
+
+.diagramTitle {
+  font-size: 16px;
+  font-weight: 600;
+  fill: #94a3b8;
+  text-anchor: middle;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* Metabolite nodes */
+.metaboliteRect {
+  fill: rgba(30, 41, 59, 0.9);
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+  transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
+}
+.metaboliteRect.input {
+  fill: url(#inputGradient);
+  stroke: rgba(59, 130, 246, 0.4);
+}
+.metaboliteRect.product {
+  fill: rgba(30, 41, 59, 0.9);
+  stroke: rgba(250, 204, 21, 0.4);
+}
+.metaboliteRect.productActive {
+  fill: url(#productGradient);
+  stroke: rgba(34, 197, 94, 0.6);
+  filter: url(#glow);
+}
+.metaboliteRect.waste {
+  fill: rgba(20, 25, 35, 0.6);
+  stroke: rgba(255, 255, 255, 0.06);
+  stroke-dasharray: 4 2;
+}
+
+.metaboliteText {
+  font-size: 14px;
+  font-weight: 500;
+  fill: #e2e8f0;
+  text-anchor: middle;
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.fluxPercent {
+  font-size: 13px;
+  font-weight: 600;
+  fill: #94a3b8;
+  text-anchor: start;
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Enzyme pills */
+.enzymeInline { cursor: pointer; }
+.enzymeInline:hover .enzymePill {
+  filter: brightness(1.3) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
+}
+.enzymePill {
+  fill: rgba(15, 23, 42, 1);
+  stroke-width: 1.5;
+  transition: fill 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
+}
+.enzymePill.enzymeActive { fill: rgba(20, 30, 48, 1); }
+.enzymeLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-family: 'IBM Plex Mono', monospace;
+  transition: fill 0.2s;
+}
+.enzymeGlowPulse { animation: glowPulse 1.5s ease-in-out infinite; }
+.enzymeBottleneckPulse { animation: bottleneckPulse 1s ease-in-out infinite; }
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+@keyframes bottleneckPulse {
+  0%, 100% { opacity: 0.5; stroke-width: 2; }
+  50% { opacity: 1; stroke-width: 4; }
+}
+
+/* Flow animation */
+.flowFast { animation: flowAnimation 0.6s linear infinite; }
+.flowMedium { animation: flowAnimation 1.2s linear infinite; }
+.flowSlow { animation: flowAnimation 2.5s linear infinite; }
+
+@keyframes flowAnimation {
+  0% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -20; }
+}

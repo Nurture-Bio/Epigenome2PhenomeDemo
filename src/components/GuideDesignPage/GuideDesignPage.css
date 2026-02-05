@@ -1,0 +1,176 @@
+/* DNA Visualization - positional layout */
+
+.dnaTrackContainer {
+  position: relative;
+  height: 180px;
+  margin: 0 10px;
+}
+
+.dnaAxis {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+}
+
+.dnaTick {
+  position: absolute;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dnaTickLine {
+  width: 1px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dnaTickLabel {
+  font-size: 9px;
+  color: #64748b;
+  margin-top: 2px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.dnaBackbone {
+  position: absolute;
+  top: 32px;
+  left: 0;
+  right: 0;
+  height: 24px;
+}
+
+.dnaStrand {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, rgba(34, 197, 94, 0.3) 0%, rgba(59, 130, 246, 0.5) 50%, rgba(168, 85, 247, 0.3) 100%);
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+}
+.dnaStrand:first-child { top: 0; }
+.dnaStrandBottom { bottom: 0; }
+
+.dnaHelixPattern {
+  position: absolute;
+  top: 3px;
+  left: 0;
+  right: 0;
+  height: 18px;
+  background: repeating-linear-gradient(90deg, transparent 0px, rgba(59, 130, 246, 0.1) 2px, transparent 4px, transparent 8px);
+}
+
+.tssMarker {
+  position: absolute;
+  top: 28px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+.tssArrow {
+  font-size: 18px;
+  color: #22c55e;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+  animation: tssGlow 2s ease-in-out infinite;
+}
+@keyframes tssGlow {
+  0%, 100% { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
+  50% { text-shadow: 0 0 20px rgba(34, 197, 94, 1); }
+}
+.tssLabel {
+  font-size: 9px;
+  font-weight: 600;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-top: 2px;
+}
+
+/* Guide markers */
+.guideMarker {
+  position: absolute;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 5;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.guideMarkerPlus { top: 4px; }
+.guideMarkerMinus { top: 56px; }
+.guideMarker:hover { z-index: 15; }
+
+.guideMarkerLine {
+  width: 2px;
+  height: 28px;
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+.guideMarkerPlus .guideMarkerLine {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.3) 0%, #3b82f6 100%);
+}
+.guideMarkerMinus .guideMarkerLine {
+  background: linear-gradient(180deg, #a855f7 0%, rgba(168, 85, 247, 0.3) 100%);
+}
+.guideMarkerHead {
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+.guideMarkerPlus .guideMarkerHead { color: #3b82f6; }
+.guideMarkerMinus .guideMarkerHead { color: #a855f7; }
+.guideMarker:hover .guideMarkerLine { box-shadow: 0 0 8px currentColor; }
+.guideMarker:hover .guideMarkerHead { transform: scale(1.3); }
+
+.guideMarkerSelected.guideMarkerPlus .guideMarkerLine {
+  width: 3px;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.3) 0%, #22c55e 100%) !important;
+}
+.guideMarkerSelected.guideMarkerMinus .guideMarkerLine {
+  width: 3px;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
+  background: linear-gradient(180deg, #22c55e 0%, rgba(34, 197, 94, 0.3) 100%) !important;
+}
+.guideMarkerSelected .guideMarkerHead {
+  color: #22c55e;
+  transform: scale(1.5);
+}
+
+/* ATAC tracks */
+.atacTrack {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.atacTrackPredicted { bottom: 44px; }
+.atacLabel {
+  font-size: 9px;
+  color: #64748b;
+  width: 32px;
+  flex-shrink: 0;
+  transition: opacity 0.3s ease;
+}
+.atacSignal {
+  flex: 1;
+  height: 32px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: opacity 0.3s ease;
+}
+.atacSvg { width: 100%; height: 100%; }

@@ -131,9 +131,7 @@ export function GeneTopologyPage() {
     if (!allLayersLoaded) return;
     if (convergenceState === 'idle') {
       setConverging();
-      setTimeout(() => {
-        setConverged();
-      }, 2000 + Math.random() * 1000);
+      setConverged();
     } else if (convergenceState === 'converged') {
       // Select to view in right panel
       selectLayer('convergence');
@@ -201,23 +199,32 @@ export function GeneTopologyPage() {
       <div className={sharedStyles.panel}>
         <div className={sharedStyles.panelHeader}>Multi-omic Data Integration</div>
         <div className={styles.content}>
-          {/* Target Gene Dropdown */}
-          <div className={styles.targetDropdown}>
+          {/* Target Gene and Condition Dropdowns */}
+          <div className={styles.targetSelectors}>
             <select className={styles.targetSelect} defaultValue="ATF1">
-              <option value="ATF1">ATF1 — Alcohol acetyltransferase</option>
+              <option value="ATF1">ATF1</option>
+              <option value="ATF2">ATF2</option>
+              <option value="EHT1">EHT1</option>
+              <option value="BAT1">BAT1</option>
+              <option value="BAT2">BAT2</option>
+            </select>
+            <select className={styles.conditionSelect} defaultValue="mid-brew">
+              <option value="mid-brew">Mid-brew</option>
+              <option value="early-log">Early-log</option>
+              <option value="late-log">Late-log</option>
+              <option value="stationary">Stationary</option>
+              <option value="ethanol">Ethanol</option>
             </select>
           </div>
 
-          <div className={styles.conditionTag}>
-            📍 Glucose-limited anaerobic (mid-brew)
-          </div>
-
-          {/* Load All button */}
-          {anyLayerIdle && (
-            <button className={styles.loadAllBtn} onClick={handleLoadAll}>
-              Load All Layers
-            </button>
-          )}
+          {/* Load All button - disabled when all layers loaded */}
+          <button
+            className={styles.loadAllBtn}
+            onClick={handleLoadAll}
+            disabled={!anyLayerIdle}
+          >
+            Load All Layers
+          </button>
 
           {/* Layer Stack */}
           <div className={styles.layerList}>

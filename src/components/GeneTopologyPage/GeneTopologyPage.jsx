@@ -208,7 +208,7 @@ export function GeneTopologyPage() {
           <button
             onClick={handleLoadAll}
             disabled={!anyLayerIdle}
-            className="w-full py-2.5 px-4 bg-gradient-to-br from-blue-500/15 to-violet-500/15 border border-violet-500/25 rounded-md text-violet-400 text-xs font-semibold cursor-pointer transition-all mb-4 hover:from-blue-500/25 hover:to-violet-500/25 hover:border-violet-500/40 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-blue-500/15 disabled:hover:to-violet-500/15 disabled:hover:border-violet-500/25"
+            className="w-full py-2.5 px-4 bg-gradient-to-br from-blue-500/15 to-violet-500/15 border border-violet-500/25 rounded-md text-violet-400 text-xs font-semibold cursor-pointer transition-colors mb-4 hover:from-blue-500/25 hover:to-violet-500/25 hover:border-violet-500/40 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-blue-500/15 disabled:hover:to-violet-500/15 disabled:hover:border-violet-500/25"
           >
             Load All Layers
           </button>

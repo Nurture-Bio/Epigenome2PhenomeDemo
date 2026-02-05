@@ -25,8 +25,8 @@ export function Navigation({ activePage, setActivePage }) {
           AF
         </div>
         <div>
-          <div className="text-base font-semibold tracking-tight">atacflux</div>
-          <div className="text-[11px] text-slate-500">Metabolic Engineering Platform</div>
+          <div className="type-title text-base tracking-tight">atacflux</div>
+          <div className="type-sm text-slate-500">Metabolic Engineering Platform</div>
         </div>
       </div>
 
@@ -36,7 +36,7 @@ export function Navigation({ activePage, setActivePage }) {
             key={page}
             onClick={() => setActivePage(i)}
             className={cn(
-              'px-6 py-3 bg-transparent border-none text-[13px] font-medium tracking-[0.5px] cursor-pointer transition-colors duration-250 relative',
+              'px-6 py-3 bg-transparent border-none type-body tracking-[0.5px] cursor-pointer transition-colors duration-250 relative',
               activePage === i ? 'text-slate-50' : 'text-slate-500 hover:text-slate-400'
             )}
           >
@@ -49,7 +49,7 @@ export function Navigation({ activePage, setActivePage }) {
         />
       </nav>
 
-      <div className="text-[11px] text-slate-600">
+      <div className="type-sm text-slate-600">
         <span className="mono">v0.9.2-beta</span> • S. cerevisiae S288C
       </div>
     </header>

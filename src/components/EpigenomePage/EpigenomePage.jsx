@@ -164,7 +164,7 @@ export function EpigenomePage() {
             <option value="ATF1">ATF1 — Alcohol acetyltransferase</option>
           </Select>
 
-          <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded text-[11px] text-amber-300">
+          <div className="px-3 py-2 bg-amber-500/10 border border-amber-500/20 rounded type-sm text-amber-300">
             📍 Glucose-limited anaerobic (mid-brew)
           </div>
 
@@ -193,12 +193,12 @@ export function EpigenomePage() {
                 >
                   <div className="flex justify-between items-start mb-1">
                     <div>
-                      <div className="text-[13px] font-medium text-slate-200">{layer.name}</div>
-                      <div className="text-[10px] text-slate-500">{layer.source}</div>
+                      <div className="type-title">{layer.name}</div>
+                      <div className="type-caption">{layer.source}</div>
                     </div>
                     <div
                       className={cn(
-                        'px-2 py-0.5 rounded text-[10px] font-medium',
+                        'px-2 py-0.5 rounded type-caption font-semibold',
                         state === 'loaded' ? 'text-green-400' : 'text-slate-500'
                       )}
                       style={{ 
@@ -211,7 +211,7 @@ export function EpigenomePage() {
                       {state === 'loaded' && '✓'}
                     </div>
                   </div>
-                  <div className="text-[11px] text-slate-400">{layer.question}</div>
+                  <div className="type-sm">{layer.question}</div>
                 </div>
               );
             })}
@@ -230,11 +230,11 @@ export function EpigenomePage() {
           >
             <div className="flex justify-between items-start mb-1">
               <div>
-                <div className="text-[13px] font-medium text-slate-200">✨ AI Convergence</div>
-                <div className="text-[10px] text-slate-500">Multi-omic Integration</div>
+                <div className="type-title">✨ AI Convergence</div>
+                <div className="type-caption">Multi-omic Integration</div>
               </div>
               <div
-                className="px-2 py-0.5 rounded text-[10px] font-medium"
+                className="px-2 py-0.5 rounded type-caption font-semibold"
                 style={{ 
                   background: convergenceState === 'converged' ? 'rgba(167, 139, 250, 0.2)' : 'rgba(100,100,100,0.15)', 
                   color: convergenceState === 'converged' ? '#a78bfa' : '#64748b' 
@@ -245,7 +245,7 @@ export function EpigenomePage() {
                 {convergenceState === 'converged' && '✓'}
               </div>
             </div>
-            <div className="text-[11px] text-slate-400">
+            <div className="type-sm">
               {allLayersLoaded ? 'Synthesize findings into actionable insight' : 'Load all layers first'}
             </div>
           </div>
@@ -275,7 +275,7 @@ export function EpigenomePage() {
           ) : isSelectedLoaded ? (
             <LayerVisualization selectedLayer={selectedLayer} selectedData={selectedData} />
           ) : (
-            <div className="flex items-center justify-center h-full text-slate-500 text-xs">
+            <div className="flex items-center justify-center h-full type-sm text-slate-500">
               Load a data layer to begin analysis
             </div>
           )}
@@ -291,11 +291,11 @@ function ConvergenceResult({ visibleChunks, typingDone, visibleInsights }) {
       <div className="p-4 bg-violet-500/[0.08] border border-violet-500/20 rounded-lg mb-4">
         <div className="flex items-center gap-2 mb-3">
           <span className="text-lg">✨</span>
-          <span className="text-[11px] font-semibold text-violet-400 uppercase tracking-wide">AI Analysis</span>
+          <span className="type-label mb-0 text-violet-400">AI Analysis</span>
         </div>
         <div className="space-y-2">
           {aiTextChunks.slice(0, visibleChunks).map((chunk, i) => (
-            <div key={i} className={cn('text-[13px]', chunk.isBullet ? 'text-slate-300 pl-4' : 'text-slate-400')}>
+            <div key={i} className={cn('type-body', chunk.isBullet ? 'text-slate-300 pl-4' : 'text-slate-400')}>
               {chunk.isBullet && <span className="text-violet-400 mr-2">•</span>}
               {chunk.text}
             </div>
@@ -310,8 +310,8 @@ function ConvergenceResult({ visibleChunks, typingDone, visibleInsights }) {
             <div key={i} className="p-3 bg-black/30 rounded-lg flex gap-3">
               <span className="text-xl">{insight.icon}</span>
               <div>
-                <div className="text-[10px] text-slate-500 uppercase tracking-wide">{insight.label}</div>
-                <div className="text-[12px] text-slate-200">{insight.value}</div>
+                <div className="type-caption uppercase tracking-wide">{insight.label}</div>
+                <div className="type-sm text-slate-200">{insight.value}</div>
               </div>
             </div>
           ))}
@@ -325,15 +325,15 @@ function LayerVisualization({ selectedLayer, selectedData }) {
   return (
     <>
       <div className="mb-4">
-        <div className="text-xl font-light text-slate-200">ATF1</div>
-        <div className="text-[11px] font-mono text-slate-500">YOR377W</div>
-        <div className="text-[12px] text-slate-400 mt-1">{selectedData?.description}</div>
+        <div className="type-heading text-xl">ATF1</div>
+        <div className="type-mono">YOR377W</div>
+        <div className="type-sm mt-1">{selectedData?.description}</div>
       </div>
 
       {selectedLayer === 'RNA-seq' && (
         <>
           <div className="mb-4">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-3">Pathway Gene Expression</div>
+            <div className="type-label">Pathway Gene Expression</div>
             {rnaSeqData.comparison.map((gene) => (
               <ComparisonBar 
                 key={gene.gene} 
@@ -352,7 +352,7 @@ function LayerVisualization({ selectedLayer, selectedData }) {
       {selectedLayer === 'ATAC-seq' && (
         <>
           <div className="mb-4">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-3">Pathway Gene Accessibility</div>
+            <div className="type-label">Pathway Gene Accessibility</div>
             {selectedData.comparison.map((gene) => (
               <ComparisonBar 
                 key={gene.gene} 
@@ -371,16 +371,16 @@ function LayerVisualization({ selectedLayer, selectedData }) {
       {selectedLayer === 'Hi-C' && (
         <>
           <div className="mb-4">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-3">3D Chromatin Architecture</div>
+            <div className="type-label">3D Chromatin Architecture</div>
             {selectedData.metrics.map((m) => (
               <div key={m.name} className="flex justify-between items-center py-2 border-b border-white/[0.04]">
-                <span className="text-[11px] text-slate-400">
+                <span className="type-sm">
                   {m.name}
                   <span className={cn('ml-1', m.type === 'repressive' ? 'text-red-400' : 'text-slate-500')}>
                     ({m.detail})
                   </span>
                 </span>
-                <span className="font-mono text-[11px]" style={{ color: m.color }}>{m.value}</span>
+                <span className="type-mono" style={{ color: m.color }}>{m.value}</span>
               </div>
             ))}
           </div>
@@ -392,17 +392,17 @@ function LayerVisualization({ selectedLayer, selectedData }) {
       {selectedLayer === 'ChIP-seq' && (
         <>
           <div className="mb-4">
-            <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wide mb-3">Histone Mark Enrichment</div>
+            <div className="type-label">Histone Mark Enrichment</div>
             {selectedData.marks.map((mark) => (
               <div key={mark.name} className="mb-3">
                 <div className="flex justify-between items-center mb-1">
-                  <span className="text-[11px]">
+                  <span className="type-sm">
                     {mark.name}
                     <span className={mark.type === 'repressive' ? 'text-red-400' : 'text-green-400'}>
                       {mark.type === 'repressive' ? ' (repressive)' : ' (active)'}
                     </span>
                   </span>
-                  <span className="font-mono text-[11px]" style={{ color: mark.color }}>
+                  <span className="type-mono" style={{ color: mark.color }}>
                     {mark.value}× {mark.value > 1 ? '↑' : '↓'}
                   </span>
                 </div>

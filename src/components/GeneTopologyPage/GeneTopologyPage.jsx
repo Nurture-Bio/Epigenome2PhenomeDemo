@@ -16,7 +16,6 @@ const aiInsights = [
   { icon: '🔒', label: 'Chromatin Lock', value: 'ATF1 promoter is chromatinized' },
   { icon: '⚖️', label: 'Pathway Imbalance', value: '15x expression gap vs upstream' },
   { icon: '🎯', label: 'CRISPRa Target', value: 'Closed but reversible state' },
-  { icon: '→', label: 'Next', value: 'Simulate ATF1 activation in Flux Dynamics' },
 ];
 
 const aiActions = [
@@ -213,14 +212,12 @@ export function GeneTopologyPage() {
             📍 Glucose-limited anaerobic (mid-brew)
           </div>
 
-          {/* Load All button - disabled when all layers loaded */}
-          <button
-            className={styles.loadAllBtn}
-            onClick={handleLoadAll}
-            disabled={!anyLayerIdle}
-          >
-            Load All Layers
-          </button>
+          {/* Load All button */}
+          {anyLayerIdle && (
+            <button className={styles.loadAllBtn} onClick={handleLoadAll}>
+              Load All Layers
+            </button>
+          )}
 
           {/* Layer Stack */}
           <div className={styles.layerList}>

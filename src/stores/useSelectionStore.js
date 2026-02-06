@@ -8,7 +8,7 @@ export const useSelectionStore = create((set, get) => ({
   // Selection state
   selectedLayer: null,       // e.g., 'ATAC-seq', 'Hi-C', 'ChIP-seq', 'RNA-seq'
   selectedGene: null,        // e.g., 'ATF1', 'BAT2'
-  selectedReaction: 'r_0160', // Default to first reaction
+  selectedReaction: null, // Default to first reaction
 
   // Layer loading states: 'idle' | 'loading' | 'loaded'
   layerLoadStates: {

@@ -71,19 +71,21 @@ response = requests.post(
             "You will receive structured data from 4 epigenomic assays at the ATF1 locus. "
             "Your job is to answer: Is the bottleneck epigenetic? Is it reversible? "
             "What should the engineer do?\n\n"
-            "IMPORTANT — this is S. cerevisiae. Use yeast-appropriate terminology only. "
-            "CRISPRa in yeast uses dCas9-VP64 or dCas9-VPR, NOT mammalian effectors "
-            "like p300 or p65. H3K4me3 is a methylation mark, not an acetylation mark — "
+            "IMPORTANT — this is S. cerevisiae. Use yeast-appropriate biology only. "
+            "H3K4me3 is a methylation mark, not an acetylation mark — "
             "do not group it with acetylation marks. Yeast histone acetyltransferases "
             "include Gcn5, Esa1, and Sas2.\n\n"
             "CRITICAL: All recommended interventions must be EPIGENETIC ONLY and "
             "LOCUS-TARGETED. No gene editing, no knockouts, no overexpression constructs, "
             "no coding sequence changes, and NO global small molecule treatments (no TSA, "
             "no nicotinamide, no HDAC inhibitors — these are untargeted and incompatible "
-            "with food production). Valid interventions: CRISPRa (dCas9-VP64/VPR) to "
-            "recruit transcriptional activators to the specific promoter, or dCas9 fused "
-            "to chromatin remodeling domains targeted to the locus. The platform's value "
-            "is precision — one locus, one intervention.\n\n"
+            "with food production). Valid interventions: targeted epigenetic activation "
+            "using guide RNAs to recruit transcriptional activators or chromatin remodelers "
+            "to the specific promoter. The platform's value is precision — one locus, one intervention.\n\n"
+            "TERMINOLOGY: Do NOT use 'CRISPR', 'Cas9', 'dCas9', 'CRISPRa', or any Cas-type "
+            "terminology. Instead use generic terms like 'targeted epigenetic activation', "
+            "'guide RNA-directed activators', 'epigenetic activator', or just 'guides'. "
+            "Keep it proprietary-sounding.\n\n"
             "Respond ONLY with JSON, no preamble, no backticks. Schema:\n"
             "{\n"
             '  "bullets": [{"text": "string", "isBullet": bool}],\n'
@@ -97,6 +99,7 @@ response = requests.post(
             "- Each bullet under 20 words\n"
             "- Exactly 3 insights with emoji\n"
             "- Exactly 1 action: the single best targeted epigenetic intervention, with because clause\n"
+            "- Action text must be under 10 words — short and punchy. The because clause can be longer.\n"
             "- Do NOT just restate each assay's numbers. Synthesize."
         ),
         "messages": [
@@ -104,7 +107,7 @@ response = requests.post(
                 "ATF1 is the suspected bottleneck in the Ehrlich pathway. "
                 "Here is the epigenomic evidence:\n"
                 f"{json.dumps(layer_data)}\n\n"
-                "Is this epigenetic silencing, and can CRISPRa at the promoter reverse it?"
+                "Is this epigenetic silencing, and can targeted activation at the promoter reverse it?"
             )}
         ]
     }

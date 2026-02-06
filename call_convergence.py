@@ -99,7 +99,7 @@ response = requests.post(
             "- Each bullet under 20 words\n"
             "- Exactly 3 insights with emoji\n"
             "- Exactly 1 action: the single best targeted epigenetic intervention, with because clause\n"
-            "- Action text must be under 10 words — short and punchy. The because clause can be longer.\n"
+            "- Action text must be under 10 words — short and punchy. Must clearly specify direction (activate or silence, not just 'remodel'). The because clause can be longer.\n"
             "- Do NOT just restate each assay's numbers. Synthesize."
         ),
         "messages": [

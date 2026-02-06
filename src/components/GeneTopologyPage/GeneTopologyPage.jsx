@@ -347,7 +347,7 @@ function ConvergenceView({ visibleChunks, typingDone, visibleInsights }) {
           {aiActions.map((a, i) => (
             <div key={i} className="flex flex-col gap-2">
               <div className="type-body leading-relaxed font-semibold">{a.action}</div>
-              <div className="type-sm leading-relaxed pl-3 border-l-2 border-violet-400/30">
+              <div className="type-body leading-relaxed pl-3 border-l-2 border-violet-400/30">
                 <span className="font-semibold text-violet-400">Because: </span>
                 {a.because}
               </div>
@@ -513,7 +513,7 @@ function ImplicationBox({ icon, text }) {
   return (
     <div className="flex gap-3 p-3.5 bg-violet-500/[0.08] border border-violet-500/20 rounded-lg">
       <span className="text-lg">{icon}</span>
-      <div className="type-sm leading-relaxed">{text}</div>
+      <div className="type-body leading-relaxed">{text}</div>
     </div>
   );
 }

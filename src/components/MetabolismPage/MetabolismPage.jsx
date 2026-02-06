@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { reactionDetails, reactionTableData } from '../../data';
-import { useSelectionStore } from '../../stores';
 import { cn } from '../../lib/utils';
-import { Card, CardHeader, CardContent, DataRow, Badge, Selectable, EmptyState } from '../ui';
+import { useSelectionStore } from '../../stores';
+import { Badge, Card, CardContent, CardHeader, DataRow, EmptyState, Selectable } from '../ui';
 
 export function MetabolismPage() {
   const { selectedReaction, selectReaction } = useSelectionStore();

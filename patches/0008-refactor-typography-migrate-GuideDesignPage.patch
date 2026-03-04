@@ -1,0 +1,83 @@
+From a44b619c8c8ccffbf7e364049e4f18a20e3a1331 Mon Sep 17 00:00:00 2001
+From: Claude <claude@anthropic.com>
+Date: Thu, 5 Feb 2026 20:03:56 +0000
+Subject: [PATCH 8/9] refactor(typography): migrate GuideDesignPage
+
+~15 replacements: select dropdowns, table headers/rows, coordinate badge,
+flux label, detail panel text. Eliminates font-medium.
+---
+ .../GuideDesignPage/GuideDesignPage.jsx          | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/src/components/GuideDesignPage/GuideDesignPage.jsx b/src/components/GuideDesignPage/GuideDesignPage.jsx
+index 1580bf3..3407c09 100644
+--- a/src/components/GuideDesignPage/GuideDesignPage.jsx
++++ b/src/components/GuideDesignPage/GuideDesignPage.jsx
+@@ -65,17 +65,17 @@ function DnaVisualization({ guides, selectedGuide, onSelectGuide, isRepression }
+       <div className="flex justify-between items-center mb-4">
+         <div className="flex gap-2 items-center">
+           <select defaultValue="ATF1"
+-            className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 text-slate-200 text-[13px] font-semibold cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
++            className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 type-select cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
+             style={{ backgroundImage: selectArrow, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}>
+             <option>ATF1</option><option>ATF2</option><option>EHT1</option><option>BAT1</option><option>BAT2</option>
+           </select>
+           <select defaultValue="promoter"
+-            className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 text-slate-200 text-[13px] font-semibold cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
++            className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 type-select cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
+             style={{ backgroundImage: selectArrow, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}>
+             <option value="promoter">Promoter</option><option value="5utr">5' UTR</option><option value="cds">CDS</option><option value="3utr">3' UTR</option>
+           </select>
+         </div>
+-        <span className="text-[10px] font-mono text-slate-500 bg-black/30 px-2 py-1 rounded">chr XV: 798,234 - 798,734</span>
++        <span className="type-mono bg-black/30 px-2 py-1 rounded">chr XV: 798,234 - 798,734</span>
+       </div>
+ 
+       <div className="dnaTrackContainer">
+@@ -220,14 +220,14 @@ export function GuideDesignPage() {
+             <span style={{ color: isRepression ? '#8b5cf6' : '#22c55e' }}>{guides.length} guides</span> found • Click to select
+           </CardHeader>
+           <div className="flex-1 overflow-y-auto overflow-x-hidden">
+-            <div className="grid grid-cols-[1fr_55px_35px_45px_70px_50px_60px] py-2.5 px-3 text-[10px] font-semibold text-slate-500 tracking-[0.5px] uppercase border-b border-white/[0.04]">
++            <div className="grid grid-cols-[1fr_55px_35px_45px_70px_50px_60px] py-2.5 px-3 type-label mb-0 tracking-[0.5px] border-b border-white/[0.04]">
+               <div>Spacer</div><div>Pos</div><div>±</div><div>PAM</div><div>Offtargets</div><div>ATAC</div><div>Δ Flux</div>
+             </div>
+             {guides.map(guide => (
+               <div key={guide.id}
+                 onClick={() => setSelectedGuide(guide.id)}
+                 className={cn(
+-                  'grid grid-cols-[1fr_55px_35px_45px_70px_50px_60px] py-2.5 px-3 text-[11px] border-b border-white/[0.04] rounded cursor-pointer relative z-[1] transition-all duration-150',
++                  'grid grid-cols-[1fr_55px_35px_45px_70px_50px_60px] py-2.5 px-3 type-sm border-b border-white/[0.04] rounded cursor-pointer relative z-[1] transition-all duration-150',
+                   selectedGuide === guide.id
+                     ? 'shadow-[0_0_0_1px_rgba(255,255,255,0.1),_0_4px_12px_rgba(0,0,0,0.4)] bg-white/[0.04]'
+                     : 'hover:shadow-[inset_0_0_0_100px_rgba(255,255,255,0.04)]',
+@@ -238,7 +238,7 @@ export function GuideDesignPage() {
+                 <div className="mono">{guide.pam}</div>
+                 <div style={{ color: guide.offTargets === 0 ? '#22c55e' : '#f59e0b' }}>{guide.offTargets}</div>
+                 <div style={{ color: '#ef4444' }}>{Math.round(guide.atacScore * 100)}%</div>
+-                <div className="font-medium" style={{ color: isRepression ? '#8b5cf6' : '#22c55e' }}>{getPredictedFlux(guide)}</div>
++                <div className="font-semibold" style={{ color: isRepression ? '#8b5cf6' : '#22c55e' }}>{getPredictedFlux(guide)}</div>
+               </div>
+             ))}
+           </div>
+@@ -266,7 +266,7 @@ export function GuideDesignPage() {
+                 style={{ padding: '6px 0' }} />
+ 
+               <div className="mt-4 p-3.5 rounded-lg" style={{ background: isRepression ? 'rgba(139, 92, 246, 0.1)' : 'rgba(0, 0, 0, 0.3)' }}>
+-                <div className="text-[11px] text-slate-500 mb-1.5">Predicted isoamyl acetate flux</div>
++                <div className="type-sm text-slate-500 mb-1.5">Predicted isoamyl acetate flux</div>
+                 <div className="text-lg font-light mb-3">
+                   <span className="text-slate-500">0.12</span>
+                   <span className="text-slate-500 mx-1.5">→</span>
+@@ -277,7 +277,7 @@ export function GuideDesignPage() {
+                   </span>
+                   <span className="text-[9px] text-slate-500 ml-1">mmol/gDW/h</span>
+                 </div>
+-                <div className="flex justify-between mb-1.5 text-[10px] text-slate-500 uppercase tracking-[0.5px]">
++                <div className="flex justify-between mb-1.5 type-caption uppercase tracking-[0.5px]">
+                   <span>Banana flavor intensity</span>
+                   <span style={{ color: isRepression ? '#8b5cf6' : '#22c55e' }}>{getPredictedFlux(selectedGuideData)}</span>
+                 </div>
+-- 
+2.43.0
+

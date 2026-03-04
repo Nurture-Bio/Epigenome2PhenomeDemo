@@ -1,0 +1,188 @@
+From e34335c1fffdb14c514e5ca3ad2d0a708324f42f Mon Sep 17 00:00:00 2001
+From: Claude <claude@anthropic.com>
+Date: Thu, 5 Feb 2026 19:56:33 +0000
+Subject: [PATCH 3/9] refactor(typography): migrate UI components
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Card.jsx: CardHeader → type-label
+DataRow.jsx: type-sm, type-label, type-body
+Badge.jsx: type-badge
+Button.jsx: font-medium → font-semibold
+ProgressBar.jsx: type-badge, type-sm
+Shared.jsx: type-body, type-badge, font-medium → font-semibold
+---
+ src/components/ui/Badge.jsx       |  2 +-
+ src/components/ui/Button.jsx      |  4 ++--
+ src/components/ui/Card.jsx        |  2 +-
+ src/components/ui/DataRow.jsx     |  8 ++++----
+ src/components/ui/ProgressBar.jsx |  8 ++++----
+ src/components/ui/Shared.jsx      | 12 ++++++------
+ 6 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/src/components/ui/Badge.jsx b/src/components/ui/Badge.jsx
+index e4ebf5f..ce2824f 100644
+--- a/src/components/ui/Badge.jsx
++++ b/src/components/ui/Badge.jsx
+@@ -13,7 +13,7 @@ export function Badge({ children, variant = 'muted', className, ...props }) {
+   return (
+     <span
+       className={cn(
+-        'inline-flex items-center px-2 py-0.5 rounded text-[9px] font-semibold border',
++        'inline-flex items-center px-2 py-0.5 rounded type-badge border',
+         variants[variant],
+         className
+       )}
+diff --git a/src/components/ui/Button.jsx b/src/components/ui/Button.jsx
+index 2ff66c7..9f2a129 100644
+--- a/src/components/ui/Button.jsx
++++ b/src/components/ui/Button.jsx
+@@ -11,7 +11,7 @@ export function Button({ children, variant = 'primary', className, ...props }) {
+   return (
+     <button
+       className={cn(
+-        'px-4 py-2 rounded-md text-xs font-medium cursor-pointer transition-all',
++        'px-4 py-2 rounded-md text-xs font-semibold cursor-pointer transition-all',
+         buttonVariants[variant],
+         className
+       )}
+@@ -28,7 +28,7 @@ export function Select({ children, className, ...props }) {
+     <select
+       className={cn(
+         'w-full px-3 py-2 bg-slate-800 border border-white/10 rounded-md',
+-        'text-slate-200 text-[13px] cursor-pointer',
++        'type-title cursor-pointer',
+         'focus:outline-none focus:border-green-500/50',
+         className
+       )}
+diff --git a/src/components/ui/Card.jsx b/src/components/ui/Card.jsx
+index 52c860d..6a5598a 100644
+--- a/src/components/ui/Card.jsx
++++ b/src/components/ui/Card.jsx
+@@ -12,7 +12,7 @@ export function Card({ className, children, ...props }) {
+ // PanelHeader: px-5 py-4 (16px 20px), 11px, semibold, tracking 1.5px, slate-500, uppercase
+ export function CardHeader({ className, children }) {
+   return (
+-    <div className={cn('px-5 py-4 border-b border-white/[0.06] text-[11px] font-semibold tracking-[1.5px] text-slate-500 uppercase flex items-center justify-between', className)}>
++    <div className={cn('px-5 py-4 border-b border-white/[0.06] type-label mb-0 tracking-[1.5px] flex items-center justify-between', className)}>
+       {children}
+     </div>
+   );
+diff --git a/src/components/ui/DataRow.jsx b/src/components/ui/DataRow.jsx
+index 18c46a9..ec1a18c 100644
+--- a/src/components/ui/DataRow.jsx
++++ b/src/components/ui/DataRow.jsx
+@@ -3,10 +3,10 @@ import { cn } from '../../lib/utils';
+ // DataRow - replaces .dataRow pattern (found many times)
+ export function DataRow({ label, value, className, mono = false, valueColor }) {
+   return (
+-    <div className={cn('flex justify-between py-1.5 text-[11px]', className)}>
++    <div className={cn('flex justify-between py-1.5 type-sm', className)}>
+       <span className="text-slate-500">{label}</span>
+       <span
+-        className={cn('font-medium', mono && 'font-mono', valueColor || 'text-slate-200')}
++        className={cn('font-semibold', mono && 'font-mono', valueColor || 'text-slate-200')}
+       >
+         {value}
+       </span>
+@@ -32,13 +32,13 @@ export function InfoBox({ label, icon, children, variant = 'blue', className })
+   return (
+     <div className={cn('p-4 rounded-lg border', variants[variant], className)}>
+       {label && (
+-        <div className={cn('text-[10px] font-semibold uppercase tracking-wider mb-2', labelColors[variant])}>
++        <div className={cn('type-label mb-2', labelColors[variant])}>
+           {label}
+         </div>
+       )}
+       <div className="flex gap-3">
+         {icon && <span className="text-lg shrink-0">{icon}</span>}
+-        <div className="text-[13px] text-slate-200 leading-relaxed">{children}</div>
++        <div className="type-body leading-relaxed">{children}</div>
+       </div>
+     </div>
+   );
+diff --git a/src/components/ui/ProgressBar.jsx b/src/components/ui/ProgressBar.jsx
+index 1adde36..ce43e50 100644
+--- a/src/components/ui/ProgressBar.jsx
++++ b/src/components/ui/ProgressBar.jsx
+@@ -20,7 +20,7 @@ export function ProgressBar({ value, max = 100, color = 'green', className, show
+         />
+       </div>
+       {showLabel && (
+-        <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-semibold">
++        <span className="absolute right-2 top-1/2 -translate-y-1/2 type-badge">
+           {label || `${Math.round(percent)}%`}
+         </span>
+       )}
+@@ -33,11 +33,11 @@ export function ComparisonBar({ gene, value, unit = '%', isBottleneck = false, r
+   return (
+     <div className="mb-3">
+       <div className="flex justify-between items-center mb-1">
+-        <span className="text-[11px]">
++        <span className="type-sm">
+           <span className={cn('font-mono', isBottleneck && 'text-red-400')}>{gene}</span>
+           {role && <span className="text-slate-500 ml-1">({role})</span>}
+         </span>
+-        <span className={cn('font-mono text-[11px]', isBottleneck ? 'text-red-500' : 'text-green-500')}>
++        <span className={cn('font-mono type-sm', isBottleneck ? 'text-red-500' : 'text-green-500')}>
+           {value}{unit}
+         </span>
+       </div>
+@@ -52,7 +52,7 @@ export function ComparisonBar({ gene, value, unit = '%', isBottleneck = false, r
+           style={{ width: `${Math.min(value, 100)}%` }}
+         />
+         {isBottleneck && (
+-          <span className="absolute right-2 top-1/2 -translate-y-1/2 text-[9px] font-semibold text-red-300">
++          <span className="absolute right-2 top-1/2 -translate-y-1/2 type-badge text-red-300">
+             BOTTLENECK
+           </span>
+         )}
+diff --git a/src/components/ui/Shared.jsx b/src/components/ui/Shared.jsx
+index dea8f54..ef1ec32 100644
+--- a/src/components/ui/Shared.jsx
++++ b/src/components/ui/Shared.jsx
+@@ -3,9 +3,9 @@ import { cn } from '../../lib/utils';
+ // DataRow: flex justify-between, py-2 (8px), border-b white/0.04, text-[13px]
+ export function DataRow({ label, value, className, valueClassName, style }) {
+   return (
+-    <div className={cn('flex justify-between py-1.5 border-b border-white/[0.04] last:border-b-0 text-[13px]', className)} style={style}>
++    <div className={cn('flex justify-between py-1.5 border-b border-white/[0.04] last:border-b-0 type-body', className)} style={style}>
+       <span className="text-slate-500">{label}</span>
+-      <span className={cn('text-slate-200 font-medium', valueClassName)}>{value}</span>
++      <span className={cn('text-slate-200 font-semibold', valueClassName)}>{value}</span>
+     </div>
+   );
+ }
+@@ -25,7 +25,7 @@ export function Badge({ variant, className, children }) {
+     keyGene: 'bg-yellow-500/20 border border-yellow-500/30 text-yellow-500',
+   };
+   return (
+-    <span className={cn('px-2 py-0.5 rounded text-[9px] font-semibold', variants[variant], className)}>
++    <span className={cn('px-2 py-0.5 rounded type-badge', variants[variant], className)}>
+       {children}
+     </span>
+   );
+@@ -39,7 +39,7 @@ export function Button({ variant = 'primary', className, children, ...props }) {
+     ghost: 'bg-transparent text-slate-400 hover:text-slate-200',
+   };
+   return (
+-    <button className={cn('px-4 py-2.5 rounded-md text-xs font-medium cursor-pointer transition-all', variants[variant], className)} {...props}>
++    <button className={cn('px-4 py-2.5 rounded-md text-xs font-semibold cursor-pointer transition-all', variants[variant], className)} {...props}>
+       {children}
+     </button>
+   );
+@@ -90,8 +90,8 @@ export function InfoBox({ variant = 'blue', className, children }) {
+ export function EmptyState({ title, children, className }) {
+   return (
+     <div className={cn('flex flex-col items-center justify-center h-full p-8 text-center', className)}>
+-      {title && <div className="text-sm text-slate-300 mb-1.5">{title}</div>}
+-      <div className="text-[13px] text-slate-500 max-w-[260px] leading-relaxed">{children}</div>
++      {title && <div className="type-body text-slate-300 mb-1.5">{title}</div>}
++      <div className="type-body text-slate-500 max-w-[260px] leading-relaxed">{children}</div>
+     </div>
+   );
+ }
+-- 
+2.43.0
+

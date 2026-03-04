@@ -420,12 +420,12 @@ export function searchByDescriptor(query) {
 
 // Popular search suggestions
 export const suggestedSearches = [
-  { term: 'banana', emoji: '🍌', description: 'Fruity ester notes' },
-  { term: 'peach', emoji: '🍑', description: 'Stone fruit aldehydes' },
-  { term: 'rose', emoji: '🌹', description: 'Floral phenethyl alcohol' },
-  { term: 'buttery', emoji: '🧈', description: 'Diacetyl/acetoin' },
-  { term: 'rancid', emoji: '🧀', description: 'Off-flavor fatty acids' },
-  { term: 'honey', emoji: '🍯', description: 'Sweet floral notes' },
-  { term: 'chocolate', emoji: '🍫', description: 'Malty aldehydes' },
-  { term: 'cherry', emoji: '🍒', description: 'Benzaldehyde' },
+  { term: 'banana',    description: 'Fruity ester notes' },
+  { term: 'peach',     description: 'Stone fruit aldehydes' },
+  { term: 'rose',      description: 'Floral phenethyl alcohol' },
+  { term: 'buttery',   description: 'Diacetyl/acetoin' },
+  { term: 'rancid',    description: 'Off-flavor fatty acids' },
+  { term: 'honey',     description: 'Sweet floral notes' },
+  { term: 'chocolate', description: 'Malty aldehydes' },
+  { term: 'cherry',    description: 'Benzaldehyde' },
 ];

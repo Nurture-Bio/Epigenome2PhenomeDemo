@@ -13,7 +13,7 @@
 
 .description {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 12px;
 }
 
@@ -27,16 +27,16 @@
 
 .targetSelect,
 .conditionSelect {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--alpha-3);
+  border: 1px solid var(--border-default);
   border-radius: 4px;
   padding: 6px 10px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239B9490' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
   padding-right: 28px;
@@ -44,25 +44,24 @@
 
 .targetSelect:hover,
 .conditionSelect:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  background-color: rgba(0, 0, 0, 0.4);
+  border-color: var(--border-strong);
 }
 
 .targetSelect:focus,
 .conditionSelect:focus {
   outline: none;
-  border-color: rgba(34, 197, 94, 0.5);
+  border-color: color-mix(in srgb, var(--color-success) 50%, transparent);
 }
 
 .targetSelect option,
 .conditionSelect option {
-  background: #1e293b;
-  color: #e2e8f0;
+  background: var(--surface-panel);
+  color: var(--text-primary);
 }
 
 .conditionTag {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 16px;
 }
 
@@ -70,10 +69,10 @@
 .loadAllBtn {
   width: 100%;
   padding: 10px 16px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border: 1px solid rgba(139, 92, 246, 0.25);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, color-mix(in srgb, var(--color-purple) 15%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-purple) 25%, transparent);
   border-radius: 6px;
-  color: #a78bfa;
+  color: var(--color-purple);
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
@@ -82,8 +81,8 @@
 }
 
 .loadAllBtn:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
-  border-color: rgba(139, 92, 246, 0.4);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 25%, transparent) 0%, color-mix(in srgb, var(--color-purple) 25%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 40%, transparent);
 }
 
 .loadAllBtn:disabled {
@@ -92,8 +91,8 @@
 }
 
 .loadAllBtn:disabled:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border-color: rgba(139, 92, 246, 0.25);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, color-mix(in srgb, var(--color-purple) 15%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 25%, transparent);
 }
 
 /* Layer list */
@@ -105,8 +104,8 @@
 }
 
 .layerCard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-subtle);
   border-left-width: 3px;
   border-left-style: solid;
   border-radius: 8px;
@@ -124,24 +123,24 @@
 .layerName {
   font-size: 13px;
   font-weight: 500;
-  color: #e2e8f0;
+  color: var(--text-primary);
 }
 
 .layerSource {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-left: 8px;
 }
 
 .layerQuestion {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .convergenceCard {
   margin-top: 12px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
-  border-color: rgba(139, 92, 246, 0.15);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 5%, transparent) 0%, color-mix(in srgb, var(--color-purple) 5%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 15%, transparent);
 }
 
 .layerCard.disabled {
@@ -163,8 +162,8 @@
   display: inline-block;
   width: 10px;
   height: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-top-color: #60a5fa;
+  border: 2px solid var(--border-default);
+  border-top-color: var(--color-accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -186,40 +185,40 @@
   gap: 10px;
   width: 100%;
   padding: 16px;
-  background: rgba(100, 100, 100, 0.15);
-  border: 1px solid rgba(100, 100, 100, 0.2);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: var(--text-muted);
   cursor: not-allowed;
   transition: all 0.3s ease;
   margin-bottom: 20px;
 }
 
 .convergeButton.convergeReady {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border-color: rgba(139, 92, 246, 0.3);
-  color: #a78bfa;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 15%, transparent) 0%, color-mix(in srgb, var(--color-purple) 15%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 30%, transparent);
+  color: var(--color-purple);
   cursor: pointer;
 }
 
 .convergeButton.convergeReady:hover {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(139, 92, 246, 0.25) 100%);
-  border-color: rgba(139, 92, 246, 0.5);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 25%, transparent) 0%, color-mix(in srgb, var(--color-purple) 25%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 50%, transparent);
   transform: translateY(-1px);
 }
 
 .convergeButton.converging {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-  border-color: rgba(139, 92, 246, 0.2);
-  color: #94a3b8;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 10%, transparent) 0%, color-mix(in srgb, var(--color-purple) 10%, transparent) 100%);
+  border-color: color-mix(in srgb, var(--color-purple) 20%, transparent);
+  color: var(--text-secondary);
 }
 
 .convergeButton.converged {
-  background: rgba(34, 197, 94, 0.1);
-  border-color: rgba(34, 197, 94, 0.3);
-  color: #22c55e;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-success) 30%, transparent);
+  color: var(--color-success);
 }
 
 .convergeIcon {
@@ -235,8 +234,8 @@
 
 /* AI typing box */
 .aiTypingBox {
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: color-mix(in srgb, var(--color-purple) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-purple) 20%, transparent);
   border-radius: 12px;
   padding: 16px;
 }
@@ -247,7 +246,7 @@
   gap: 8px;
   margin-bottom: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-purple) 15%, transparent);
 }
 
 .aiIcon {
@@ -257,20 +256,20 @@
 .aiLabel {
   font-size: 12px;
   font-weight: 600;
-  color: #a78bfa;
+  color: var(--color-purple);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .aiText {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   line-height: 1.6;
   min-height: 120px;
 }
 
 .aiIntro {
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin-bottom: 12px;
 }
 
@@ -282,7 +281,7 @@
 }
 
 .bulletIcon {
-  color: #22c55e;
+  color: var(--color-success);
   flex-shrink: 0;
 }
 
@@ -309,8 +308,8 @@
   align-items: flex-start;
   gap: 12px;
   padding: 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   animation: fadeInUp 0.3s ease;
 }
@@ -328,7 +327,7 @@
 .insightLabel {
   font-size: 10px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
@@ -336,14 +335,14 @@
 
 .insightValue {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   line-height: 1.4;
 }
 
 /* Typewriter effect */
 .cursor {
   display: inline-block;
-  color: #a78bfa;
+  color: var(--color-purple);
   animation: blink 0.8s infinite;
   margin-left: 2px;
 }
@@ -363,7 +362,7 @@
 .typingDot {
   width: 8px;
   height: 8px;
-  background: #a78bfa;
+  background: var(--color-purple);
   border-radius: 50%;
   animation: typingBounce 1.2s infinite;
 }
@@ -377,11 +376,11 @@
 }
 
 @keyframes typingBounce {
-  0%, 60%, 100% { 
+  0%, 60%, 100% {
     transform: translateY(0);
     opacity: 0.4;
   }
-  30% { 
+  30% {
     transform: translateY(-8px);
     opacity: 1;
   }
@@ -399,20 +398,20 @@
 .geneNameLarge {
   font-size: 28px;
   font-weight: 300;
-  color: #f1f5f9;
+  color: var(--text-primary);
   margin-bottom: 4px;
 }
 
 .geneSystematic {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-muted);
   font-family: monospace;
   margin-bottom: 8px;
 }
 
 .geneDesc {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
 }
 
 /* Expression bars (RNA-seq) */
@@ -433,7 +432,7 @@
 
 .conditionName {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
 }
 
 .expressionPct {
@@ -443,7 +442,7 @@
 
 .expressionBar {
   height: 10px;
-  background: #1e293b;
+  background: var(--surface-input);
   border-radius: 5px;
   overflow: hidden;
 }
@@ -462,8 +461,8 @@
 /* Alert box */
 .alertBox {
   padding: 16px;
-  background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.2);
+  background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-warning) 20%, transparent);
   border-radius: 8px;
   margin-bottom: 24px;
 }
@@ -482,17 +481,17 @@
 .alertTitle {
   font-size: 14px;
   font-weight: 600;
-  color: #fbbf24;
+  color: var(--color-warning);
 }
 
 .alertSubtitle {
   font-size: 11px;
-  color: #f59e0b;
+  color: var(--color-warning);
 }
 
 .alertBody {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -504,8 +503,8 @@
 }
 
 .impactCard {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   padding: 16px;
   text-align: center;
@@ -519,7 +518,7 @@
 
 .impactLabel {
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 /* Metric display (other layers) */
@@ -527,7 +526,7 @@
   text-align: center;
   margin-bottom: 24px;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-hover);
   border-radius: 12px;
 }
 
@@ -545,7 +544,7 @@
 
 .metricUnit {
   font-size: 13px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .statusBadge {
@@ -556,7 +555,7 @@
   font-size: 13px;
   font-weight: 500;
   text-align: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--alpha-2);
   margin-bottom: 24px;
 }
 
@@ -583,21 +582,21 @@
 
 .emptyTitle {
   font-size: 14px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
 .emptyDesc {
   font-size: 12px;
-  color: #475569;
+  color: var(--text-muted);
   max-width: 200px;
 }
 
 /* Finding / Implication boxes */
 .findingBox {
   padding: 16px;
-  background: rgba(59, 130, 246, 0.08);
-  border: 1px solid rgba(59, 130, 246, 0.2);
+  background: color-mix(in srgb, var(--color-accent) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent);
   border-radius: 8px;
   margin-bottom: 16px;
 }
@@ -605,7 +604,7 @@
 .findingLabel {
   font-size: 10px;
   font-weight: 600;
-  color: #60a5fa;
+  color: var(--color-accent);
   letter-spacing: 1px;
   text-transform: uppercase;
   margin-bottom: 8px;
@@ -613,7 +612,7 @@
 
 .findingText {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   line-height: 1.5;
 }
 
@@ -621,8 +620,8 @@
   display: flex;
   gap: 12px;
   padding: 14px;
-  background: rgba(139, 92, 246, 0.08);
-  border: 1px solid rgba(139, 92, 246, 0.2);
+  background: color-mix(in srgb, var(--color-purple) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-purple) 20%, transparent);
   border-radius: 8px;
 }
 
@@ -632,7 +631,7 @@
 
 .implicationText {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -640,14 +639,14 @@
 .comparisonSection {
   margin-bottom: 20px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--surface-hover);
   border-radius: 8px;
 }
 
 .comparisonTitle {
   font-size: 11px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 14px;
@@ -665,20 +664,20 @@
 }
 
 .comparisonGene .highlightGene {
-  color: #ef4444;
+  color: var(--color-danger);
   font-weight: 600;
 }
 
 .comparisonRole {
   display: block;
   font-size: 9px;
-  color: #475569;
+  color: var(--text-muted);
 }
 
 .comparisonBar {
   flex: 1;
   height: 10px;
-  background: #1e293b;
+  background: var(--surface-input);
   border-radius: 5px;
   overflow: hidden;
   position: relative;
@@ -696,7 +695,7 @@
   top: 50%;
   transform: translateY(-50%);
   font-size: 8px;
-  color: #fca5a5;
+  color: var(--color-danger);
   font-weight: 600;
   letter-spacing: 0.5px;
 }
@@ -718,15 +717,15 @@
 
 .detailCard {
   padding: 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
   text-align: center;
 }
 
 .detailLabel {
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 6px;
 }
 
@@ -743,7 +742,7 @@
 .marksTitle {
   font-size: 11px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 14px;
@@ -755,7 +754,7 @@
 
 .metricRow {
   padding: 12px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .metricRow:last-child {
@@ -777,7 +776,7 @@
 
 .markName {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
 }
 
 .markType {
@@ -792,7 +791,7 @@
 
 .markBar {
   height: 8px;
-  background: #1e293b;
+  background: var(--surface-input);
   border-radius: 4px;
   overflow: hidden;
   position: relative;
@@ -803,7 +802,7 @@
   top: 0;
   bottom: 0;
   width: 2px;
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--border-strong);
 }
 
 .markFill {
@@ -816,8 +815,8 @@
 .actionCard {
   margin-top: 16px;
   padding: 16px;
-  background: rgba(167, 139, 250, 0.06);
-  border: 1px solid rgba(167, 139, 250, 0.2);
+  background: color-mix(in srgb, var(--color-purple) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-purple) 20%, transparent);
   border-radius: 10px;
   animation: fadeInUp 0.4s ease;
 }
@@ -836,7 +835,7 @@
 .actionTitle {
   font-size: 11px;
   font-weight: 600;
-  color: #a78bfa;
+  color: var(--color-purple);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -849,20 +848,20 @@
 
 .actionText {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   line-height: 1.5;
   font-weight: 500;
 }
 
 .actionBecause {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.5;
   padding-left: 12px;
-  border-left: 2px solid rgba(167, 139, 250, 0.3);
+  border-left: 2px solid color-mix(in srgb, var(--color-purple) 30%, transparent);
 }
 
 .becauseLabel {
   font-weight: 600;
-  color: #a78bfa;
+  color: var(--color-purple);
 }

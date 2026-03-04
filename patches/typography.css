@@ -1,5 +1,5 @@
 /*
- * typography.css — E2P unified type system
+ * typography.css — AtacFlux unified type system
  *
  * 8 tokens. Each one is a complete visual pattern — size, weight, color,
  * spacing, tracking all baked in. No extra classes needed for the common case.
@@ -7,7 +7,7 @@
  * Override when needed: Tailwind utilities beat @layer base, so
  *   className="type-label text-violet-400"   ← violet label
  *   className="type-label mb-1"              ← tighter spacing
- *   className="type-sm text-text-muted"      ← explicit muted override
+ *   className="type-sm text-slate-500"       ← more muted
  *
  * Import AFTER tailwind in global.css:
  *   @import "tailwindcss";
@@ -18,19 +18,22 @@
 
   /* --------------------------------------------------------- */
   /*  HEADING — page titles, gene detail names                 */
-  /*  28px · light 300 · text-primary                          */
+  /*  28px · light 300 · slate-200                             */
+  /*  Used: PageHeader h1, GeneTopology gene name,             */
+  /*        EpigenomePage gene name                             */
   /* --------------------------------------------------------- */
   .type-heading {
     font-size: 28px;
     font-weight: 300;
-    color: var(--text-primary);
+    color: #e2e8f0;
     margin: 0;
   }
 
   /* --------------------------------------------------------- */
   /*  METRIC — big KPI numbers (capture rate, fold change, ΔG) */
   /*  28px · semibold 600 · mono · no default color            */
-  /*  Color is always dynamic (green/red/muted per value)      */
+  /*  Color is always dynamic (green/red/slate per value)      */
+  /*  Used: SimulationPage capture %, fold×, MetabolismPage ΔG */
   /* --------------------------------------------------------- */
   .type-metric {
     font-size: 28px;
@@ -42,7 +45,8 @@
   /* --------------------------------------------------------- */
   /*  GENE — gene name in list rows (prominent inline display) */
   /*  15px · semibold 600 · mono · no default color            */
-  /*  Color set per-context (green-500, text-primary, etc.)   */
+  /*  Color set per-context (green-500, slate-200, etc.)       */
+  /*  Used: FlavorSearch list, SimulationPage gene names       */
   /* --------------------------------------------------------- */
   .type-gene {
     font-size: 15px;
@@ -52,43 +56,58 @@
 
   /* --------------------------------------------------------- */
   /*  BODY — primary readable text                             */
-  /*  13px · normal 400 · text-primary                         */
+  /*  13px · normal 400 · slate-200                            */
+  /*  Used: AI analysis prose, item descriptions, data values, */
+  /*        page subtitles (with text-slate-400 override),     */
+  /*        findings, reaction names                           */
   /* --------------------------------------------------------- */
   .type-body {
     font-size: 13px;
     font-weight: 400;
-    color: var(--text-primary);
+    color: #e2e8f0;
   }
 
   /* --------------------------------------------------------- */
   /*  TITLE — emphasized name in a list or row                 */
-  /*  13px · semibold 600 · text-primary                       */
+  /*  13px · semibold 600 · slate-200                          */
+  /*  The bold sibling of type-body. Use for the primary name  */
+  /*  in a selectable row: layer name, compound name, action.  */
+  /*  Used: layer names, compound titles, reaction IDs,        */
+  /*        intervention actions                               */
   /* --------------------------------------------------------- */
   .type-title {
     font-size: 13px;
     font-weight: 600;
-    color: var(--text-primary);
+    color: #e2e8f0;
   }
 
   /* --------------------------------------------------------- */
   /*  SM — secondary detail text                               */
-  /*  11px · normal 400 · text-secondary                       */
+  /*  11px · normal 400 · slate-400                            */
+  /*  The workhorse small text: descriptions, table cells,     */
+  /*  data-row values, source lines, questions, footnotes.     */
+  /*  Used: layer.question, layer.source, substrates/products, */
+  /*        DataRow values, gene full_name, table body cells   */
   /* --------------------------------------------------------- */
   .type-sm {
     font-size: 11px;
     font-weight: 400;
-    color: var(--text-secondary);
+    color: #94a3b8;
   }
 
   /* --------------------------------------------------------- */
   /*  LABEL — uppercase section divider                        */
-  /*  11px · semibold 600 · text-muted · uppercase · tracked   */
+  /*  10px · semibold 600 · slate-500 · uppercase · tracked    */
   /*  mb-3 baked in (override with mb-* when tighter/looser)   */
+  /*  Used: "PATHWAY GENE EXPRESSION", "HISTONE MARK          */
+  /*  ENRICHMENT", table column headers, card section titles,  */
+  /*  "AI Analysis" (with text-violet-400 override),           */
+  /*  metric captions (with mb-1 override)                     */
   /* --------------------------------------------------------- */
   .type-label {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
-    color: var(--text-muted);
+    color: #64748b;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 12px;
@@ -96,46 +115,46 @@
 
   /* --------------------------------------------------------- */
   /*  MONO — identifiers, coordinates, sequence IDs            */
-  /*  11px · normal 400 · mono · text-muted                    */
+  /*  11px · normal 400 · mono · slate-500                     */
+  /*  Used: YOR377W, chr XV:798234, spacer sequences,          */
+  /*        EC numbers, genomic coordinates                    */
   /* --------------------------------------------------------- */
   .type-mono {
     font-size: 11px;
     font-weight: 400;
     font-family: 'IBM Plex Mono', monospace;
-    color: var(--text-muted);
+    color: #64748b;
   }
 
   /* --------------------------------------------------------- */
   /*  BADGE — tiny inline status text (BLOCKED, BOTTLENECK)    */
-  /*  10px · semibold 600 · no default color                   */
+  /*  9px · semibold 600 · no default color                    */
   /*  Color always set per-context                             */
   /* --------------------------------------------------------- */
   .type-badge {
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 600;
   }
 
   /* --------------------------------------------------------- */
-  /*  CAPTION — helper text (detail annotations, counts)       */
-  /*  11px · normal 400 · text-muted                           */
+  /*  CAPTION — 10px helper text (detail annotations, counts)  */
+  /*  10px · normal 400 · slate-500                            */
+  /*  Used: layer source labels, descriptor counts, bar axis   */
   /* --------------------------------------------------------- */
   .type-caption {
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 400;
-    color: var(--text-muted);
+    color: #64748b;
   }
 
   /* --------------------------------------------------------- */
   /*  SELECT — form control text (dropdowns, selects)          */
-  /*  13px · semibold 600 · text-primary                       */
-  /*  Arrow SVG is themed via :root / [data-theme="dark"]      */
+  /*  13px · semibold 600 · slate-200                          */
+  /*  Used: all <select> dropdowns across pages                */
   /* --------------------------------------------------------- */
   .type-select {
     font-size: 13px;
     font-weight: 600;
-    color: var(--text-primary);
-    background-image: var(--select-arrow);
-    background-repeat: no-repeat;
-    background-position: right 8px center;
+    color: #e2e8f0;
   }
 }

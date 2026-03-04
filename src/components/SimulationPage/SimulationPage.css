@@ -10,7 +10,7 @@
 .diagramTitle {
   font-size: 16px;
   font-weight: 600;
-  fill: #94a3b8;
+  fill: var(--text-muted);
   text-anchor: middle;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -18,8 +18,8 @@
 
 /* Metabolite nodes */
 .metaboliteRect {
-  fill: rgba(30, 41, 59, 0.9);
-  stroke: rgba(255, 255, 255, 0.12);
+  fill: var(--surface-panel);
+  stroke: var(--border-default);
   stroke-width: 1;
   transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
 }
@@ -28,7 +28,7 @@
   stroke: rgba(59, 130, 246, 0.4);
 }
 .metaboliteRect.product {
-  fill: rgba(30, 41, 59, 0.9);
+  fill: var(--surface-panel);
   stroke: rgba(250, 204, 21, 0.4);
 }
 .metaboliteRect.productActive {
@@ -37,22 +37,22 @@
   filter: url(#glow);
 }
 .metaboliteRect.waste {
-  fill: rgba(20, 25, 35, 0.6);
-  stroke: rgba(255, 255, 255, 0.06);
+  fill: var(--surface-input);
+  stroke: var(--border-subtle);
   stroke-dasharray: 4 2;
 }
 
 .metaboliteText {
   font-size: 14px;
   font-weight: 500;
-  fill: #e2e8f0;
+  fill: var(--text-primary);
   text-anchor: middle;
   font-family: 'IBM Plex Sans', sans-serif;
 }
 .fluxPercent {
   font-size: 13px;
   font-weight: 600;
-  fill: #94a3b8;
+  fill: var(--text-muted);
   text-anchor: start;
   font-family: 'IBM Plex Mono', monospace;
 }
@@ -63,11 +63,11 @@
   filter: brightness(1.3) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.4));
 }
 .enzymePill {
-  fill: rgba(15, 23, 42, 1);
+  fill: var(--surface-panel);
   stroke-width: 1.5;
   transition: fill 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
 }
-.enzymePill.enzymeActive { fill: rgba(20, 30, 48, 1); }
+.enzymePill.enzymeActive { fill: var(--surface-raised); }
 .enzymeLabel {
   font-size: 11px;
   font-weight: 600;

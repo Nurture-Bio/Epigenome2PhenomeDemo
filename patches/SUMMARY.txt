@@ -1,0 +1,27 @@
+ src/components/EpigenomePage/EpigenomePage.jsx     | 50 +++++++--------
+ .../FlavorSearchPage/FlavorSearchPage.jsx          | 16 ++---
+ .../GeneTopologyPage/GeneTopologyPage.jsx          | 74 +++++++++++-----------
+ src/components/GuideDesignPage/GuideDesignPage.jsx | 16 ++---
+ src/components/MetabolismPage/MetabolismPage.jsx   | 38 +++++------
+ src/components/Navigation/Navigation.jsx           |  8 +--
+ src/components/PageHeader/PageHeader.jsx           |  4 +-
+ src/components/SimulationPage/SimulationPage.jsx   | 22 +++----
+ src/components/ui/Badge.jsx                        |  2 +-
+ src/components/ui/Button.jsx                       |  4 +-
+ src/components/ui/Card.jsx                         |  2 +-
+ src/components/ui/DataRow.jsx                      |  8 +--
+ src/components/ui/ProgressBar.jsx                  |  8 +--
+ src/components/ui/Shared.jsx                       | 12 ++--
+ src/styles/global.css                              |  1 +
+ src/styles/typography.css                          | 32 ++++++++++
+ 16 files changed, 165 insertions(+), 132 deletions(-)
+---
+80af9bf refactor(typography): migrate FlavorSearchPage
+a44b619 refactor(typography): migrate GuideDesignPage
+945ad39 refactor(typography): migrate SimulationPage
+8f747d4 refactor(typography): migrate MetabolismPage
+0bf47fe refactor(typography): migrate GeneTopologyPage
+1a9fccf refactor(typography): migrate EpigenomePage
+e34335c refactor(typography): migrate UI components
+3aa190f refactor(typography): migrate PageHeader + Navigation
+dc3ee38 feat(typography): add typography.css token system and wire into global.css

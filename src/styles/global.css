@@ -1,10 +1,155 @@
 @import "tailwindcss";
 @import './typography.css';
 
-/* Global Reset & Base Styles */
+/* =====================================================
+   LAYER 1: PRIMITIVES
+   ===================================================== */
 :root {
   --header-height: 81px;
+
+  /* Slate scale — cool, clinical precision */
+  --color-sand-50:  #FFFFFF;         /* purest surface — panels, nav */
+  --color-sand-100: #F8FAFC;         /* barely cool white — raised surfaces */
+  --color-sand-200: #F1F5F9;         /* cool slate body */
+  --color-sand-300: #FFFFFF;         /* nav bar = white (border separates it) */
+
+  /* Ink scale — cool dark text */
+  --color-soot-900: #0F172A;         /* ~18:1 on white */
+  --color-soot-600: #475569;         /* ~7.6:1 on white */
+  --color-soot-400: #64748B;         /* ~4.76:1 on white */
+
+  /* Alpha conduit — cool solid tints */
+  --alpha-1: #F8FAFC;   /* surface-input — near-white form bg */
+  --alpha-2: #E2E8F0;   /* hover */
+  --alpha-3: #CBD5E1;   /* selected / border-default */
+  --alpha-4: #94A3B8;   /* */
+  --alpha-5: #64748B;   /* border-strong */
+
+  /* Semantic action colors — WCAG AA on white (≥4.5:1 verified) */
+  --color-success: #166534;   /* green-800, 7.1:1 on white */
+  --color-danger:  #b91c1c;   /* red-700,   6.5:1 on white */
+  --color-warning: #92400e;   /* amber-800, 7.1:1 on white */
+  --color-accent:  #2563eb;   /* blue-600,  5.2:1 on white */
+  --color-purple:  #7c3aed;   /* violet-600, 5.7:1 on white */
+
+  /* Select arrow — cool ink on slate */
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748B' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
 }
+
+[data-theme="dark"] {
+  /* Sand scale — dark void */
+  --color-sand-50:  rgba(255, 255, 255, 0.04);
+  --color-sand-100: rgba(255, 255, 255, 0.02);
+  --color-sand-200: #0a0f14;
+  --color-sand-300: rgba(255, 255, 255, 0.02);
+
+  /* Soot scale — light text on dark */
+  --color-soot-900: #e2e8f0;
+  --color-soot-600: #94a3b8;
+  --color-soot-400: #64748b;
+
+  /* Alpha conduit — white tints on dark */
+  --alpha-1: rgba(255, 255, 255, 0.02);
+  --alpha-2: rgba(255, 255, 255, 0.06);
+  --alpha-3: rgba(255, 255, 255, 0.10);
+  --alpha-4: rgba(255, 255, 255, 0.15);
+  --alpha-5: rgba(255, 255, 255, 0.22);
+
+  /* Semantic action colors — bright for contrast on dark */
+  --color-success: #22c55e;
+  --color-danger:  #ef4444;
+  --color-warning: #fb923c;
+  --color-accent:  #3b82f6;
+  --color-purple:  #8b5cf6;
+
+  /* Select arrow — lighter on dark void */
+  --select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2394a3b8' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+}
+
+/* =====================================================
+   LAYER 2: SEMANTICS  (defined once, never changed)
+   ===================================================== */
+:root {
+  --surface-background: var(--color-sand-200);
+  --surface-panel:      var(--color-sand-50);
+  --surface-raised:     var(--color-sand-100);
+  --surface-input:      var(--alpha-1);
+  /* Hover/selected: accent-tinted, not grey — coherent across all interactive contexts.
+     Transparent as mix partner means "rgba(accent, N%)" — works on any surface, any theme. */
+  --surface-hover:    color-mix(in srgb, var(--color-accent)  6%, transparent);
+  --surface-selected: color-mix(in srgb, var(--color-accent) 12%, transparent);
+
+  --text-primary:   var(--color-soot-900);
+  --text-secondary: var(--color-soot-600);
+  --text-muted:     var(--color-soot-400);
+
+  --border-subtle:  var(--alpha-2);
+  --border-default: var(--alpha-3);
+  --border-strong:  var(--alpha-5);
+
+  --nav-background: var(--color-sand-300);
+  --nav-border:     var(--alpha-3);
+
+  /* Text that lives ON top of action-colored backgrounds (buttons, badges, mode headers) */
+  --text-on-color: #ffffff;
+
+  /* =====================================================
+     PHYSICS: timing (φ × 160ms), easing, radius, glow
+     ===================================================== */
+  --t-instant: 61ms;
+  --t-fast:    99ms;
+  --t-base:    160ms;
+  --t-ease:    259ms;
+  --t-slow:    419ms;
+  --t-drift:   678ms;
+
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:   cubic-bezier(0.4, 0, 1, 1);
+  --ease-move: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Radius: instrument-grade, not consumer-app */
+  --radius-sm:   2px;
+  --radius-md:   4px;
+  --radius-lg:   6px;
+  --radius-panel: 0px;   /* panels/cards: flush, not bubbly */
+
+  /* Glow tokens */
+  --glow-accent-sm:  0 2px 14px color-mix(in srgb, var(--color-accent)  32%, transparent);
+  --glow-success-sm: 0 2px 14px color-mix(in srgb, var(--color-success) 32%, transparent);
+  --glow-danger-sm:  0 2px 14px color-mix(in srgb, var(--color-danger)  32%, transparent);
+  --glow-focus:      0 0 0 2px color-mix(in srgb, var(--color-accent)   38%, transparent);
+}
+
+/* =====================================================
+   TAILWIND v4 THEME CONDUIT
+   Binds semantic tokens → Tailwind utility engine
+   Generates: bg-surface-*, text-text-*, border-border-*
+   ===================================================== */
+@theme {
+  --color-surface-background: var(--surface-background);
+  --color-surface-panel:      var(--surface-panel);
+  --color-surface-raised:     var(--surface-raised);
+  --color-surface-input:      var(--surface-input);
+  --color-surface-hover:      var(--surface-hover);
+  --color-surface-selected:   var(--surface-selected);
+
+  --color-text-primary:   var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted:     var(--text-muted);
+
+  --color-border-subtle:  var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-strong:  var(--border-strong);
+
+  --color-nav-background: var(--nav-background);
+  --color-nav-border:     var(--nav-border);
+
+  --color-text-on-color: var(--text-on-color);
+}
+
+/* =====================================================
+   BASE
+   ===================================================== */
 
 /* NOTE: Do NOT add a * { margin: 0; padding: 0 } reset here.
    Tailwind v4 preflight already does this inside @layer base.
@@ -13,8 +158,8 @@
 
 body {
   font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #0a0f14;
-  color: #e2e8f0;
+  background: var(--surface-background);
+  color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -96,10 +241,17 @@ body {
   51%, 100% { opacity: 0; }
 }
 
+/* Disabled state — universal, unmistakable */
+:disabled,
+[aria-disabled="true"] {
+  opacity: 0.38;
+  filter: grayscale(1);
+  cursor: not-allowed;
+}
+
 /* Selection styling */
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #fff;
+  background: color-mix(in srgb, var(--color-accent) 25%, transparent);
 }
 
 /* Scrollbar styling */
@@ -109,14 +261,476 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--alpha-1);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--alpha-3);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--alpha-4);
+}
+
+
+/* =====================================================
+   DATA CELL OVERLAY PATTERN
+   Two-layer compositing for interactive scientific grids:
+     Layer 1 — --data-color on background-color (heatmap signal, set on <tr>, inherited)
+     Layer 2 — ::after pseudo-element (interaction state: hover tint / selection highlight)
+   The overlay is pointer-events:none so it never blocks text or click targets.
+   ===================================================== */
+
+.data-row {
+  cursor: pointer;
+}
+
+.data-cell {
+  background-color: var(--data-color, transparent);
+  position: relative;
+}
+
+.data-cell::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  transition: background-color 0.15s;
+}
+
+.data-row:hover .data-cell::after {
+  background-color: var(--surface-hover);
+}
+
+.data-row[aria-selected="true"] .data-cell::after {
+  background-color: var(--surface-selected);
+}
+
+/* Left accent on first cell only — purely visual, no layout impact */
+.data-row[aria-selected="true"] .data-cell:first-child::after {
+  border-left: 2px solid var(--color-accent);
+}
+
+/* =====================================================
+   INTERACTION MECHANICS — physics-governed
+   ===================================================== */
+
+/* Universal timing on interactive elements */
+button, input, select, [role="button"], [role="option"] {
+  transition:
+    background   var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    box-shadow   var(--t-fast) var(--ease-out),
+    color        var(--t-fast) var(--ease-out),
+    filter       var(--t-fast) var(--ease-out);
+}
+
+button:active:not(:disabled),
+[role="button"]:active:not([aria-disabled="true"]) {
+  transform: scale(0.97);
+  transition: transform var(--t-instant) var(--ease-out);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--glow-focus);
+}
+
+/* =====================================================
+   BUTTON PRIMITIVES — .btn base + variants
+   ===================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 30px;
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  user-select: none;
+  white-space: nowrap;
+  line-height: 1;
+  transition:
+    background   var(--t-fast) var(--ease-out),
+    border-color var(--t-fast) var(--ease-out),
+    box-shadow   var(--t-fast) var(--ease-out),
+    filter       var(--t-fast) var(--ease-out),
+    transform    var(--t-instant) var(--ease-out);
+}
+.btn:active:not(:disabled) { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--text-on-color);
+}
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.1);
+  box-shadow: var(--glow-accent-sm);
+}
+
+.btn-secondary {
+  background: var(--surface-input);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-hover);
+  border-color: var(--border-strong);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.btn-danger {
+  background: var(--color-danger);
+  color: var(--text-on-color);
+}
+.btn-danger:hover:not(:disabled) {
+  filter: brightness(1.1);
+  box-shadow: var(--glow-danger-sm);
+}
+
+/* =====================================================
+   .dr — DATA ROW  (works on both <div> and <tr>)
+   .dt — DATA TABLE (semantic <table> whose <tr>s are .dr)
+
+   HOVER MODEL — additive overlay, not background replacement.
+   -------------------------------------------------------
+   The wrong approach: .dr:hover { background: someColor }
+   This DESTROYS any information already in the background
+   (delta tints, status tints). Every OLAP tool gets this wrong
+   at first. The correct model, used by Bloomberg, Kibana EUI,
+   and Carbon: hover = a semi-transparent wash composited ON TOP
+   of whatever is already there.
+
+   MECHANISM — inset box-shadow fill trick:
+     box-shadow: inset 0 0 0 9999px rgba(...)
+   A spread-only inset shadow with a huge spread fills the entire
+   padding box of the element. It sits ABOVE the background in the
+   paint order but BELOW the content — exactly like an overlay.
+   Crucially, this works on <tr> elements, where ::after
+   pseudo-elements are undefined by the CSS spec and fail in
+   border-collapse tables.
+
+   TWO ORTHOGONAL PROPERTIES — zero cascade conflicts:
+     background  → owned exclusively by delta tint (or transparent)
+     box-shadow  → owns status left-bar AND interaction overlay
+   These properties never fight. Hover cannot overwrite delta.
+   Delta cannot bleed into the status bar.
+
+   STATUS LEFT-BAR — set --dr-status on the element inline:
+     style={{ '--dr-status': 'var(--color-danger)' }}
+   Uses inset 2px 0 0 (x-offset only) to paint a 2px left edge.
+   border-left: does NOT work on <tr> with border-collapse:collapse.
+   box-shadow inset does.
+
+   HOVER/SELECTED OVERLAY — accent-tinted, not grey/black.
+   Using rgba(0,0,0,X) on cool white pulls warm → reads brown.
+   Accent-tinted fill (the same blue used site-wide for hover)
+   composites cleanly on any background without warmth shift.
+   ===================================================== */
+
+:root {
+  /* Accent-tinted overlay fill for .dr hover and selected states.
+     Progressive: hover=6% accent, selected=12% accent.
+     color-mix with transparent = rgba(accent, N%) on any surface. */
+  --dr-hover-fill:    color-mix(in srgb, var(--color-accent)  6%, transparent);
+  --dr-selected-fill: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+.dr {
+  cursor: pointer;
+  /* Status bar: set --dr-status inline on the element.
+     Default transparent = no bar, zero visual cost. */
+  box-shadow: inset 2px 0 0 var(--dr-status, transparent);
+  transition:
+    background var(--t-fast) var(--ease-out),
+    box-shadow var(--t-fast) var(--ease-out);
+}
+
+/* Hover: adds overlay fill to existing box-shadow.
+   --dr-status preserved as first value in the list. */
+.dr:hover {
+  box-shadow:
+    inset 2px 0 0 var(--dr-status, transparent),
+    inset 0 0 0 9999px var(--dr-hover-fill);
+}
+
+/* Selected: deeper overlay. Applied via dr--selected class from JSX.
+   Both status bar and fill coexist — no information lost. */
+.dr--selected {
+  box-shadow:
+    inset 2px 0 0 var(--dr-status, transparent),
+    inset 0 0 0 9999px var(--dr-selected-fill);
+}
+
+/* DELTA TINTS — continuous red→white→blue diverging heatmap.
+   -------------------------------------------------------
+   Applied via inline style background from divergingColor() in colorScale.js.
+   No CSS keyframes — CSS transition: background on .dr handles animation.
+   The color is a color-mix() of var(--color-accent) or var(--color-danger)
+   with var(--surface-panel), intensity proportional to the relative flux change.
+   White neutral on light theme, dark-void neutral on dark theme.
+   Threshold ±5% (enforced in divergingColor). */
+
+/* DATA TABLE — semantic <table> element.
+   Sticky headers require position:sticky + explicit background
+   (otherwise scrolled rows bleed through).
+   border-collapse:collapse is required for .dr box-shadow to
+   render correctly — separate borders create gaps. */
+.dt {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: inherit;
+}
+.dt thead th {
+  padding: 6px 12px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap;
+  position: sticky; /* freeze header on scroll */
+  top: 0;
+  background: var(--surface-panel); /* opaque — prevents row bleed-through */
+  z-index: 1;
+}
+.dt tbody td {
+  padding: 8px 12px;
+  font-size: 11px;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+/* =====================================================
+   .ac — ACTION CARD  (grid-based selectable item)
+
+   Companion to .dr for card-shaped interaction targets.
+   Where .dr owns a row, .ac owns a card tile.
+
+   Three-state cascade:
+     rest     → surface-hover base, left-accent border
+     hover    → lift (translateY -1px) + accent glow shadow
+     selected → surface-selected + ring shadow, no lift
+     disabled → opacity 40%, pointer-events none
+
+   --ac-accent: set inline on the element to drive both
+   the left border color and the hover shadow color.
+   ===================================================== */
+
+.ac {
+  cursor: pointer;
+  border: 1px solid var(--border-subtle);
+  border-left: 3px solid var(--ac-accent, var(--border-default));
+  background: var(--surface-hover); /* always-on subtle base */
+  transition:
+    background  var(--t-fast) var(--ease-out),
+    box-shadow  var(--t-fast) var(--ease-out),
+    transform   var(--t-fast) var(--ease-out);
+}
+.ac:hover:not(.ac--selected):not(.ac--disabled) {
+  background: var(--surface-selected);
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px var(--border-default),
+    0 2px 8px color-mix(in srgb, var(--ac-accent, var(--color-accent)) 20%, transparent);
+}
+.ac:active:not(.ac--disabled) {
+  transform: scale(0.98);
+  transition-duration: var(--t-instant);
+}
+.ac--selected {
+  background: var(--surface-selected);
+  box-shadow: 0 0 0 1px var(--border-default), 0 4px 12px var(--alpha-3);
+}
+.ac--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* =====================================================
+   .mb — METRIC BAR primitive
+
+   Same architecture as .dr / .ac:
+   CSS owns every visual rule. React sets one variable.
+   --mb-fill: driven inline by the variant prop.
+   Framer Motion animates width on .mb-fill.
+
+   .mb-track   — the full-width background rail
+   .mb-fill    — the animated value fill (width set by Motion)
+   .mb-baseline — optional reference line (e.g. fold-change at 20%)
+   .mb-header  — label / value row above the track
+   .mb-label   — left-side descriptor
+   .mb-value   — right-side mono value
+   ===================================================== */
+
+.mb-track {
+  height: 6px;
+  overflow: hidden;
+  position: relative;
+  background: var(--surface-input);
+  border-radius: var(--radius-md);
+}
+
+.mb-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: var(--mb-fill, var(--color-accent));
+  border-radius: var(--radius-md);
+}
+
+.mb-baseline {
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 1px;
+  background: var(--border-strong);
+  z-index: 1;
+}
+
+.mb-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.mb-label { font-size: 11px; color: var(--text-secondary); }
+.mb-value { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--text-primary); }
+
+/* =====================================================
+   PENDING BAR — indeterminate progress indicator for async refetch.
+
+   PLACEMENT — position:absolute, zero layout shift.
+   Industry standard (Material React Table, MUI X DataGrid):
+   use a progress bar for REFETCH operations (data already shown),
+   never a loading overlay (which blocks interaction).
+   Rendered inside the Card (position:relative) — floats above
+   the content at top:0 without pushing anything down.
+   pointer-events:none — transparent to all mouse interaction.
+
+   ANIMATION — indeterminate scan, not a determinate fill.
+   We don't know the actual progress of a Promise.all, so we scan.
+   Duration uses --t-drift (678ms, the φ×160ms slowest step)
+   paired with --ease-move (cubic-bezier ease) for a fluid,
+   non-mechanical feel. The 20% wide bar scanning 500% of the
+   container gives ~4 full sweeps per second at drift speed.
+
+   Usage in JSX:
+     {status === 'pending' && <div className="pending-bar" />}
+   The bar appears and disappears with no DOM layout change.
+   ===================================================== */
+
+@keyframes pending-scan {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(500%); }
+}
+
+.pending-bar {
+  position: absolute; /* out of document flow — zero layout shift */
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  z-index: 2; /* above Card header border */
+  overflow: hidden; /* clip the scanning bar to the container width */
+  pointer-events: none;
+  background: var(--border-subtle); /* track: subtle full-width base */
+}
+.pending-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 20%; /* scanning bar width */
+  height: 100%;
+  background: var(--color-accent);
+  animation: pending-scan var(--t-drift) var(--ease-move) infinite;
+}
+
+
+/* =====================================================
+   CALLOUT — left-border accent, no gradient background
+   ===================================================== */
+
+.callout {
+  padding: 10px 14px;
+  border-left: 2px solid var(--callout-color, var(--color-accent));
+  background: color-mix(in srgb, var(--callout-color, var(--color-accent)) 5%, var(--surface-panel));
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* =====================================================
+   COMBOBOX — Radix Select primitives
+   ===================================================== */
+
+.combobox-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  height: 28px;
+  background: var(--surface-input);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.combobox-trigger:hover { border-color: var(--border-strong); }
+.combobox-trigger[data-state="open"] {
+  border-color: var(--color-accent);
+  box-shadow: var(--glow-focus);
+}
+.combobox-trigger-icon {
+  color: var(--text-muted);
+  margin-left: 2px;
+  flex-shrink: 0;
+  transition: transform var(--t-fast) var(--ease-out);
+}
+[data-state="open"] .combobox-trigger-icon { transform: rotate(180deg); }
+
+.combobox-content {
+  background: var(--surface-panel);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-soot-900) 16%, transparent);
+  overflow: hidden;
+  z-index: 9999;
+  min-width: var(--radix-select-trigger-width);
+}
+
+.combobox-viewport { padding: 2px; }
+
+.combobox-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 11px;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  border-radius: var(--radius-sm);
+}
+.combobox-item[data-highlighted] { background: var(--surface-hover); }
+.combobox-item[data-state="checked"] {
+  color: var(--color-accent);
+  font-weight: 600;
 }

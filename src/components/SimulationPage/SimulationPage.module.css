@@ -11,9 +11,8 @@
 
 /* Glass card base */
 .card {
-  background: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-panel);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   overflow: hidden;
 }
@@ -24,7 +23,7 @@
 
 .cardHeader {
   padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -35,7 +34,7 @@
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 1.2px;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
 }
 
@@ -45,14 +44,14 @@
 
 .cardDescription {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.5;
   margin: 0 0 12px 0;
 }
 
 .aboutText {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 10px 0;
 }
@@ -62,16 +61,16 @@
 }
 
 .aboutText strong {
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
 .resetBtn {
   font-size: 10px;
   font-weight: 500;
-  color: #94a3b8;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  background: var(--surface-hover);
+  border: 1px solid var(--border-default);
   border-radius: 4px;
   padding: 4px 10px;
   cursor: pointer;
@@ -79,9 +78,9 @@
 }
 
 .resetBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #e2e8f0;
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--surface-selected);
+  color: var(--text-primary);
+  border-color: var(--border-strong);
 }
 
 /* =========================================
@@ -98,7 +97,7 @@
 .diagramTitle {
   font-size: 16px;
   font-weight: 600;
-  fill: #94a3b8;
+  fill: var(--text-secondary);
   text-anchor: middle;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -106,45 +105,45 @@
 
 /* Metabolite nodes */
 .metaboliteRect {
-  fill: rgba(30, 41, 59, 0.9);
-  stroke: rgba(255, 255, 255, 0.12);
+  fill: var(--surface-raised);
+  stroke: var(--border-default);
   stroke-width: 1;
   transition: fill 0.3s ease, stroke 0.3s ease, filter 0.3s ease;
 }
 
 .metaboliteRect.input {
   fill: url(#inputGradient);
-  stroke: rgba(59, 130, 246, 0.4);
+  stroke: color-mix(in srgb, var(--color-accent) 40%, transparent);
 }
 
 .metaboliteRect.product {
-  fill: rgba(30, 41, 59, 0.9);
-  stroke: rgba(250, 204, 21, 0.4);
+  fill: var(--surface-raised);
+  stroke: color-mix(in srgb, var(--color-warning) 40%, transparent);
 }
 
 .metaboliteRect.productActive {
   fill: url(#productGradient);
-  stroke: rgba(34, 197, 94, 0.6);
+  stroke: color-mix(in srgb, var(--color-success) 60%, transparent);
   filter: url(#glow);
 }
 
 .metaboliteRect.waste {
-  fill: rgba(20, 25, 35, 0.6);
-  stroke: rgba(255, 255, 255, 0.06);
+  fill: var(--surface-input);
+  stroke: var(--border-subtle);
   stroke-dasharray: 4 2;
 }
 
 .metaboliteText {
   font-size: 14px;
   font-weight: 500;
-  fill: #e2e8f0;
+  fill: var(--text-primary);
   text-anchor: middle;
   font-family: 'IBM Plex Sans', sans-serif;
 }
 
 .fluxText {
   font-size: 11px;
-  fill: #64748b;
+  fill: var(--text-muted);
   text-anchor: middle;
   font-family: 'IBM Plex Mono', monospace;
 }
@@ -152,7 +151,7 @@
 .fluxPercent {
   font-size: 13px;
   font-weight: 600;
-  fill: #94a3b8;
+  fill: var(--text-secondary);
   text-anchor: start;
   font-family: 'IBM Plex Mono', monospace;
 }
@@ -167,17 +166,17 @@
 }
 
 .enzymePill {
-  fill: rgba(15, 23, 42, 1);
+  fill: var(--surface-panel);
   stroke-width: 1.5;
   transition: fill 0.2s ease, filter 0.2s ease, stroke 0.2s ease;
 }
 
 .enzymePill.enzymeActive {
-  fill: rgba(20, 30, 48, 1);
+  fill: var(--surface-raised);
 }
 
 .enzymePill.enzymeBottleneck {
-  fill: rgba(30, 20, 25, 1);
+  fill: var(--surface-raised);
   animation: pulseBottleneck 2s ease-in-out infinite;
 }
 
@@ -197,32 +196,32 @@
 }
 
 @keyframes glowPulse {
-  0%, 100% { 
+  0%, 100% {
     opacity: 0.4;
   }
-  50% { 
+  50% {
     opacity: 0.8;
   }
 }
 
 @keyframes bottleneckPulse {
-  0%, 100% { 
+  0%, 100% {
     opacity: 0.5;
     stroke-width: 2;
   }
-  50% { 
+  50% {
     opacity: 1;
     stroke-width: 4;
   }
 }
 
 @keyframes pulseBottleneck {
-  0%, 100% { filter: drop-shadow(0 0 0 rgba(239, 68, 68, 0)); }
-  50% { filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.6)); }
+  0%, 100% { filter: drop-shadow(0 0 0 color-mix(in srgb, var(--color-danger) 0%, transparent)); }
+  50% { filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-danger) 60%, transparent)); }
 }
 
 .chromatinBar {
-  fill: var(--bar-color, #22c55e);
+  fill: var(--bar-color, var(--color-success));
   transform-box: fill-box;
   transform-origin: left center;
   transform: scaleX(var(--bar-scale, 1));
@@ -253,7 +252,7 @@
 
 .enzymePercent {
   font-size: 10px;
-  fill: #64748b;
+  fill: var(--text-muted);
   text-anchor: middle;
   font-family: 'IBM Plex Mono', monospace;
 }
@@ -262,7 +261,7 @@
 .productLabel {
   font-size: 12px;
   font-weight: 700;
-  fill: #22c55e;
+  fill: var(--color-success);
   text-anchor: middle;
   letter-spacing: 1.5px;
 }
@@ -270,7 +269,7 @@
 .wasteLabel {
   font-size: 12px;
   font-weight: 600;
-  fill: #64748b;
+  fill: var(--text-muted);
   text-anchor: middle;
   letter-spacing: 1.5px;
 }
@@ -330,7 +329,7 @@
 /* Hover handled by shared .selectable class */
 
 .interventionRow.active {
-  background: rgba(34, 197, 94, 0.08);
+  background: color-mix(in srgb, var(--color-success) 8%, transparent);
 }
 
 .interventionInfo {
@@ -348,11 +347,11 @@
 
 .interventionMeta {
   font-size: 13px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .interventionMeta span {
-  color: #22c55e;
+  color: var(--color-success);
   font-weight: 500;
 }
 
@@ -360,7 +359,7 @@
 .toggle {
   width: 36px;
   height: 20px;
-  background: #334155;
+  background: var(--surface-input);
   border-radius: 10px;
   position: relative;
   transition: background 0.2s;
@@ -368,19 +367,19 @@
 }
 
 .toggle.on {
-  background: linear-gradient(90deg, #22c55e, #16a34a);
+  background: var(--color-success);
 }
 
 .toggleKnob {
   position: absolute;
   width: 14px;
   height: 14px;
-  background: white;
+  background: var(--surface-panel);
   border-radius: 50%;
   top: 3px;
   left: 3px;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 3px var(--alpha-3);
 }
 
 .toggle.on .toggleKnob {
@@ -391,7 +390,7 @@
 .triToggle {
   display: flex;
   gap: 2px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 6px;
   padding: 2px;
 }
@@ -402,7 +401,7 @@
   border: none;
   border-radius: 4px;
   background: transparent;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
@@ -413,26 +412,26 @@
 }
 
 .triToggleBtn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
+  background: var(--surface-hover);
+  color: var(--text-secondary);
 }
 
 .triToggleBtn.triToggleActive {
-  color: white;
+  color: var(--text-on-color);
 }
 
 .triToggleBtn.triToggleRepress {
-  background: linear-gradient(135deg, #ef4444, #dc2626);
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  background: var(--color-danger);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-danger) 30%, transparent);
 }
 
 .triToggleBtn.triToggleNormal {
-  background: #475569;
+  background: var(--alpha-4);
 }
 
 .triToggleBtn.triToggleActivate {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  box-shadow: 0 2px 8px rgba(34, 197, 94, 0.3);
+  background: var(--color-success);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
 /* Results display */
@@ -444,14 +443,14 @@
 
 .resultCard {
   padding: 12px;
-  background: rgba(0, 0, 0, 0.25);
+  background: var(--alpha-3);
   border-radius: 8px;
   text-align: center;
 }
 
 .resultLabel {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 4px;
@@ -467,7 +466,7 @@
 
 .resultUnit {
   font-size: 12px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-top: 4px;
 }
 
@@ -481,27 +480,27 @@
   justify-content: space-between;
   margin-bottom: 6px;
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .captureBar {
   height: 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 6px;
   overflow: hidden;
 }
 
 .captureProduct {
   height: 100%;
-  background: linear-gradient(90deg, #22c55e, #10b981);
+  background: var(--color-success);
   border-radius: 6px;
 }
 
 .fluxProductBar {
   height: 100%;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  background: linear-gradient(90deg, var(--color-accent), var(--color-purple));
   border-radius: 6px;
 }
 
@@ -509,23 +508,23 @@
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-top: 4px;
 }
 
 /* Insight banner */
 .insightBanner {
   padding: 10px 14px;
-  background: linear-gradient(90deg, rgba(59, 130, 246, 0.08) 0%, rgba(139, 92, 246, 0.08) 100%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--color-accent) 8%, transparent) 0%, color-mix(in srgb, var(--color-purple) 8%, transparent) 100%);
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .insightBanner.success {
-  background: linear-gradient(90deg, rgba(34, 197, 94, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%);
-  color: #86efac;
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  color: var(--color-success);
 }
 
 /* Legend */
@@ -533,7 +532,7 @@
   display: flex;
   gap: 20px;
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .legendItem {
@@ -547,4 +546,3 @@
   height: 8px;
   border-radius: 50%;
 }
-

@@ -16,11 +16,11 @@
 
 .modelBadge {
   padding: 8px 12px;
-  background: rgba(34, 197, 94, 0.1);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
   border-radius: 6px;
   margin-bottom: 12px;
   font-size: 11px;
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .thermoBadge {
@@ -32,22 +32,22 @@
 }
 
 .thermoBadgeActive {
-  background: rgba(139, 92, 246, 0.1);
-  color: #a78bfa;
+  background: color-mix(in srgb, var(--color-purple) 10%, transparent);
+  color: var(--color-purple);
 }
 
 .thermoBadgeRecalculating {
-  background: rgba(251, 146, 60, 0.15);
-  color: #fb923c;
+  background: color-mix(in srgb, var(--color-warning) 15%, transparent);
+  color: var(--color-warning);
 }
 
 .growthRate {
   margin-top: 12px;
   padding: 8px 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 6px;
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   text-align: center;
 }
 
@@ -63,20 +63,20 @@
 }
 
 .conditionOptionInactive {
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-2);
   border: 1px solid transparent;
 }
 
 .conditionOptionActive {
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
 }
 
 .glucoseSelect {
-  background: #1e293b;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: var(--surface-input);
+  border: 1px solid var(--border-default);
   border-radius: 4px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-size: 12px;
   padding: 4px 8px;
   cursor: pointer;
@@ -94,10 +94,10 @@
   display: grid;
   grid-template-columns: 70px 55px 40px 80px 1fr;
   padding: 8px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid var(--border-subtle);
   font-size: 10px;
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   letter-spacing: 0.5px;
 }
 
@@ -111,7 +111,7 @@
   display: grid;
   grid-template-columns: 70px 55px 40px 80px 1fr;
   padding: 10px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--alpha-1);
   border-left: 2px solid transparent;
   font-size: 11px;
   border-radius: 4px;
@@ -119,23 +119,23 @@
 }
 
 .reactionRowBlocked {
-  background: rgba(239, 68, 68, 0.1);
-  border-left-color: #ef4444;
+  background: color-mix(in srgb, var(--color-danger) 10%, transparent);
+  border-left-color: var(--color-danger);
 }
 
 .reactionRowReduced {
-  background: rgba(251, 146, 60, 0.08);
-  border-left-color: #fb923c;
+  background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+  border-left-color: var(--color-warning);
 }
 
 .reactionRowLimited {
-  background: rgba(251, 146, 60, 0.06);
-  border-left-color: #fb923c;
+  background: color-mix(in srgb, var(--color-warning) 6%, transparent);
+  border-left-color: var(--color-warning);
 }
 
 .reactionRowIncreased {
-  background: rgba(34, 197, 94, 0.08);
-  border-left-color: #22c55e;
+  background: color-mix(in srgb, var(--color-success) 8%, transparent);
+  border-left-color: var(--color-success);
 }
 
 .dGBadge {
@@ -144,32 +144,32 @@
 }
 
 .dGBadgeFavorable {
-  color: #4ade80;
+  color: var(--color-success);
 }
 
 .dGBadgeHighFavorable {
-  color: #60a5fa;
+  color: var(--color-accent);
 }
 
 .dGBadgeUnfavorable {
-  color: #fbbf24;
+  color: var(--color-warning);
 }
 
 .dGBadgeNeutral {
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .locBadge {
   padding: 2px 6px;
   border-radius: 3px;
   font-size: 9px;
-  background: rgba(255, 255, 255, 0.1);
-  color: #94a3b8;
+  background: var(--surface-hover);
+  color: var(--text-secondary);
 }
 
 .blockedLabel {
   margin-left: 8px;
-  color: #ef4444;
+  color: var(--color-danger);
   font-size: 9px;
 }
 
@@ -182,58 +182,58 @@
 
 .reactionId {
   font-size: 14px;
-  color: #60a5fa;
+  color: var(--color-accent);
 }
 
 .reactionName {
   font-size: 13px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   margin-bottom: 8px;
 }
 
 .compartmentLabel {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .compartmentMito {
-  color: #a78bfa;
+  color: var(--color-purple);
 }
 
 .compartmentCyto {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .equationBox {
   padding: 16px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 8px;
   margin-bottom: 16px;
 }
 
 .equation {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
 .thermoBox {
   padding: 16px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-default);
   margin-bottom: 16px;
 }
 
 .thermoBoxFavorable {
-  background: rgba(34, 197, 94, 0.1);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
 }
 
 .thermoBoxUnfavorable {
-  background: rgba(245, 158, 11, 0.1);
+  background: color-mix(in srgb, var(--color-warning) 10%, transparent);
 }
 
 .thermoBoxNeutral {
-  background: rgba(96, 165, 250, 0.1);
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 .dGValue {
@@ -248,13 +248,13 @@
 
 .uncertainty {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
 .thermoLabel {
   padding: 4px 8px;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-hover);
   border-radius: 4px;
   font-size: 10px;
   font-weight: 500;
@@ -269,13 +269,13 @@
 
 .metaboliteHeader {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 6px;
   letter-spacing: 0.5px;
 }
 
 .metaboliteItem {
   font-size: 11px;
-  color: #94a3b8;
+  color: var(--text-secondary);
   margin-bottom: 4px;
 }

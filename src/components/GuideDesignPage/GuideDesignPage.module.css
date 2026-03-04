@@ -11,7 +11,7 @@
 
 /* Mode header bar */
 .modeHeader {
-  background: linear-gradient(90deg, #166534 0%, #15803d 100%);
+  background: var(--color-success);
   padding: 6px 16px;
   border-radius: 6px;
   display: flex;
@@ -45,21 +45,22 @@
 
 .configLabel {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   display: block;
   margin-bottom: 6px;
 }
 
 .configValue {
   padding: 8px 12px;
-  background: #0f172a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-input);
+  border: 1px solid var(--border-default);
   border-radius: 6px;
   font-size: 13px;
+  color: var(--text-primary);
 }
 
 .configSecondary {
-  color: #64748b;
+  color: var(--text-muted);
   margin-left: 8px;
 }
 
@@ -91,7 +92,7 @@
   grid-template-columns: 1fr 55px 35px 45px 70px 50px 60px;
   padding: 10px 12px;
   font-size: 11px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-subtle);
   border-radius: 4px;
 }
 
@@ -99,7 +100,7 @@
 
 .guideHeader {
   font-weight: 600;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 10px;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -111,34 +112,35 @@
 }
 
 .detailsPanelActive {
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
-  border: 1px solid rgba(34, 197, 94, 0.2);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-success) 5%, transparent) 0%, color-mix(in srgb, var(--color-accent) 5%, transparent) 100%);
+  border: 1px solid color-mix(in srgb, var(--color-success) 20%, transparent);
 }
 
 .spacerBox {
   padding: 10px 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 6px;
   word-break: break-all;
   line-height: 1.4;
   margin-bottom: 16px;
+  color: var(--text-primary);
 }
 
 .pamHighlight {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 /* Flux prediction */
 .fluxPrediction {
   margin-top: 16px;
   padding: 14px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 8px;
 }
 
 .fluxTitle {
   font-size: 11px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-bottom: 6px;
 }
 
@@ -149,21 +151,21 @@
 }
 
 .fluxOld {
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .fluxArrow {
-  color: #64748b;
+  color: var(--text-muted);
   margin: 0 6px;
 }
 
 .fluxNew {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .fluxUnit {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-left: 4px;
 }
 
@@ -173,14 +175,14 @@
   justify-content: space-between;
   margin-bottom: 6px;
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .intensityBar {
   height: 12px;
-  background: rgba(0, 0, 0, 0.3);
+  background: var(--alpha-3);
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -188,7 +190,7 @@
 
 .intensityFill {
   height: 100%;
-  background: linear-gradient(90deg, #22c55e 0%, #facc15 100%);
+  background: linear-gradient(90deg, var(--color-success) 0%, var(--color-warning) 100%);
   border-radius: 6px;
 }
 
@@ -196,18 +198,17 @@
 .emptyState {
   padding: 24px;
   text-align: center;
-  color: #64748b;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
 /* DNA Visualization */
 .dnaContainer {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 41, 59, 0.6) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
   border-radius: 12px;
   padding: 16px 20px;
   margin-bottom: 16px;
-  backdrop-filter: blur(8px);
 }
 
 .dnaHeader {
@@ -225,16 +226,16 @@
 
 .geneSelect,
 .regionSelect {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--alpha-3);
+  border: 1px solid var(--border-default);
   border-radius: 4px;
   padding: 6px 10px;
-  color: #e2e8f0;
+  color: var(--text-primary);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239B9490' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 8px center;
   padding-right: 28px;
@@ -242,33 +243,32 @@
 
 .geneSelect:hover,
 .regionSelect:hover {
-  border-color: rgba(255, 255, 255, 0.25);
-  background-color: rgba(0, 0, 0, 0.4);
+  border-color: var(--border-strong);
 }
 
 .geneSelect:focus,
 .regionSelect:focus {
   outline: none;
-  border-color: rgba(34, 197, 94, 0.5);
+  border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 
 .geneSelect option,
 .regionSelect option {
-  background: #1e293b;
-  color: #e2e8f0;
+  background: var(--surface-panel);
+  color: var(--text-primary);
 }
 
 .dnaTitle {
   font-size: 13px;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text-primary);
 }
 
 .dnaCoords {
   font-size: 10px;
   font-family: 'JetBrains Mono', monospace;
-  color: #64748b;
-  background: rgba(0, 0, 0, 0.3);
+  color: var(--text-muted);
+  background: var(--alpha-3);
   padding: 4px 8px;
   border-radius: 4px;
 }
@@ -299,12 +299,12 @@
 .dnaTickLine {
   width: 1px;
   height: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--border-default);
 }
 
 .dnaTickLabel {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-top: 2px;
   font-family: 'JetBrains Mono', monospace;
 }
@@ -323,13 +323,13 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, 
-    rgba(34, 197, 94, 0.3) 0%,
-    rgba(59, 130, 246, 0.5) 50%,
-    rgba(168, 85, 247, 0.3) 100%
+  background: linear-gradient(90deg,
+    color-mix(in srgb, var(--color-success) 30%, transparent) 0%,
+    color-mix(in srgb, var(--color-accent) 50%, transparent) 50%,
+    color-mix(in srgb, var(--color-purple) 30%, transparent) 100%
   );
   border-radius: 2px;
-  box-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 
 .dnaStrand:first-child {
@@ -349,7 +349,7 @@
   background: repeating-linear-gradient(
     90deg,
     transparent 0px,
-    rgba(59, 130, 246, 0.1) 2px,
+    color-mix(in srgb, var(--color-accent) 10%, transparent) 2px,
     transparent 4px,
     transparent 8px
   );
@@ -368,21 +368,21 @@
 
 .tssArrow {
   font-size: 18px;
-  color: #22c55e;
-  text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+  color: var(--color-success);
+  text-shadow: 0 0 10px color-mix(in srgb, var(--color-success) 80%, transparent);
   animation: tssGlow 2s ease-in-out infinite;
 }
 
 @keyframes tssGlow {
-  0%, 100% { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
-  50% { text-shadow: 0 0 20px rgba(34, 197, 94, 1); }
+  0%, 100% { text-shadow: 0 0 10px color-mix(in srgb, var(--color-success) 50%, transparent); }
+  50% { text-shadow: 0 0 20px var(--color-success); }
 }
 
 .tssLabel {
   font-size: 9px;
   font-weight: 600;
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 15%, transparent);
   padding: 2px 6px;
   border-radius: 3px;
   margin-top: 2px;
@@ -423,12 +423,12 @@
 
 /* + strand: gradient fades toward DNA (top to bottom) */
 .guideMarkerPlus .guideMarkerLine {
-  background: linear-gradient(180deg, rgba(59, 130, 246, 0.3) 0%, #3b82f6 100%);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-accent) 30%, transparent) 0%, var(--color-accent) 100%);
 }
 
 /* - strand: gradient fades away from DNA (top to bottom) */
 .guideMarkerMinus .guideMarkerLine {
-  background: linear-gradient(180deg, #a855f7 0%, rgba(168, 85, 247, 0.3) 100%);
+  background: linear-gradient(180deg, var(--color-purple) 0%, color-mix(in srgb, var(--color-purple) 30%, transparent) 100%);
 }
 
 .guideMarkerHead {
@@ -439,11 +439,11 @@
 }
 
 .guideMarkerPlus .guideMarkerHead {
-  color: #3b82f6;
+  color: var(--color-accent);
 }
 
 .guideMarkerMinus .guideMarkerHead {
-  color: #a855f7;
+  color: var(--color-purple);
 }
 
 .guideMarker:hover .guideMarkerLine {
@@ -456,18 +456,18 @@
 
 .guideMarkerSelected.guideMarkerPlus .guideMarkerLine {
   width: 3px;
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
-  background: linear-gradient(180deg, rgba(34, 197, 94, 0.3) 0%, #22c55e 100%) !important;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-success) 80%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-success) 30%, transparent) 0%, var(--color-success) 100%) !important;
 }
 
 .guideMarkerSelected.guideMarkerMinus .guideMarkerLine {
   width: 3px;
-  box-shadow: 0 0 12px rgba(34, 197, 94, 0.8);
-  background: linear-gradient(180deg, #22c55e 0%, rgba(34, 197, 94, 0.3) 100%) !important;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--color-success) 80%, transparent);
+  background: linear-gradient(180deg, var(--color-success) 0%, color-mix(in srgb, var(--color-success) 30%, transparent) 100%) !important;
 }
 
 .guideMarkerSelected .guideMarkerHead {
-  color: #22c55e;
+  color: var(--color-success);
   transform: scale(1.5);
 }
 
@@ -476,14 +476,14 @@
   bottom: -24px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.9);
-  border: 1px solid rgba(34, 197, 94, 0.5);
+  background: var(--surface-panel);
+  border: 1px solid color-mix(in srgb, var(--color-success) 50%, transparent);
   padding: 3px 6px;
   border-radius: 4px;
   font-size: 9px;
   white-space: nowrap;
-  color: #22c55e;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  color: var(--color-success);
+  box-shadow: 0 2px 8px color-mix(in srgb, black 50%, transparent);
 }
 
 /* ATAC track */
@@ -504,20 +504,20 @@
 
 .atacLabel {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   width: 32px;
   flex-shrink: 0;
   transition: opacity 0.3s ease;
 }
 
 .atacTrackPredicted .atacLabel {
-  color: #22c55e;
+  color: var(--color-success);
 }
 
 .atacSignal {
   flex: 1;
   height: 32px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--alpha-2);
   border-radius: 4px;
   overflow: hidden;
   transition: opacity 0.3s ease;
@@ -534,7 +534,7 @@
   gap: 16px;
   margin-top: 12px;
   padding-top: 12px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid var(--border-subtle);
   flex-wrap: wrap;
   align-items: center;
 }
@@ -544,7 +544,7 @@
   align-items: center;
   gap: 6px;
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .legendDot {
@@ -554,33 +554,33 @@
 }
 
 .legendPlus {
-  background: #3b82f6;
-  box-shadow: 0 0 6px rgba(59, 130, 246, 0.5);
+  background: var(--color-accent);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-accent) 50%, transparent);
 }
 
 .legendMinus {
-  background: #a855f7;
-  box-shadow: 0 0 6px rgba(168, 85, 247, 0.5);
+  background: var(--color-purple);
+  box-shadow: 0 0 6px color-mix(in srgb, var(--color-purple) 50%, transparent);
 }
 
 .legendAtac {
   width: 20px;
   height: 8px;
-  background: linear-gradient(90deg, #ef4444 0%, rgba(239, 68, 68, 0.2) 100%);
+  background: linear-gradient(90deg, var(--color-danger) 0%, color-mix(in srgb, var(--color-danger) 20%, transparent) 100%);
   border-radius: 2px;
 }
 
 .legendAtacPredicted {
   width: 20px;
   height: 8px;
-  background: linear-gradient(90deg, #22c55e 0%, rgba(34, 197, 94, 0.2) 100%);
+  background: linear-gradient(90deg, var(--color-success) 0%, color-mix(in srgb, var(--color-success) 20%, transparent) 100%);
   border-radius: 2px;
 }
 
 .legendAtacRepression {
   width: 20px;
   height: 8px;
-  background: linear-gradient(90deg, #8b5cf6 0%, rgba(139, 92, 246, 0.2) 100%);
+  background: linear-gradient(90deg, var(--color-purple) 0%, color-mix(in srgb, var(--color-purple) 20%, transparent) 100%);
   border-radius: 2px;
 }
 
@@ -590,19 +590,19 @@
   align-items: center;
   gap: 8px;
   padding: 4px 10px;
-  background: rgba(34, 197, 94, 0.1);
-  border: 1px solid rgba(34, 197, 94, 0.3);
+  background: color-mix(in srgb, var(--color-success) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-success) 30%, transparent);
   border-radius: 6px;
 }
 
 .legendDeltaLabel {
   font-size: 10px;
-  color: #64748b;
+  color: var(--text-muted);
 }
 
 .legendDeltaValue {
   font-size: 11px;
   font-weight: 600;
-  color: #22c55e;
+  color: var(--color-success);
   font-family: 'JetBrains Mono', monospace;
 }

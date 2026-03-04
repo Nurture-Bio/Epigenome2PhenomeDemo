@@ -3,7 +3,7 @@ import { aiActions, aiInsights, aiTextChunks } from '../../../convergence_answer
 import { epigenomeLayers } from '../../data';
 import { cn } from '../../lib/utils';
 import { useSelectionStore } from '../../stores';
-import { Card, CardHeader, DataRow, EmptyState } from '../ui';
+import { ActionCard, Button, Card, CardHeader, ComboBox, DataRow, EmptyState, MetricBar } from '../ui';
 
 const rnaSeqData = {
   gene: 'ATF1',
@@ -70,9 +70,6 @@ const layerVisData = {
     implication: 'The promoter is nucleosome-occluded; activation could recruit acetyltransferases to open chromatin.',
   },
 };
-
-// Drop-down arrow SVG for custom selects
-const selectArrow = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M3 4.5L6 7.5L9 4.5'/%3E%3C/svg%3E")`;
 
 export function GeneTopologyPage() {
   const {
@@ -172,30 +169,25 @@ export function GeneTopologyPage() {
         <div className="p-5">
           {/* Selectors */}
           <div className="flex gap-2 items-center mb-4">
-            <select
-              defaultValue="ATF1"
-              className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 type-select cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
-              style={{ backgroundImage: selectArrow, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}
-            >
-              <option>ATF1</option><option>ATF2</option><option>EHT1</option><option>BAT1</option><option>BAT2</option>
-            </select>
-            <select
-              defaultValue="mid-brew"
-              className="bg-black/30 border border-white/15 rounded py-1.5 px-2.5 pr-7 type-select cursor-pointer appearance-none outline-none hover:border-white/25 focus:border-green-500/50"
-              style={{ backgroundImage: selectArrow, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 8px center' }}
-            >
-              <option value="mid-brew">Mid-brew</option><option value="early-log">Early-log</option><option value="late-log">Late-log</option><option value="stationary">Stationary</option><option value="ethanol">Ethanol</option>
-            </select>
+            <ComboBox defaultValue="ATF1" options={['ATF1','ATF2','EHT1','BAT1','BAT2'].map(v => ({ value: v, label: v }))} />
+            <ComboBox defaultValue="mid-brew" options={[
+              { value: 'mid-brew',   label: 'Mid-brew' },
+              { value: 'early-log',  label: 'Early-log' },
+              { value: 'late-log',   label: 'Late-log' },
+              { value: 'stationary', label: 'Stationary' },
+              { value: 'ethanol',    label: 'Ethanol' },
+            ]} />
           </div>
 
           {/* Load All */}
-          <button
+          <Button
+            variant="secondary"
             onClick={handleLoadAll}
             disabled={!anyLayerIdle}
-            className="w-full py-2.5 px-4 bg-gradient-to-br from-blue-500/15 to-violet-500/15 border border-violet-500/25 rounded-md text-violet-400 text-xs font-semibold cursor-pointer transition-colors mb-4 hover:from-blue-500/25 hover:to-violet-500/25 hover:border-violet-500/40 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:from-blue-500/15 disabled:hover:to-violet-500/15 disabled:hover:border-violet-500/25"
+            className="w-full mb-4"
           >
             Load All Layers
-          </button>
+          </Button>
 
           {/* Layer Stack */}
           <div className="flex flex-col gap-3 mb-6">
@@ -203,71 +195,65 @@ export function GeneTopologyPage() {
               const isSelected = selectedLayer === layer.source;
               const state = layerLoadStates[layer.source];
               return (
-                <div
+                <ActionCard
                   key={layer.name}
+                  selected={isSelected}
+                  accentColor={layer.color}
                   onClick={() => handleLayerClick(layer)}
-                  className={cn(
-                    'bg-white/[0.02] border border-white/[0.08] border-l-[3px] rounded-lg p-3.5 px-4 cursor-pointer relative z-[1] transition-all duration-150',
-                    !isSelected && 'hover:shadow-[inset_0_0_0_100px_rgba(255,255,255,0.04)]',
-                    isSelected && 'shadow-[0_0_0_1px_rgba(255,255,255,0.1),_0_4px_12px_rgba(0,0,0,0.4)] bg-white/[0.04]',
-                  )}
-                  style={{ borderLeftColor: layer.color }}
+                  className="p-3.5 px-4"
                 >
                   <div className="flex justify-between items-center mb-1.5">
                     <div>
                       <span className="type-title">{layer.name}</span>
-                      <span className="type-sm text-slate-500 ml-2">{layer.source}</span>
+                      <span className="type-sm text-text-secondary ml-2">{layer.source}</span>
                     </div>
                     <div
                       className="py-1 px-2.5 rounded type-caption font-semibold min-w-[32px] text-center"
                       style={{
-                        background: state === 'loaded' ? `${layer.color}20` : 'rgba(100,100,100,0.15)',
-                        color: state === 'loaded' ? layer.color : '#64748b'
+                        background: state === 'loaded' ? `${layer.color}20` : 'var(--surface-selected)',
+                        color: state === 'loaded' ? layer.color : 'var(--text-secondary)'
                       }}
                     >
                       {state === 'idle' && 'Load'}
-                      {state === 'loading' && <span className="inline-flex items-center"><span className="inline-block w-2.5 h-2.5 border-2 border-white/20 border-t-blue-400 rounded-full animate-spin" /></span>}
+                      {state === 'loading' && <span className="inline-flex items-center"><span className="inline-block w-2.5 h-2.5 border-2 border-border-subtle border-t-[var(--color-accent)] rounded-full animate-spin" /></span>}
                       {state === 'loaded' && '✓'}
                     </div>
                   </div>
-                  <div className="type-sm text-slate-500">{layer.question}</div>
-                </div>
-              );
+                  <div className="type-sm text-text-secondary">{layer.question}</div>
+                </ActionCard>
+            );
             })}
           </div>
 
           {/* Convergence Card */}
-          <div
+          <ActionCard
+            selected={selectedLayer === 'convergence'}
+            accentColor="var(--color-purple)"
+            disabled={!allLayersLoaded}
             onClick={handleConvergeClick}
-            className={cn(
-              'bg-gradient-to-br from-blue-500/5 to-violet-500/5 border border-violet-500/15 border-l-[3px] rounded-lg p-3.5 px-4 cursor-pointer relative z-[1] transition-all duration-150',
-              selectedLayer !== 'convergence' && 'hover:shadow-[inset_0_0_0_100px_rgba(255,255,255,0.04)]',
-              selectedLayer === 'convergence' && 'shadow-[0_0_0_1px_rgba(255,255,255,0.1),_0_4px_12px_rgba(0,0,0,0.4)] bg-white/[0.04]',
-              !allLayersLoaded && 'opacity-50 cursor-not-allowed',
-            )}
-            style={{ borderLeftColor: '#a78bfa' }}
+            className="p-3.5 px-4"
           >
             <div className="flex justify-between items-center mb-1.5">
               <div>
-                <span className="type-title">✨ AI Convergence</span>
-                <span className="type-sm text-slate-500 ml-2">Multi-omic Integration</span>
+                <span className="type-title">AI Convergence</span>
+                <span className="type-sm text-text-secondary ml-2">Multi-omic Integration</span>
               </div>
               <div
                 className="py-1 px-2.5 rounded type-caption font-semibold min-w-[32px] text-center"
                 style={{
-                  background: convergenceState === 'converged' ? 'rgba(167, 139, 250, 0.2)' : 'rgba(100,100,100,0.15)',
-                  color: convergenceState === 'converged' ? '#a78bfa' : '#64748b'
+                  background: convergenceState === 'converged' ? 'color-mix(in srgb, var(--color-purple) 20%, transparent)' : 'var(--surface-selected)',
+                  color: convergenceState === 'converged' ? 'var(--color-purple)' : 'var(--text-secondary)'
                 }}
               >
                 {convergenceState === 'idle' && (allLayersLoaded ? 'Run' : '—')}
-                {convergenceState === 'converging' && <span className="inline-flex items-center"><span className="inline-block w-2.5 h-2.5 border-2 border-white/20 border-t-blue-400 rounded-full animate-spin" /></span>}
+                {convergenceState === 'converging' && <span className="inline-flex items-center"><span className="inline-block w-2.5 h-2.5 border-2 border-border-subtle border-t-[var(--color-accent)] rounded-full animate-spin" /></span>}
                 {convergenceState === 'converged' && '✓'}
               </div>
             </div>
-            <div className="type-sm text-slate-500">
+            <div className="type-sm text-text-secondary">
               {allLayersLoaded ? 'Synthesize findings into actionable insight' : 'Load all layers first'}
             </div>
-          </div>
+          </ActionCard>
 
           {/* Summary */}
           <div className="mt-4">
@@ -306,19 +292,18 @@ function ConvergenceView({ visibleChunks, typingDone, visibleInsights }) {
   return (
     <div className="flex flex-col gap-5">
       {/* AI typing box */}
-      <div className="bg-violet-500/[0.08] border border-violet-500/20 rounded-xl p-4">
-        <div className="flex items-center gap-2 mb-3 pb-3 border-b border-violet-500/15">
-          <span className="text-base">✨</span>
-          <span className="type-label mb-0 text-violet-400">AI Analysis</span>
+      <div className="callout p-4" style={{ '--callout-color': 'var(--color-purple)' }}>
+        <div className="mb-3 pb-3 border-b" style={{ borderColor: 'color-mix(in srgb, var(--color-purple) 20%, transparent)' }}>
+          <span className="type-label mb-0" style={{ color: 'var(--color-purple)' }}>AI Analysis</span>
         </div>
         <div className="type-body leading-relaxed min-h-[120px]">
           {aiTextChunks.slice(0, visibleChunks).map((chunk, i) => (
-            <div key={i} className={chunk.isBullet ? 'flex gap-2 mb-1.5 pl-1' : 'text-slate-400 mb-3'}>
-              {chunk.isBullet && <span className="text-green-500 shrink-0">•</span>}
+            <div key={i} className={chunk.isBullet ? 'flex gap-2 mb-1.5 pl-1' : 'text-text-secondary mb-3'}>
+              {chunk.isBullet && <span className="shrink-0" style={{ color: 'var(--color-success)' }}>•</span>}
               {chunk.text}
             </div>
           ))}
-          {!typingDone && <span className="inline-block text-violet-400 animate-[blink_0.8s_infinite] ml-0.5">|</span>}
+          {!typingDone && <span className="inline-block animate-[blink_0.8s_infinite] ml-0.5" style={{ color: 'var(--color-purple)' }}>|</span>}
         </div>
       </div>
 
@@ -326,12 +311,9 @@ function ConvergenceView({ visibleChunks, typingDone, visibleInsights }) {
       {typingDone && (
         <div className="grid grid-cols-2 gap-3">
           {aiInsights.slice(0, visibleInsights).map((insight, i) => (
-            <div key={i} className="flex items-start gap-3 p-3.5 bg-white/[0.02] border border-white/[0.06] rounded-lg animate-[fadeInUp_0.3s_ease]">
-              <span className="text-lg shrink-0">{insight.icon}</span>
-              <div className="flex-1 min-w-0">
-                <div className="type-label mb-1">{insight.label}</div>
-                <div className="type-body leading-snug">{insight.value}</div>
-              </div>
+            <div key={i} className="p-3.5 bg-surface-hover border border-border-subtle animate-[fadeInUp_0.3s_ease]">
+              <div className="type-label mb-1">{insight.label}</div>
+              <div className="type-body leading-snug">{insight.value}</div>
             </div>
           ))}
         </div>
@@ -339,16 +321,15 @@ function ConvergenceView({ visibleChunks, typingDone, visibleInsights }) {
 
       {/* Action card */}
       {typingDone && visibleInsights >= aiInsights.length && (
-        <div className="mt-4 p-4 bg-violet-400/[0.06] border border-violet-400/20 rounded-[10px] animate-[fadeInUp_0.4s_ease]">
-          <div className="flex items-center gap-2 mb-3">
-            <span className="text-base">⚡</span>
-            <span className="type-label mb-0 text-violet-400">Recommended Intervention</span>
+        <div className="mt-4 callout animate-[fadeInUp_0.4s_ease]" style={{ '--callout-color': 'var(--color-purple)' }}>
+          <div className="mb-3">
+            <span className="type-label mb-0" style={{ color: 'var(--color-purple)' }}>Recommended Intervention</span>
           </div>
           {aiActions.map((a, i) => (
             <div key={i} className="flex flex-col gap-2">
               <div className="type-body leading-relaxed font-semibold">{a.action}</div>
-              <div className="type-body leading-relaxed pl-3 border-l-2 border-violet-400/30">
-                <span className="font-semibold text-violet-400">Because: </span>
+              <div className="type-body leading-relaxed pl-3 border-l-2" style={{ borderColor: 'color-mix(in srgb, var(--color-purple) 30%, transparent)' }}>
+                <span className="font-semibold" style={{ color: 'var(--color-purple)' }}>Because: </span>
                 {a.because}
               </div>
             </div>
@@ -381,7 +362,7 @@ function LayerVisualization({ selectedLayer, selectedData }) {
             valueSuffix=" TPM"
           />
           <FindingBox finding={rnaSeqData.finding} />
-          <ImplicationBox icon="💡" text={rnaSeqData.implication} />
+          <ImplicationBox text={rnaSeqData.implication} />
         </>
       )}
 
@@ -398,7 +379,7 @@ function LayerVisualization({ selectedLayer, selectedData }) {
             valueSuffix="%"
           />
           <FindingBox finding={selectedData.finding} />
-          <ImplicationBox icon="🔒" text={selectedData.implication} />
+          <ImplicationBox text={selectedData.implication} />
         </>
       )}
 
@@ -408,21 +389,21 @@ function LayerVisualization({ selectedLayer, selectedData }) {
           <div className="mb-5">
             <div className="type-label">3D Chromatin Architecture</div>
             {selectedData.metrics.map((m) => (
-              <div key={m.name} className="py-3 border-b border-white/[0.06] last:border-b-0">
+              <div key={m.name} className="py-3 border-b border-border-subtle last:border-b-0">
                 <div className="flex justify-between items-center">
                   <span className="type-body">
                     {m.name}
-                    <span className="type-caption ml-1" style={{ color: m.type === 'repressive' ? '#ef4444' : m.type === 'neutral' ? '#64748b' : '#22c55e' }}>
+                    <span className="type-caption ml-1" style={{ color: m.type === 'repressive' ? 'var(--color-danger)' : m.type === 'neutral' ? 'var(--text-muted)' : 'var(--color-success)' }}>
                       {' '}({m.detail})
                     </span>
                   </span>
-                  <span className="type-title font-mono" style={{ color: m.color }}>{m.value}</span>
+                  <span className="type-title font-mono" style={{ color: m.type === 'repressive' ? 'var(--color-danger)' : m.type === 'neutral' ? 'var(--text-muted)' : 'var(--color-success)' }}>{m.value}</span>
                 </div>
               </div>
             ))}
           </div>
           <FindingBox finding={selectedData.finding} />
-          <ImplicationBox icon="🧬" text={selectedData.implication} />
+          <ImplicationBox text={selectedData.implication} />
         </>
       )}
 
@@ -436,29 +417,24 @@ function LayerVisualization({ selectedLayer, selectedData }) {
                 <div className="flex justify-between items-baseline mb-1.5">
                   <span className="type-body">
                     {mark.name}
-                    <span className="type-caption ml-1" style={{ color: mark.type === 'repressive' ? '#ef4444' : '#22c55e' }}>
+                    <span className="type-caption ml-1" style={{ color: mark.type === 'repressive' ? 'var(--color-danger)' : 'var(--color-success)' }}>
                       {mark.type === 'repressive' ? ' (repressive)' : ' (active)'}
                     </span>
                   </span>
-                  <span className="type-title font-mono" style={{ color: mark.color }}>
+                  <span className="type-title font-mono" style={{ color: mark.type === 'repressive' ? 'var(--color-danger)' : 'var(--color-success)' }}>
                     {mark.value}× {mark.value > 1 ? '↑' : '↓'}
                   </span>
                 </div>
-                <div className="h-2 bg-slate-800 rounded overflow-hidden relative">
-                  <div className="absolute top-0 bottom-0 w-0.5 bg-white/30" style={{ left: '20%' }} />
-                  <div
-                    className="h-full rounded transition-[width] duration-500"
-                    style={{
-                      width: `${Math.min(mark.value * 20, 100)}%`,
-                      background: `linear-gradient(90deg, ${mark.color}80, ${mark.color})`
-                    }}
-                  />
-                </div>
+                <MetricBar
+                  value={Math.min(mark.value * 20, 100)}
+                  variant={mark.type === 'repressive' ? 'danger' : 'success'}
+                  baseline={20}
+                />
               </div>
             ))}
           </div>
           <FindingBox finding={selectedData.finding} />
-          <ImplicationBox icon="🎯" text={selectedData.implication} />
+          <ImplicationBox text={selectedData.implication} />
         </>
       )}
     </>
@@ -473,25 +449,20 @@ function BarSection({ title, items, labelKey, subtitleKey, valueKey, pctKey, val
         <div key={item[labelKey]} className="mb-3.5">
           <div className="flex justify-between items-baseline mb-1.5">
             <span className="type-body">
-              <span className={cn('font-mono', item.highlight && 'text-red-500 font-semibold')}>{item[labelKey]}</span>
+              <span className="font-mono" style={item.highlight ? { color: 'var(--color-danger)', fontWeight: 600 } : undefined}>{item[labelKey]}</span>
               {subtitleKey && <span className="type-caption ml-1"> ({item[subtitleKey]})</span>}
             </span>
-            <span className="type-title font-mono" style={{ color: item.highlight ? '#ef4444' : '#22c55e' }}>
+            <span className="type-title font-mono" style={{ color: item.highlight ? 'var(--color-danger)' : 'var(--color-success)' }}>
               {item[valueKey]}{valueSuffix}
             </span>
           </div>
-          <div className="h-2 bg-slate-800 rounded overflow-hidden relative">
-            <div
-              className="h-full rounded transition-[width] duration-500"
-              style={{
-                width: `${item[pctKey]}%`,
-                background: item.highlight
-                  ? 'linear-gradient(90deg, #dc262680, #ef4444)'
-                  : 'linear-gradient(90deg, #15803d80, #22c55e)'
-              }}
+          <div className="relative">
+            <MetricBar
+              value={item[pctKey]}
+              variant={item.highlight ? 'danger' : 'success'}
             />
             {item.highlight && (
-              <span className="absolute right-2 top-1/2 -translate-y-1/2 type-badge text-red-300 tracking-[0.5px]">BOTTLENECK</span>
+              <span className="absolute right-0 -top-5 type-badge tracking-[0.5px]" style={{ color: 'var(--color-danger)' }}>BOTTLENECK</span>
             )}
           </div>
         </div>
@@ -502,17 +473,16 @@ function BarSection({ title, items, labelKey, subtitleKey, valueKey, pctKey, val
 
 function FindingBox({ finding }) {
   return (
-    <div className="p-4 bg-blue-500/[0.08] border border-blue-500/20 rounded-lg mb-4">
-      <div className="type-label mb-2 text-blue-400">Key Finding</div>
+    <div className="callout mb-4" style={{ '--callout-color': 'var(--color-accent)' }}>
+      <div className="type-label mb-1.5" style={{ color: 'var(--color-accent)' }}>Key Finding</div>
       <div className="type-body leading-relaxed">{finding}</div>
     </div>
   );
 }
 
-function ImplicationBox({ icon, text }) {
+function ImplicationBox({ text }) {
   return (
-    <div className="flex gap-3 p-3.5 bg-violet-500/[0.08] border border-violet-500/20 rounded-lg">
-      <span className="text-lg">{icon}</span>
+    <div className="callout" style={{ '--callout-color': 'var(--color-purple)' }}>
       <div className="type-body leading-relaxed">{text}</div>
     </div>
   );

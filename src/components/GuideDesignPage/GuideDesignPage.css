@@ -25,12 +25,12 @@
 .dnaTickLine {
   width: 1px;
   height: 8px;
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--border-default);
 }
 
 .dnaTickLabel {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   margin-top: 2px;
   font-family: 'JetBrains Mono', monospace;
 }
@@ -75,19 +75,18 @@
 }
 .tssArrow {
   font-size: 18px;
-  color: #22c55e;
-  text-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+  color: var(--color-success);
   animation: tssGlow 2s ease-in-out infinite;
 }
 @keyframes tssGlow {
-  0%, 100% { text-shadow: 0 0 10px rgba(34, 197, 94, 0.5); }
-  50% { text-shadow: 0 0 20px rgba(34, 197, 94, 1); }
+  0%, 100% { filter: drop-shadow(0 0 4px var(--color-success)); }
+  50% { filter: drop-shadow(0 0 10px var(--color-success)); }
 }
 .tssLabel {
   font-size: 9px;
   font-weight: 600;
-  color: #22c55e;
-  background: rgba(34, 197, 94, 0.15);
+  color: var(--color-success);
+  background: var(--surface-panel);
   padding: 2px 6px;
   border-radius: 3px;
   margin-top: 2px;
@@ -160,7 +159,7 @@
 .atacTrackPredicted { bottom: 44px; }
 .atacLabel {
   font-size: 9px;
-  color: #64748b;
+  color: var(--text-muted);
   width: 32px;
   flex-shrink: 0;
   transition: opacity 0.3s ease;
@@ -168,7 +167,7 @@
 .atacSignal {
   flex: 1;
   height: 32px;
-  background: rgba(0, 0, 0, 0.2);
+  background: var(--surface-input);
   border-radius: 4px;
   overflow: hidden;
   transition: opacity 0.3s ease;

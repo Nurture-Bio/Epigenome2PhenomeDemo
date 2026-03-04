@@ -1,0 +1,64 @@
+From 3aa190f8babc5862b81b9b38be385bee00c9e28f Mon Sep 17 00:00:00 2001
+From: Claude <claude@anthropic.com>
+Date: Thu, 5 Feb 2026 19:55:07 +0000
+Subject: [PATCH 2/9] refactor(typography): migrate PageHeader + Navigation
+
+PageHeader: type-heading, type-body
+Navigation: type-title, type-sm, type-body for tabs
+Eliminates font-medium from nav tabs (was invisible at 13px)
+---
+ src/components/Navigation/Navigation.jsx | 8 ++++----
+ src/components/PageHeader/PageHeader.jsx | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/src/components/Navigation/Navigation.jsx b/src/components/Navigation/Navigation.jsx
+index 0a6b2c0..18beb36 100644
+--- a/src/components/Navigation/Navigation.jsx
++++ b/src/components/Navigation/Navigation.jsx
+@@ -25,8 +25,8 @@ export function Navigation({ activePage, setActivePage }) {
+           AF
+         </div>
+         <div>
+-          <div className="text-base font-semibold tracking-tight">atacflux</div>
+-          <div className="text-[11px] text-slate-500">Metabolic Engineering Platform</div>
++          <div className="type-title text-base tracking-tight">atacflux</div>
++          <div className="type-sm text-slate-500">Metabolic Engineering Platform</div>
+         </div>
+       </div>
+ 
+@@ -36,7 +36,7 @@ export function Navigation({ activePage, setActivePage }) {
+             key={page}
+             onClick={() => setActivePage(i)}
+             className={cn(
+-              'px-6 py-3 bg-transparent border-none text-[13px] font-medium tracking-[0.5px] cursor-pointer transition-colors duration-250 relative',
++              'px-6 py-3 bg-transparent border-none type-body tracking-[0.5px] cursor-pointer transition-colors duration-250 relative',
+               activePage === i ? 'text-slate-50' : 'text-slate-500 hover:text-slate-400'
+             )}
+           >
+@@ -49,7 +49,7 @@ export function Navigation({ activePage, setActivePage }) {
+         />
+       </nav>
+ 
+-      <div className="text-[11px] text-slate-600">
++      <div className="type-sm text-slate-600">
+         <span className="mono">v0.9.2-beta</span> • S. cerevisiae S288C
+       </div>
+     </header>
+diff --git a/src/components/PageHeader/PageHeader.jsx b/src/components/PageHeader/PageHeader.jsx
+index cf53f0d..a52fa30 100644
+--- a/src/components/PageHeader/PageHeader.jsx
++++ b/src/components/PageHeader/PageHeader.jsx
+@@ -1,8 +1,8 @@
+ export function PageHeader({ title, subtitle }) {
+   return (
+     <div className="flex flex-col items-center text-center animate-[pageHeaderFadeIn_0.35s_ease-out_both]">
+-      <h1 className="text-2xl font-light m-0 mb-1 text-slate-200">{title}</h1>
+-      <p className="text-[13px] text-slate-400 m-0 max-w-[700px] leading-relaxed">{subtitle}</p>
++      <h1 className="type-heading mb-1">{title}</h1>
++      <p className="type-body text-slate-400 max-w-[700px] leading-relaxed">{subtitle}</p>
+     </div>
+   );
+ }
+-- 
+2.43.0
+

@@ -7,9 +7,9 @@ export const aiTextChunks = [
 ];
 
 export const aiInsights = [
-  { icon: '🔒', label: 'Chromatin Barrier', value: 'Dense nucleosomes block access' },
-  { icon: '⚡', label: 'Multi-layer Silencing', value: 'Acetylation + compartment defects' },
-  { icon: '🎯', label: 'Reversible Target', value: 'Epigenetic not genetic defect' },
+  { label: 'Chromatin Barrier', value: 'Dense nucleosomes block access' },
+  { label: 'Multi-layer Silencing', value: 'Acetylation + compartment defects' },
+  { label: 'Reversible Target', value: 'Epigenetic not genetic defect' },
 ];
 
 export const aiActions = [
